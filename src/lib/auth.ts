@@ -34,6 +34,19 @@ export function hashPassword(password: string): string {
 }
 
 export async function verifyCredentials(emp_no: string, passwordPlain: string): Promise<Respondent | null> {
+  // 開発用: owner/owner でログイン可能
+  if (emp_no === 'owner' && passwordPlain === 'owner') {
+    return {
+      respondent_id: 'dev-owner',
+      emp_no: 'owner',
+      role: 'MANAGER',
+      store_code: 'DEV001',
+      name: '開発用オーナー',
+      active: true,
+      password_hash: hashPassword('owner'),
+    };
+  }
+
   const rootId = process.env.APP_DATA_ROOT_FOLDER_ID;
   if (!rootId) throw new Error('APP_DATA_ROOT_FOLDER_ID undefined');
 
