@@ -34,16 +34,24 @@ export function hashPassword(password: string): string {
 }
 
 export async function verifyCredentials(emp_no: string, passwordPlain: string): Promise<Respondent | null> {
-  // 開発用: owner/owner でログイン可能
-  if (emp_no === 'owner' && passwordPlain === 'owner') {
+  // 開発用: owner/owner1/owner2/owner3 でログイン可能
+  const devAccounts: Record<string, { role: 'MANAGER' | 'STAFF' | 'PA'; name: string }> = {
+    'owner': { role: 'MANAGER', name: '開発用（店長）' },
+    'owner1': { role: 'MANAGER', name: '開発用（店長）' },
+    'owner2': { role: 'STAFF', name: '開発用（社員）' },
+    'owner3': { role: 'PA', name: '開発用（PA）' },
+  };
+
+  if (emp_no in devAccounts && passwordPlain === emp_no) {
+    const account = devAccounts[emp_no];
     return {
-      respondent_id: 'dev-owner',
-      emp_no: 'owner',
-      role: 'MANAGER',
+      respondent_id: `dev-${emp_no}`,
+      emp_no: emp_no,
+      role: account.role,
       store_code: 'DEV001',
-      name: '開発用オーナー',
+      name: account.name,
       active: true,
-      password_hash: hashPassword('owner'),
+      password_hash: hashPassword(emp_no),
     };
   }
 
