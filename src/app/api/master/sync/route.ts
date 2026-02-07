@@ -92,7 +92,7 @@ export async function POST() {
 
       // 既存ファイルがあれば更新、なければ新規作成
       const existingFile = await findFileByName('respondents.json', masterFolderId, 'application/json');
-      await saveJsonFile(master, 'respondents.json', masterFolderId, existingFile?.id);
+      await saveJsonFile(master, 'respondents.json', masterFolderId, existingFile?.id || undefined);
       results.push(`respondents.json: ${respondents.length}件`);
     }
 
@@ -123,7 +123,7 @@ export async function POST() {
       };
 
       const existingFile = await findFileByName('org_units.json', masterFolderId, 'application/json');
-      await saveJsonFile(master, 'org_units.json', masterFolderId, existingFile?.id);
+      await saveJsonFile(master, 'org_units.json', masterFolderId, existingFile?.id || undefined);
       results.push(`org_units.json: ${orgUnits.length}件`);
     }
 
