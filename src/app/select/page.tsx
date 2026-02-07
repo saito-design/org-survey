@@ -7,6 +7,8 @@ export default function SelectPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState<string | null>(null);
+  const [setupLoading, setSetupLoading] = useState(false);
+  const [setupResult, setSetupResult] = useState<string | null>(null);
 
   useEffect(() => {
     // セッション確認
@@ -76,12 +78,46 @@ export default function SelectPage() {
           </button>
         </div>
 
+        {/* デモデータセットアップ */}
+        <div className="mt-8 pt-6 border-t border-gray-200">
+          <p className="text-xs text-gray-400 mb-3 text-center">管理者メニュー</p>
+          <button
+            onClick={async () => {
+              if (!confirm('デモデータをセットアップしますか？\n既存データは上書きされます。')) return;
+              setSetupLoading(true);
+              setSetupResult(null);
+              try {
+                const res = await fetch('/api/admin/setup-demo', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                  setSetupResult(`セットアップ完了: ${data.uploaded.respondents}名, ${data.uploaded.orgUnits}店舗, ${data.uploaded.responses}件の回答`);
+                } else {
+                  setSetupResult(`エラー: ${data.error || data.details}`);
+                }
+              } catch (e) {
+                setSetupResult('エラー: 通信に失敗しました');
+              } finally {
+                setSetupLoading(false);
+              }
+            }}
+            disabled={setupLoading}
+            className="w-full bg-gray-100 text-gray-600 py-2 rounded-lg text-sm hover:bg-gray-200 transition-colors disabled:opacity-50"
+          >
+            {setupLoading ? 'セットアップ中...' : 'デモデータをセットアップ'}
+          </button>
+          {setupResult && (
+            <p className={`mt-2 text-xs text-center ${setupResult.startsWith('エラー') ? 'text-red-500' : 'text-green-600'}`}>
+              {setupResult}
+            </p>
+          )}
+        </div>
+
         <button
           onClick={async () => {
             await fetch('/api/auth/logout', { method: 'POST' });
             router.push('/');
           }}
-          className="w-full mt-8 text-gray-500 hover:text-gray-700 text-sm"
+          className="w-full mt-4 text-gray-500 hover:text-gray-700 text-sm"
         >
           ログアウト
         </button>
