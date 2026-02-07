@@ -185,12 +185,12 @@ export default function SurveyPage() {
                   {q.scale === '5point' && (
                     <div className="flex justify-center gap-1 sm:gap-3">
                       {[
-                        { val: 1, label: '全く\n思わない', selected: 'bg-red-100 border-red-500 text-red-700', num: 'text-red-600' },
-                        { val: 2, label: 'あまり\n思わない', selected: 'bg-orange-100 border-orange-500 text-orange-700', num: 'text-orange-600' },
-                        { val: 3, label: 'どちらとも\nいえない', selected: 'bg-gray-200 border-gray-500 text-gray-700', num: 'text-gray-600' },
-                        { val: 4, label: 'まあ\nそう思う', selected: 'bg-sky-100 border-sky-500 text-sky-700', num: 'text-sky-600' },
-                        { val: 5, label: '強く\nそう思う', selected: 'bg-blue-100 border-blue-500 text-blue-700', num: 'text-blue-600' },
-                      ].map(({ val, label, selected, num }) => (
+                        { val: 1, line1: '全く', line2: '思わない', selected: 'bg-red-100 border-red-500 text-red-700', num: 'text-red-600' },
+                        { val: 2, line1: 'あまり', line2: '思わない', selected: 'bg-orange-100 border-orange-500 text-orange-700', num: 'text-orange-600' },
+                        { val: 3, line1: 'どちらとも', line2: 'いえない', selected: 'bg-gray-200 border-gray-500 text-gray-700', num: 'text-gray-600' },
+                        { val: 4, line1: 'まあ', line2: 'そう思う', selected: 'bg-sky-100 border-sky-500 text-sky-700', num: 'text-sky-600' },
+                        { val: 5, line1: '強く', line2: 'そう思う', selected: 'bg-blue-100 border-blue-500 text-blue-700', num: 'text-blue-600' },
+                      ].map(({ val, line1, line2, selected, num }) => (
                         <button
                           key={val}
                           onClick={() => handleAnswer(q.question_id, val)}
@@ -205,8 +205,8 @@ export default function SurveyPage() {
                           }`}>
                             {val}
                           </span>
-                          <span className="text-[10px] leading-tight text-center whitespace-pre-line mt-1">
-                            {label}
+                          <span className="text-[10px] leading-tight text-center mt-1">
+                            {line1}<br />{line2}
                           </span>
                         </button>
                       ))}
