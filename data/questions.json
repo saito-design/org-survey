@@ -5,7 +5,7 @@
       "original_no": 1,
       "factor_id": "F1",
       "element_id": "1",
-      "text": "私の仕事は、会社にとって、お客さまにとって、大きな影響があり重要だと思う",
+      "text": "私の仕事は、会社にとって、お客さまにとって、**大きな影響があり重要**だと思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -17,7 +17,7 @@
       "original_no": 2,
       "factor_id": "F1",
       "element_id": "2",
-      "text": "日々、変化や刺激を感じられる仕事だと思う",
+      "text": "日々、**変化や刺激を感じられる**仕事だと思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -29,7 +29,7 @@
       "original_no": 3,
       "factor_id": "F2",
       "element_id": "12",
-      "text": "仕事を通じていろいろなスキルを身につけることができるし、活かせると思う",
+      "text": "仕事を通じていろいろな**スキルを身につけることができるし、活かせる**と思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -41,7 +41,7 @@
       "original_no": 4,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私は、店舗業務の全体（人・モノ・金の管理）について自身で完結することができている",
+      "text": "私は、**店舗業務の全体（人・モノ・金の管理）について自身で完結することができている**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -53,7 +53,7 @@
       "original_no": 5,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私は、私の考えで計画、決定し、仕事を進めることが出来ていると思う",
+      "text": "私は、私の考えで計画、決定し、**仕事を進めることが出来ていると思う**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -65,7 +65,7 @@
       "original_no": 6,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私の仕事に対する評価は、明確・公平にされていると感じる",
+      "text": "私の仕事に対する**評価は、明確・公平**にされていると感じる",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -77,7 +77,7 @@
       "original_no": 7,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私は今の仕事を通じて、社内で活躍するチャンスが大いにあると思う",
+      "text": "私は今の仕事を通じて、社内で**活躍するチャンスが大いにある**と思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -89,7 +89,7 @@
       "original_no": 8,
       "factor_id": "F2",
       "element_id": "13",
-      "text": "私の職場には不平不満等をこぼす人がいない",
+      "text": "私の職場には**不平不満等をこぼす人がいない**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -101,7 +101,7 @@
       "original_no": 9,
       "factor_id": "F2",
       "element_id": "13",
-      "text": "私の職場には手抜きをしている人はいなく、みんな積極的に仕事をしていると思う",
+      "text": "私の職場には**手抜きをしている人はいなく、みんな積極的**に仕事をしていると思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -113,7 +113,7 @@
       "original_no": 10,
       "factor_id": "F1",
       "element_id": "3",
-      "text": "私の職場にはハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全だと思う",
+      "text": "私の職場には**ハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全**だと思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -137,7 +137,7 @@
       "original_no": 12,
       "factor_id": "F1",
       "element_id": "3",
-      "text": "私の職場は、ウィルス対策や食中毒対策にしっかりと取組めていると思う",
+      "text": "私の職場は、**ウィルス対策や食中毒対策にしっかりと取組めていると思う**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -149,7 +149,7 @@
       "original_no": 13,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "私の職場は、整理整頓が行き届き、清潔だと思う",
+      "text": "私の職場は、**整理整頓が行き届き、清潔**だと思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -161,7 +161,7 @@
       "original_no": 14,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "私の職場は、休暇の取得や残業の改善が図られていると思う",
+      "text": "私の職場は、**休暇の取得や残業の改善が図られていると思う**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -173,7 +173,7 @@
       "original_no": 15,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "その他、室温・湿度、照明、雑音など、特に気になる箇所はない",
+      "text": "その他、室温・湿度、照明、雑音など、**特に気になる箇所はない**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -185,7 +185,7 @@
       "original_no": 16,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "私は、会社の理念（お客様や地域に対する会社の想い）やビジョンを知っている",
+      "text": "私は、会社の**理念（お客様や地域に対する会社の想い）やビジョンを知っている**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -197,7 +197,7 @@
       "original_no": 17,
       "factor_id": "F2",
       "element_id": "9",
-      "text": "私は、会社の理念を私なりに理解して行動できていると思う",
+      "text": "私は、会社の**理念を私なりに理解して行動**できていると思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -209,7 +209,7 @@
       "original_no": 18,
       "factor_id": "F1",
       "element_id": "4",
-      "text": "私は、会社の将来ビジョンに共感し、期待している",
+      "text": "私は、会社の将来ビジョンに共感し、**期待している**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -221,7 +221,7 @@
       "original_no": 19,
       "factor_id": "F1",
       "element_id": "4",
-      "text": "上司は、わたしの仕事を良く見てくれ、わたしの仕事を認めてくれる",
+      "text": "上司は、わたしの仕事を良く見てくれ、わたしの**仕事を認めてくれる**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -233,7 +233,7 @@
       "original_no": 20,
       "factor_id": "F1",
       "element_id": "5",
-      "text": "上司は、日頃から又は面談を通じて、自身の仕事について結果やアドバイス等のフィードバックをしてくれる",
+      "text": "上司は、日頃から又は面談を通じて、自身の仕事について結果やアドバイス等の**フィードバックをしてくれる**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -245,7 +245,7 @@
       "original_no": 21,
       "factor_id": "F1",
       "element_id": "5",
-      "text": "上司は、わたしを熱心に育成してくれていると思う",
+      "text": "上司は、わたしを**熱心に育成**してくれていると思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -257,7 +257,7 @@
       "original_no": 22,
       "factor_id": "F1",
       "element_id": "5",
-      "text": "上司に対して自分の意見を言うことができる関係性だと思う",
+      "text": "上司に対して自分の**意見を言うことができる**関係性だと思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -269,7 +269,7 @@
       "original_no": 23,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "私は、今の賃金に納得している",
+      "text": "私は、今の賃金**に納得している**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -281,7 +281,7 @@
       "original_no": 24,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "私は、今の福利厚生に納得している",
+      "text": "私は、今の福利厚生**に納得している**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -293,7 +293,7 @@
       "original_no": 25,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "仕事に必要な知識について、会社が十分な教育の機会を与えてくれていると思う",
+      "text": "仕事に必要な知識について、会社が十分な**教育の機会を与えてくれている**と思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -305,7 +305,7 @@
       "original_no": 26,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "私は、今後もこの会社に勤めていたいと思う",
+      "text": "私は、今後もこの会社に**勤めていたい**と思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -329,7 +329,7 @@
       "original_no": 28,
       "factor_id": "F1",
       "element_id": "7",
-      "text": "私は、総合的に職場・仕事に満足している",
+      "text": "私は、総合的に職場・仕事**に満足している**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -341,7 +341,7 @@
       "original_no": 29,
       "factor_id": "F1",
       "element_id": "7",
-      "text": "私は、総合的に会社に満足している",
+      "text": "私は、総合的に会社**に満足している**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -353,7 +353,7 @@
       "original_no": 30,
       "factor_id": "F1",
       "element_id": "7",
-      "text": "私は、スタッフに期待することや、やるべきことを具体的に細かく指示・指導するタイプだと思う",
+      "text": "私は、スタッフに期待することや、**やるべきことを具体的に細かく指示・指導するタイプだと思う**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -365,7 +365,7 @@
       "original_no": 31,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "私は、スタッフの考えや思いに気を配り、提案も聞くタイプだと思う",
+      "text": "私は、スタッフの考えや思いに気を配り、**提案も聞くタイプだと思う**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -377,7 +377,7 @@
       "original_no": 32,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "私は、スタッフに期待し、高い目標を立てて全力を尽くすよう鼓舞するタイプだと思う",
+      "text": "私は、スタッフに期待し、**高い目標を立てて全力を尽くすよう鼓舞するタイプだと思う**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -401,7 +401,7 @@
       "original_no": 34,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "私は、スタッフを熱心に育成していると思う",
+      "text": "私は、スタッフを**熱心に育成**していると思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -413,7 +413,7 @@
       "original_no": 35,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "私に対してスタッフが自分の意見を言うことができる関係性だと思う",
+      "text": "私に対してスタッフが自分の**意見を言うことができる**関係性だと思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -425,7 +425,7 @@
       "original_no": 36,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "私は部下やスタッフ教えるにあたり、十分な知識を得られていると思う",
+      "text": "私は部下やスタッフ教えるにあたり、**十分な知識を得られていると思う**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -437,7 +437,7 @@
       "original_no": 37,
       "factor_id": "F1",
       "element_id": "8",
-      "text": "部下やスタッフを教えるにあたり、教育ツールなどの整備が行き届き、教えやすい環境だと思う",
+      "text": "部下やスタッフを教えるにあたり、教育ツールなどの整備が行き届き、**教えやすい環境**だと思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -449,7 +449,7 @@
       "original_no": 38,
       "factor_id": "F1",
       "element_id": "8",
-      "text": "スタッフは、同僚同士、お互いフォローしあいながら仕事をしていると思う",
+      "text": "スタッフは、同僚同士、お互い**フォローしあいながら**仕事をしていると思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -461,7 +461,7 @@
       "original_no": 39,
       "factor_id": "F1",
       "element_id": "8",
-      "text": "スタッフは、同僚同士、お互い指摘し合える関係性だと思う",
+      "text": "スタッフは、同僚同士、お互い**指摘し合える**関係性だと思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -473,7 +473,7 @@
       "original_no": 40,
       "factor_id": "F2",
       "element_id": "10",
-      "text": "スタッフは、同僚同士、仕事に限らず仲良くしている",
+      "text": "スタッフは、同僚同士、仕事に限らず**仲良くしている**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -485,7 +485,7 @@
       "original_no": 41,
       "factor_id": "F2",
       "element_id": "10",
-      "text": "同僚（他店店長）とは、お互いフォローしあいながら仕事をしていると思う",
+      "text": "同僚（他店店長）とは、お互い**フォローしあいながら**仕事をしていると思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -497,7 +497,7 @@
       "original_no": 42,
       "factor_id": "F2",
       "element_id": "10",
-      "text": "同僚（他店店長）とは、お互い指摘し合える関係性だと思う",
+      "text": "同僚（他店店長）とは、お互い**指摘し合える**関係性だと思う",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -509,7 +509,7 @@
       "original_no": 43,
       "factor_id": "F2",
       "element_id": "10",
-      "text": "同僚（他店店長）とは、仕事に限らず仲良くしている",
+      "text": "同僚（他店店長）とは、仕事に限らず**仲良くしている**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -521,7 +521,7 @@
       "original_no": 44,
       "factor_id": "F2",
       "element_id": "10",
-      "text": "私は、社交的で人と仲良くなるのが得意なタイプだと思う",
+      "text": "私は、**社交的で人と仲良くなるのが得意なタイプだと思う**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -545,7 +545,7 @@
       "original_no": 46,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私の仕事が、お客さまにどのようなサービスを提供する役割か、はっきりとわかっている",
+      "text": "私の仕事が、お客さまにどのような**サービスを提供する役割か、はっきりとわかっている**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -581,7 +581,7 @@
       "original_no": 49,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私は、お客さまに喜んでもらえることが何よりも嬉しい",
+      "text": "私は、**お客さまに喜んでもらえることが何よりも嬉しい**",
       "scale": "5point",
       "roles": [
         "MANAGER"
@@ -593,7 +593,7 @@
       "original_no": 1,
       "factor_id": "F1",
       "element_id": "1",
-      "text": "私の仕事は、職場にとって、お客さまにとって、大きな影響があり重要だと思う",
+      "text": "私の仕事は、職場にとって、お客さまにとって、**大きな影響があり重要**だと思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -605,7 +605,7 @@
       "original_no": 2,
       "factor_id": "F1",
       "element_id": "2",
-      "text": "日々、変化や刺激を感じられる仕事だと思う",
+      "text": "日々、**変化や刺激を感じられる**仕事だと思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -617,7 +617,7 @@
       "original_no": 3,
       "factor_id": "F2",
       "element_id": "12",
-      "text": "仕事を通じていろいろなスキルを身につけることができるし、活かせると思う",
+      "text": "仕事を通じていろいろな**スキルを身につけることができるし、活かせる**と思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -641,7 +641,7 @@
       "original_no": 5,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私は、私の考えで仕事を進めることが出来ていると思う",
+      "text": "私は、**私の考えで仕事を進めることが出来ていると思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -653,7 +653,7 @@
       "original_no": 6,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私の仕事に対する評価は、明確・公平にされていると感じる",
+      "text": "私の仕事に対する**評価は、明確・公平**にされていると感じる",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -665,7 +665,7 @@
       "original_no": 7,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "今の仕事は私が活躍するチャンスがあると思う",
+      "text": "今の仕事は私が**活躍するチャンスがある**と思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -677,7 +677,7 @@
       "original_no": 8,
       "factor_id": "F2",
       "element_id": "13",
-      "text": "私の職場には不平不満等をこぼす人がいない",
+      "text": "私の職場には**不平不満等をこぼす人がいない**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -689,7 +689,7 @@
       "original_no": 9,
       "factor_id": "F2",
       "element_id": "13",
-      "text": "私の職場には手抜きをしている人はいなく、みんな積極的に仕事をしていると思う",
+      "text": "私の職場には**手抜きをしている人はいなく、みんな積極的**に仕事をしていると思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -701,7 +701,7 @@
       "original_no": 10,
       "factor_id": "F1",
       "element_id": "3",
-      "text": "私の職場にはハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全だと思う",
+      "text": "私の職場には**ハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全**だと思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -725,7 +725,7 @@
       "original_no": 12,
       "factor_id": "F1",
       "element_id": "3",
-      "text": "私の職場は、ウィルス対策や食中毒対策にしっかりと取組めていると思う",
+      "text": "私の職場は、**ウィルス対策や食中毒対策にしっかりと取組めていると思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -737,7 +737,7 @@
       "original_no": 13,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "私の職場は、整理整頓が行き届き、清潔だと思う",
+      "text": "私の職場は、**整理整頓が行き届き、清潔**だと思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -749,7 +749,7 @@
       "original_no": 14,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "私の職場は、休暇の取得や残業の改善が図られていると思う",
+      "text": "私の職場は、**休暇の取得や残業の改善が図られていると思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -761,7 +761,7 @@
       "original_no": 15,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "その他、室温・湿度、照明、雑音など、特に気になる箇所はない",
+      "text": "その他、室温・湿度、照明、雑音など、**特に気になる箇所はない**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -773,7 +773,7 @@
       "original_no": 16,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "私は、会社の理念（お客様や地域に対する会社の想い）を知っている",
+      "text": "私は、会社の**理念（お客様や地域に対する会社の想い）を知っている**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -785,7 +785,7 @@
       "original_no": 17,
       "factor_id": "F2",
       "element_id": "9",
-      "text": "私は、会社の理念を自分なりに理解して行動できていると思う",
+      "text": "私は、会社の**理念を自分なりに理解して行動**できていると思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -797,7 +797,7 @@
       "original_no": 18,
       "factor_id": "F1",
       "element_id": "4",
-      "text": "私は、会社の掲げる将来の姿に期待し、それを一緒に目指したいと思う",
+      "text": "私は、会社の掲げる将来の姿に期待し、**それを一緒に目指したいと思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -821,7 +821,7 @@
       "original_no": 23,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "私は、今の賃金に納得している",
+      "text": "私は、今の賃金**に納得している**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -833,7 +833,7 @@
       "original_no": 24,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "私は、今の福利厚生に納得している",
+      "text": "私は、今の福利厚生**に納得している**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -845,7 +845,7 @@
       "original_no": 25,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "仕事に必要な知識について、十分な教育の機会を与えてくれていると思う",
+      "text": "仕事に必要な知識について、十分な**教育の機会を与えてくれている**と思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -857,7 +857,7 @@
       "original_no": 26,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "私は、今後もこの会社に勤めていたいと思う",
+      "text": "私は、今後もこの会社に**勤めていたい**と思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -869,7 +869,7 @@
       "original_no": 27,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "私は、これからも会社やお店に積極的に貢献していきたいと考えている",
+      "text": "私は、これからも会社やお店に積極的に**貢献していきたい**と考えている",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -881,7 +881,7 @@
       "original_no": 28,
       "factor_id": "F1",
       "element_id": "7",
-      "text": "私は、総合的に職場・仕事に満足している",
+      "text": "私は、総合的に職場・仕事**に満足している**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -893,7 +893,7 @@
       "original_no": 29,
       "factor_id": "F1",
       "element_id": "7",
-      "text": "私は、総合的に会社に満足している",
+      "text": "私は、総合的に会社**に満足している**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -953,7 +953,7 @@
       "original_no": 34,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "上司は、私を熱心に育成してくれていると思う",
+      "text": "上司は、私を**熱心に育成**してくれていると思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -965,7 +965,7 @@
       "original_no": 35,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "上司や社員に対して自分の意見を言うことができる関係性だと思う",
+      "text": "上司や社員に対して自分の**意見を言うことができる**関係性だと思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -977,7 +977,7 @@
       "original_no": 36,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "後輩を教えるにあたり、自分に十分な知識があると思う",
+      "text": "後輩を教えるにあたり、**自分に十分な知識があると思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -989,7 +989,7 @@
       "original_no": 37,
       "factor_id": "F1",
       "element_id": "8",
-      "text": "後輩を教えるにあたり、教育ツールなどの整備が行き届き、教えやすい環境だと思う",
+      "text": "後輩を教えるにあたり、教育ツールなどの整備が行き届き、**教えやすい環境**だと思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1001,7 +1001,7 @@
       "original_no": 38,
       "factor_id": "F1",
       "element_id": "8",
-      "text": "同僚とは、お互いフォローしあいながら仕事をしていると思う",
+      "text": "同僚とは、お互い**フォローしあいながら**仕事をしていると思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1013,7 +1013,7 @@
       "original_no": 39,
       "factor_id": "F1",
       "element_id": "8",
-      "text": "同僚とは、お互い指摘し合える関係性だと思う",
+      "text": "同僚とは、お互い**指摘し合える**関係性だと思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1025,7 +1025,7 @@
       "original_no": 40,
       "factor_id": "F2",
       "element_id": "10",
-      "text": "同僚とは、仕事に限らず仲良くしている",
+      "text": "同僚とは、仕事に限らず**仲良くしている**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1037,7 +1037,7 @@
       "original_no": 41,
       "factor_id": "F2",
       "element_id": "10",
-      "text": "私は、社交的で人と仲良くなるのが得意なタイプだと思う",
+      "text": "私は、**社交的で人と仲良くなるのが得意なタイプだと思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1061,7 +1061,7 @@
       "original_no": 43,
       "factor_id": "F2",
       "element_id": "10",
-      "text": "私の仕事が、お客さまにどのようなサービスを提供する役割か、はっきりとわかっている",
+      "text": "私の仕事が、お客さまにどのような**サービスを提供する役割か、はっきりとわかっている**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1097,7 +1097,7 @@
       "original_no": 46,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私は、お客さまに喜んでもらえることが何よりも嬉しい",
+      "text": "私は、**お客さまに喜んでもらえることが何よりも嬉しい**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1109,7 +1109,7 @@
       "original_no": 50,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "技術レベルの高い人、決定力の高い人、コミュニケーション力が高い人など、能力が高いメンバーがバランスよくいると思う",
+      "text": "技術レベルの高い人、決定力の高い人、コミュニケーション力が高い人など、**能力が高いメンバーがバランスよくいると思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1121,7 +1121,7 @@
       "original_no": 51,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "メンバーは、人当たりが良く、誠実で、落ち着いた人が多いと思う",
+      "text": "メンバーは、人当たりが良く、誠実で、**落ち着いた人が多いと思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1133,7 +1133,7 @@
       "original_no": 52,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "メンバーの能力や好みを考慮して、それぞれが貢献できるように役割分担されていると思う",
+      "text": "メンバーの能力や好みを考慮して、**それぞれが貢献できるように役割分担されていると思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1145,7 +1145,7 @@
       "original_no": 53,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "メンバーは、それぞれの経験や考え方を出し合い協力して仕事を進めていると思う",
+      "text": "メンバーは、**それぞれの経験や考え方を出し合い協力して仕事を進めていると思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1157,7 +1157,7 @@
       "original_no": 54,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "メンバーの人数はちょうどよいと思う",
+      "text": "メンバーの人数は**ちょうどよい**と思う",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1181,7 +1181,7 @@
       "original_no": 56,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "メンバーは、みなチームで働くことを楽しんでいると思う",
+      "text": "メンバーは、**みなチームで働くことを楽しんでいると思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1193,7 +1193,7 @@
       "original_no": 57,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私たちのお店が目指す方向性は明確で、みんなしっかり認識できていると思う",
+      "text": "私たちのお店が目指す方向性は明確で、**みんなしっかり認識できていると思う**",
       "scale": "5point",
       "roles": [
         "STAFF"
@@ -1241,7 +1241,7 @@
       "original_no": 1,
       "factor_id": "F1",
       "element_id": "1",
-      "text": "私の仕事は、職場にとって、お客さまにとって、大きな影響があり重要だと思う",
+      "text": "私の仕事は、職場にとって、お客さまにとって、**大きな影響があり重要**だと思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1253,7 +1253,7 @@
       "original_no": 2,
       "factor_id": "F1",
       "element_id": "2",
-      "text": "日々、変化や刺激を感じられる仕事だと思う",
+      "text": "日々、**変化や刺激を感じられる**仕事だと思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1265,7 +1265,7 @@
       "original_no": 3,
       "factor_id": "F2",
       "element_id": "12",
-      "text": "仕事を通じていろいろなスキルを身につけることができるし、活かせると思う",
+      "text": "仕事を通じていろいろな**スキルを身につけることができるし、活かせる**と思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1289,7 +1289,7 @@
       "original_no": 5,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私は、私の考えで仕事を進めることが出来ていると思う",
+      "text": "私は、**私の考えで仕事を進めることが出来ていると思う**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1301,7 +1301,7 @@
       "original_no": 6,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "私の仕事に対する評価は、明確・公平にされていると感じる",
+      "text": "私の仕事に対する**評価は、明確・公平**にされていると感じる",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1313,7 +1313,7 @@
       "original_no": 7,
       "factor_id": "F1",
       "element_id": "99",
-      "text": "今の仕事は私が活躍するチャンスがあると思う",
+      "text": "今の仕事は私が**活躍するチャンスがある**と思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1325,7 +1325,7 @@
       "original_no": 8,
       "factor_id": "F2",
       "element_id": "13",
-      "text": "私の職場には不平不満等をこぼす人がいない",
+      "text": "私の職場には**不平不満等をこぼす人がいない**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1337,7 +1337,7 @@
       "original_no": 9,
       "factor_id": "F2",
       "element_id": "13",
-      "text": "私の職場にはハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全だと思う",
+      "text": "私の職場には**ハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全**だと思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1361,7 +1361,7 @@
       "original_no": 11,
       "factor_id": "F1",
       "element_id": "3",
-      "text": "私の職場は、整理整頓が行き届き、清潔だと思う",
+      "text": "私の職場は、**整理整頓が行き届き、清潔**だと思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1373,7 +1373,7 @@
       "original_no": 12,
       "factor_id": "F1",
       "element_id": "3",
-      "text": "その他、室温・湿度、照明、雑音など、特に気になる箇所はない",
+      "text": "その他、室温・湿度、照明、雑音など、**特に気になる箇所はない**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1385,7 +1385,7 @@
       "original_no": 13,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "私は、会社の理念（お客様や地域に対する会社の想い）を知っている",
+      "text": "私は、会社の**理念（お客様や地域に対する会社の想い）を知っている**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1397,7 +1397,7 @@
       "original_no": 14,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "私は、会社の理念を自分なりに理解して行動できていると思う",
+      "text": "私は、会社の**理念を自分なりに理解して行動**できていると思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1409,7 +1409,7 @@
       "original_no": 15,
       "factor_id": "F2",
       "element_id": "11",
-      "text": "私は、会社の掲げる将来の姿に期待し、勤めている以上はそれを一緒に目指したいと思う",
+      "text": "私は、会社の掲げる将来の姿に期待し、**勤めている以上はそれを一緒に目指したいと思う**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1421,7 +1421,7 @@
       "original_no": 19,
       "factor_id": "F1",
       "element_id": "4",
-      "text": "仕事に必要な知識について、十分な教育の機会を与えてくれていると思う",
+      "text": "仕事に必要な知識について、十分な**教育の機会を与えてくれている**と思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1433,7 +1433,7 @@
       "original_no": 20,
       "factor_id": "F1",
       "element_id": "5",
-      "text": "私は、これからも会社やお店に積極的に貢献していきたいと考えている",
+      "text": "私は、これからも会社やお店に積極的に**貢献していきたい**と考えている",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1445,7 +1445,7 @@
       "original_no": 21,
       "factor_id": "F1",
       "element_id": "5",
-      "text": "私は、総合的に職場・仕事に満足している",
+      "text": "私は、総合的に職場・仕事**に満足している**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1457,7 +1457,7 @@
       "original_no": 22,
       "factor_id": "F1",
       "element_id": "5",
-      "text": "私は、総合的に会社に満足している",
+      "text": "私は、総合的に会社**に満足している**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1481,7 +1481,7 @@
       "original_no": 24,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "店長や社員は、私を熱心に育成してくれていると思う",
+      "text": "店長や社員は、私を**熱心に育成**してくれていると思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1493,7 +1493,7 @@
       "original_no": 25,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "店長や社員に対して自分の意見を言うことができる関係性だと思う",
+      "text": "店長や社員に対して自分の**意見を言うことができる**関係性だと思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1505,7 +1505,7 @@
       "original_no": 26,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "同僚とは、お互いフォローしあいながら仕事をしていると思う",
+      "text": "同僚とは、お互い**フォローしあいながら**仕事をしていると思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1517,7 +1517,7 @@
       "original_no": 27,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "同僚とは、お互い指摘し合える関係性だと思う",
+      "text": "同僚とは、お互い**指摘し合える**関係性だと思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1529,7 +1529,7 @@
       "original_no": 28,
       "factor_id": "F1",
       "element_id": "7",
-      "text": "同僚とは、仕事に限らず仲良くしている",
+      "text": "同僚とは、仕事に限らず**仲良くしている**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1541,7 +1541,7 @@
       "original_no": 29,
       "factor_id": "F1",
       "element_id": "7",
-      "text": "私は、社交的で人と仲良くなるのが得意なタイプだと思う",
+      "text": "私は、**社交的で人と仲良くなるのが得意なタイプだと思う**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1553,7 +1553,7 @@
       "original_no": 30,
       "factor_id": "F1",
       "element_id": "7",
-      "text": "私の仕事が、お客さまにどのようなサービスを提供する役割か、はっきりとわかっている",
+      "text": "私の仕事が、お客さまにどのような**サービスを提供する役割か、はっきりとわかっている**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1589,7 +1589,7 @@
       "original_no": 33,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "私は、お客さまに喜んでもらえることが何よりも嬉しい",
+      "text": "私は、**お客さまに喜んでもらえることが何よりも嬉しい**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1601,7 +1601,7 @@
       "original_no": 34,
       "factor_id": "F1",
       "element_id": "80",
-      "text": "私たちのお店が目指す方向性は明確で、みんなしっかり認識できていると思う",
+      "text": "私たちのお店が目指す方向性は明確で、**みんなしっかり認識できていると思う**",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1649,7 +1649,7 @@
       "original_no": 38,
       "factor_id": "F1",
       "element_id": "8",
-      "text": "メンバー同士（上司も含めて）で信頼感があると思う",
+      "text": "メンバー同士（上司も含めて）で**信頼感がある**と思う",
       "scale": "5point",
       "roles": [
         "PA"
@@ -1661,7 +1661,7 @@
       "original_no": 39,
       "factor_id": "F1",
       "element_id": "8",
-      "text": "私のいるチーム（店舗）は、メンバーが切磋琢磨し、仕事を高め合っていると思う",
+      "text": "私のいるチーム（店舗）は、メンバーが切磋琢磨し、**仕事を高め合っていると思う**",
       "scale": "5point",
       "roles": [
         "PA"
