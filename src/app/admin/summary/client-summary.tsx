@@ -41,12 +41,17 @@ export default function ClientSummary() {
     async function fetchData() {
       try {
         const res = await fetch('/api/admin/summary?segment=store_code');
-        if (!res.ok) {
-          if (res.status === 401) window.location.href = '/login';
-          if (res.status === 403) throw new Error('管理者権限がありません');
-          throw new Error('データの取得に失敗しました');
-        }
         const json = await res.json();
+
+        if (!res.ok) {
+          if (res.status === 401) {
+            window.location.href = '/';
+            return;
+          }
+          if (res.status === 403) throw new Error('管理者権限がありません');
+          if (res.status === 404) throw new Error('回答データがまだありません');
+          throw new Error(json.details || json.error || 'データの取得に失敗しました');
+        }
         if (json.error) throw new Error(json.error);
         setData(json);
       } catch (err) {
