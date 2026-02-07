@@ -117,14 +117,8 @@ export default function SurveyPage() {
     );
   }
 
-  // 因子ごとにグループ化
-  const questionsByFactor = factors
-    .sort((a, b) => a.order - b.order)
-    .map(factor => ({
-      ...factor,
-      questions: questions.filter(q => q.factor_id === factor.factor_id),
-    }))
-    .filter(f => f.questions.length > 0);
+  // 設問番号順にソート
+  const sortedQuestions = [...questions].sort((a, b) => a.order - b.order);
 
   const answeredCount = Object.values(answers).filter(v => v !== null).length;
   const progress = questions.length > 0 ? Math.round((answeredCount / questions.length) * 100) : 0;
@@ -168,57 +162,49 @@ export default function SurveyPage() {
           回答済み: {answeredCount} / {questions.length} 問 ({progress}%)
         </div>
 
-        {questionsByFactor.map(factor => (
-          <div key={factor.factor_id} className="mb-8">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b">
-              {factor.factor_name}
-            </h2>
+        <div className="space-y-4">
+          {sortedQuestions.map((q) => (
+            <div key={q.question_id} className="bg-white p-4 rounded-lg shadow-sm">
+              <div className="flex mb-3">
+                <span className="text-gray-400 mr-2 shrink-0">Q{q.order}.</span>
+                <span className="text-gray-800" dangerouslySetInnerHTML={{
+                  __html: q.text.replace(/\*\*(.+?)\*\*/g, '<strong class="text-blue-700 font-bold">$1</strong>')
+                }} />
+              </div>
 
-            <div className="space-y-4">
-              {factor.questions.map((q, idx) => (
-                <div key={q.question_id} className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="flex mb-3">
-                    <span className="text-gray-400 mr-2 shrink-0">Q{q.order}.</span>
-                    <span className="text-gray-800" dangerouslySetInnerHTML={{
-                      __html: q.text.replace(/\*\*(.+?)\*\*/g, '<strong class="text-blue-700 font-bold">$1</strong>')
-                    }} />
-                  </div>
-
-                  {q.scale === '5point' && (
-                    <div className="flex justify-center gap-1 sm:gap-3">
-                      {[
-                        { val: 1, line1: '全く', line2: '思わない', selected: 'bg-red-100 border-red-500 text-red-700', num: 'text-red-600' },
-                        { val: 2, line1: 'あまり', line2: '思わない', selected: 'bg-orange-100 border-orange-500 text-orange-700', num: 'text-orange-600' },
-                        { val: 3, line1: 'どちらとも', line2: 'いえない', selected: 'bg-gray-200 border-gray-500 text-gray-700', num: 'text-gray-600' },
-                        { val: 4, line1: 'まあ', line2: 'そう思う', selected: 'bg-sky-100 border-sky-500 text-sky-700', num: 'text-sky-600' },
-                        { val: 5, line1: '強く', line2: 'そう思う', selected: 'bg-blue-100 border-blue-500 text-blue-700', num: 'text-blue-600' },
-                      ].map(({ val, line1, line2, selected, num }) => (
-                        <button
-                          key={val}
-                          onClick={() => handleAnswer(q.question_id, val)}
-                          className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all min-w-[60px] sm:min-w-[72px] ${
-                            answers[q.question_id] === val
-                              ? selected
-                              : 'bg-white border-gray-200 text-gray-500 hover:border-gray-400'
-                          }`}
-                        >
-                          <span className={`text-xl font-bold ${
-                            answers[q.question_id] === val ? num : 'text-gray-700'
-                          }`}>
-                            {val}
-                          </span>
-                          <span className="text-[10px] leading-tight text-center mt-1">
-                            {line1}<br />{line2}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
+              {q.scale === '5point' && (
+                <div className="flex justify-center gap-1 sm:gap-3">
+                  {[
+                    { val: 1, line1: '全く', line2: '思わない', selected: 'bg-red-100 border-red-500 text-red-700', num: 'text-red-600' },
+                    { val: 2, line1: 'あまり', line2: '思わない', selected: 'bg-orange-100 border-orange-500 text-orange-700', num: 'text-orange-600' },
+                    { val: 3, line1: 'どちらとも', line2: 'いえない', selected: 'bg-gray-200 border-gray-500 text-gray-700', num: 'text-gray-600' },
+                    { val: 4, line1: 'まあ', line2: 'そう思う', selected: 'bg-sky-100 border-sky-500 text-sky-700', num: 'text-sky-600' },
+                    { val: 5, line1: '強く', line2: 'そう思う', selected: 'bg-blue-100 border-blue-500 text-blue-700', num: 'text-blue-600' },
+                  ].map(({ val, line1, line2, selected, num }) => (
+                    <button
+                      key={val}
+                      onClick={() => handleAnswer(q.question_id, val)}
+                      className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all min-w-[60px] sm:min-w-[72px] ${
+                        answers[q.question_id] === val
+                          ? selected
+                          : 'bg-white border-gray-200 text-gray-500 hover:border-gray-400'
+                      }`}
+                    >
+                      <span className={`text-xl font-bold ${
+                        answers[q.question_id] === val ? num : 'text-gray-700'
+                      }`}>
+                        {val}
+                      </span>
+                      <span className="text-[10px] leading-tight text-center mt-1">
+                        {line1}<br />{line2}
+                      </span>
+                    </button>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
 
         {/* ボタン */}
         <div className="flex gap-4 justify-center mt-8 pb-8">
