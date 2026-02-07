@@ -1,0 +1,205 @@
+{
+  "entries": [
+    {
+      "respondent_id": "R00001",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "MANAGER",
+      "store_code": "1001",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00002",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1001",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00003",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1001",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00004",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1001",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00005",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1001",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00006",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "MANAGER",
+      "store_code": "1002",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00007",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1002",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00008",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1002",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00009",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1002",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00010",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1002",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00011",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "MANAGER",
+      "store_code": "1003",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00012",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1003",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00013",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1003",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00014",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1003",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00015",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1003",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00016",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "MANAGER",
+      "store_code": "1004",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00017",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1004",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00018",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1004",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00019",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1004",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00020",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1004",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00021",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "MANAGER",
+      "store_code": "1005",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00022",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1005",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00023",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "STAFF",
+      "store_code": "1005",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00024",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1005",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "respondent_id": "R00025",
+      "file_id": "",
+      "survey_id": "2026-02",
+      "role": "PA",
+      "store_code": "1005",
+      "updated_at": "2026-02-07T15:45:53.008Z"
+    }
+  ],
+  "updated_at": "2026-02-07T15:45:53.008Z"
+}

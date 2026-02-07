@@ -1,0 +1,446 @@
+{
+  "responses": [
+    {
+      "response_id": "9d64ba10-9bb3-4891-894a-ece5b51b303d",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q01",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "2181e5df-ef07-44ce-9e47-af56b46fd341",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q02",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "0fcc3c39-47c8-4e77-89c2-8f4a3aad2572",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q03",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "d1ed504c-f491-4140-bc35-b6749e92348d",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q04",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "f7c41c48-194b-400b-8de4-7d50f66c3ece",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q05",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "b39685e2-3115-453e-841f-14f46b8228f8",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q06",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "199be37c-2894-4eb4-8c8d-b868e8e17c6e",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q07",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "23388ee5-4e6e-4f41-9f03-b529005878c2",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q08",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "af93e81c-6044-45cf-808c-8f9f82a3e6fc",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q09",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "2cafec83-4efa-42f7-b671-b30ff7fd0d21",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q10",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "d65cc800-a0a1-42ae-8306-f5e61cfb8599",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q11",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "7c4859fb-5394-4c9f-a054-c0b93f9ca287",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q12",
+      "value": 2,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "f905e29d-4db0-46b3-86f3-c82d7495d963",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q13",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "d09a1188-ccea-488d-83c8-c6c3fcc1ff71",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q14",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "98d7b0d6-7362-43ac-bf46-b329435eefba",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q15",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "305090ff-3f29-44cd-9680-8c6c8e32933d",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q16",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "39ce84f8-dcf7-4fd3-a57c-aa20b3ece4eb",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q17",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "c5844a23-47d7-486a-b9c3-daf09204a69e",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q18",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "82e88bdf-dfc7-4ca3-b4b7-94c087669b59",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q19",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "943780ac-408e-4801-a1e8-d3cc468d884f",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q20",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "86489c0e-e215-4dac-9f58-2fa42eebcc09",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q21",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "44a27822-0c09-42e1-b758-c81bcda26832",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q22",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "5f185402-8eaf-4b96-bf50-20eda68ab48b",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q23",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "5f98bffd-df70-4875-a087-7d15dedc57e9",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q24",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "bd0e503a-ad18-4431-98d3-ed6f9e002049",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q25",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "f7670049-7a2e-483c-99cb-0ffc83a02efb",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q26",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "ea181c7e-fe76-4ab5-a874-6ee3a7e66c14",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q27",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "fe77a467-81ca-43a9-ad25-925fd42d78d4",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q28",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "04d74b92-4b4c-4391-a1e5-a729c95c7193",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q29",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "d15de66d-c512-46a7-b694-c6fa48d51319",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q30",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "69eeb303-7c60-42ef-b41a-2eaa8464d99f",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q31",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "49592a04-1b51-40a1-bb19-1756289b4ccc",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q32",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "bc7f97a1-166e-43a3-9d12-31b8cc8acb5c",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q33",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "74a8c34a-ccde-40f5-a87b-7af217745778",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q34",
+      "value": 2,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "34ada2e8-cfc0-476b-b4fb-1ad8d08bfeac",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q35",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "0c132f98-997c-46a0-b340-8940d727a1dc",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q36",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "99919c70-b548-4127-9aa2-a55aeb0b6061",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q37",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "a250ef72-85c0-4a6a-8af1-ffa90b0233da",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q38",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "f2da7da2-6ca7-4502-91df-cb1ce7809ccd",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q39",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "440fc8d1-7c3f-4e8c-b8da-655067879095",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q40",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "8b0ef629-5fb9-4049-887b-c8c8d3443efd",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q41",
+      "value": 3,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "330ec40d-bcb2-4e18-af58-9e1ded7a17fa",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q42",
+      "value": 2,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "6e526fc4-734a-46ff-95f4-0c5cabb5e610",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q43",
+      "value": 2,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "96d67918-c583-4c1e-819b-0d4f544a4402",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q44",
+      "value": 2,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "b05d2f26-0b90-4b4f-aea1-c8e261053bc9",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q45",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "7967f323-59e7-4c4a-9cdd-985fe4b9d595",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q46",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "b99d03f4-1d7f-4396-818e-c5bca11c5c5b",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q47",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "9337d50f-64ba-470c-93d1-f6aec882d5cf",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q48",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    },
+    {
+      "response_id": "da74c888-2630-4898-91b2-7eda64857e75",
+      "survey_id": "2026-02",
+      "respondent_id": "R00006",
+      "question_id": "MANAGER-Q49",
+      "value": 4,
+      "created_at": "2026-02-07T15:45:53.008Z",
+      "submitted_at": "2026-02-07T15:45:53.008Z"
+    }
+  ],
+  "updated_at": "2026-02-07T15:45:53.008Z"
+}

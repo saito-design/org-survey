@@ -1,0 +1,45 @@
+{
+  "org_units": [
+    {
+      "store_code": "1001",
+      "store_name": "サンプル青山店",
+      "area": "関東",
+      "manager": "田中",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1002",
+      "store_name": "サンプル新宿店",
+      "area": "関東",
+      "manager": "佐藤",
+      "business_type": "ダイニング",
+      "active": true
+    },
+    {
+      "store_code": "1003",
+      "store_name": "サンプル梅田店",
+      "area": "関西",
+      "manager": "鈴木",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1004",
+      "store_name": "サンプル心斎橋店",
+      "area": "関西",
+      "manager": "高橋",
+      "business_type": "カフェ",
+      "active": true
+    },
+    {
+      "store_code": "1005",
+      "store_name": "サンプル栄店",
+      "area": "中部",
+      "manager": "伊藤",
+      "business_type": "ダイニング",
+      "active": true
+    }
+  ],
+  "updated_at": "2026-02-07T15:45:53.008Z"
+}
