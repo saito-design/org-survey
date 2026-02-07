@@ -11,8 +11,8 @@ export async function GET() {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    // ローカルファイルから読み込み
-    const filePath = path.join(process.cwd(), 'data', 'questions.json');
+    // ローカルファイルから読み込み（正の置き場: questions/questions.json）
+    const filePath = path.join(process.cwd(), 'questions', 'questions.json');
     if (!fs.existsSync(filePath)) {
       return NextResponse.json({ error: 'questions.json not found' }, { status: 404 });
     }
