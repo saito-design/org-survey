@@ -40,7 +40,7 @@
       "question_id": "MANAGER-Q04",
       "original_no": 4,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "14",
       "text": "私は、**店舗業務の全体（人・モノ・金の管理）について自身で完結することができている**",
       "scale": "5point",
       "roles": [
@@ -52,7 +52,7 @@
       "question_id": "MANAGER-Q05",
       "original_no": 5,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "16",
       "text": "私は、私の考えで計画、決定し、**仕事を進めることが出来ていると思う**",
       "scale": "5point",
       "roles": [
@@ -64,7 +64,7 @@
       "question_id": "MANAGER-Q06",
       "original_no": 6,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "18",
       "text": "私の仕事に対する**評価は、明確・公平**にされていると感じる",
       "scale": "5point",
       "roles": [
@@ -76,7 +76,7 @@
       "question_id": "MANAGER-Q07",
       "original_no": 7,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "3",
       "text": "私は今の仕事を通じて、社内で**活躍するチャンスが大いにある**と思う",
       "scale": "5point",
       "roles": [
@@ -544,7 +544,7 @@
       "question_id": "MANAGER-Q46",
       "original_no": 46,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "15",
       "text": "私の仕事が、お客さまにどのような**サービスを提供する役割か、はっきりとわかっている**",
       "scale": "5point",
       "roles": [
@@ -556,7 +556,7 @@
       "question_id": "MANAGER-Q47",
       "original_no": 47,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "15",
       "text": "お客さまが喜ぶと思うサービスを自身の判断で行うことが出来ている",
       "scale": "5point",
       "roles": [
@@ -568,7 +568,7 @@
       "question_id": "MANAGER-Q48",
       "original_no": 48,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "15",
       "text": "そのような判断をすることが、はっきり職務として明確になっている",
       "scale": "5point",
       "roles": [
@@ -580,7 +580,7 @@
       "question_id": "MANAGER-Q49",
       "original_no": 49,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "15",
       "text": "私は、**お客さまに喜んでもらえることが何よりも嬉しい**",
       "scale": "5point",
       "roles": [
@@ -628,7 +628,7 @@
       "question_id": "STAFF-Q04",
       "original_no": 4,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "14",
       "text": "私は、接客や調理などの業務において、一つの仕事を完了するところまで受け持っている（接客であれば入店からお見送りまで、調理であればひとつの料理を完成させるまで）",
       "scale": "5point",
       "roles": [
@@ -640,7 +640,7 @@
       "question_id": "STAFF-Q05",
       "original_no": 5,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "16",
       "text": "私は、**私の考えで仕事を進めることが出来ていると思う**",
       "scale": "5point",
       "roles": [
@@ -652,7 +652,7 @@
       "question_id": "STAFF-Q06",
       "original_no": 6,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "18",
       "text": "私の仕事に対する**評価は、明確・公平**にされていると感じる",
       "scale": "5point",
       "roles": [
@@ -664,7 +664,7 @@
       "question_id": "STAFF-Q07",
       "original_no": 7,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "3",
       "text": "今の仕事は私が**活躍するチャンスがある**と思う",
       "scale": "5point",
       "roles": [
@@ -1096,7 +1096,7 @@
       "question_id": "STAFF-Q46",
       "original_no": 46,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "15",
       "text": "私は、**お客さまに喜んでもらえることが何よりも嬉しい**",
       "scale": "5point",
       "roles": [
@@ -1108,7 +1108,7 @@
       "question_id": "STAFF-Q50",
       "original_no": 50,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "15",
       "text": "技術レベルの高い人、決定力の高い人、コミュニケーション力が高い人など、**能力が高いメンバーがバランスよくいると思う**",
       "scale": "5point",
       "roles": [
@@ -1120,7 +1120,7 @@
       "question_id": "STAFF-Q51",
       "original_no": 51,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "メンバーは、人当たりが良く、誠実で、**落ち着いた人が多いと思う**",
       "scale": "5point",
       "roles": [
@@ -1132,7 +1132,7 @@
       "question_id": "STAFF-Q52",
       "original_no": 52,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "メンバーの能力や好みを考慮して、**それぞれが貢献できるように役割分担されていると思う**",
       "scale": "5point",
       "roles": [
@@ -1144,7 +1144,7 @@
       "question_id": "STAFF-Q53",
       "original_no": 53,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "メンバーは、**それぞれの経験や考え方を出し合い協力して仕事を進めていると思う**",
       "scale": "5point",
       "roles": [
@@ -1156,7 +1156,7 @@
       "question_id": "STAFF-Q54",
       "original_no": 54,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "メンバーの人数は**ちょうどよい**と思う",
       "scale": "5point",
       "roles": [
@@ -1168,7 +1168,7 @@
       "question_id": "STAFF-Q55",
       "original_no": 55,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "メンバーは、誰でも２つ以上のポジションを担当できる",
       "scale": "5point",
       "roles": [
@@ -1180,7 +1180,7 @@
       "question_id": "STAFF-Q56",
       "original_no": 56,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "メンバーは、**みなチームで働くことを楽しんでいると思う**",
       "scale": "5point",
       "roles": [
@@ -1192,7 +1192,7 @@
       "question_id": "STAFF-Q57",
       "original_no": 57,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "私たちのお店が目指す方向性は明確で、**みんなしっかり認識できていると思う**",
       "scale": "5point",
       "roles": [
@@ -1204,7 +1204,7 @@
       "question_id": "STAFF-Q58",
       "original_no": 58,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "目指す方向へ向かって、具体的で現実的な目標が立てられている",
       "scale": "5point",
       "roles": [
@@ -1216,7 +1216,7 @@
       "question_id": "STAFF-Q59",
       "original_no": 59,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "メンバーは、目標達成に向けて自信を持って取り組んでいる",
       "scale": "5point",
       "roles": [
@@ -1228,7 +1228,7 @@
       "question_id": "STAFF-Q60",
       "original_no": 60,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "19",
       "text": "メンバーはいい意味で緊張感を持ち、お互いの考え方の違いについてよく話し合っている",
       "scale": "5point",
       "roles": [
@@ -1276,7 +1276,7 @@
       "question_id": "PA-Q04",
       "original_no": 4,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "14",
       "text": "私は、接客や調理などの業務において、一つの仕事を完了するところまで受け持っている（接客であれば入店からお見送りまで、調理であればひとつの料理を完成させるまで）",
       "scale": "5point",
       "roles": [
@@ -1288,7 +1288,7 @@
       "question_id": "PA-Q05",
       "original_no": 5,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "16",
       "text": "私は、**私の考えで仕事を進めることが出来ていると思う**",
       "scale": "5point",
       "roles": [
@@ -1300,7 +1300,7 @@
       "question_id": "PA-Q06",
       "original_no": 6,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "18",
       "text": "私の仕事に対する**評価は、明確・公平**にされていると感じる",
       "scale": "5point",
       "roles": [
@@ -1312,7 +1312,7 @@
       "question_id": "PA-Q07",
       "original_no": 7,
       "factor_id": "F1",
-      "element_id": "99",
+      "element_id": "3",
       "text": "今の仕事は私が**活躍するチャンスがある**と思う",
       "scale": "5point",
       "roles": [
@@ -1765,6 +1765,42 @@
       "element_name": "理念・ビジョンの認知と理解",
       "factor_id": "F2",
       "order": 14
+    },
+    {
+      "element_id": "14",
+      "element_name": "顧客視点意識",
+      "factor_id": "F2",
+      "order": 15
+    },
+    {
+      "element_id": "15",
+      "element_name": "顧客対応型文化の要素",
+      "factor_id": "F2",
+      "order": 16
+    },
+    {
+      "element_id": "16",
+      "element_name": "貢献意欲",
+      "factor_id": "F1",
+      "order": 17
+    },
+    {
+      "element_id": "17",
+      "element_name": "職務満足度2",
+      "factor_id": "F1",
+      "order": 18
+    },
+    {
+      "element_id": "18",
+      "element_name": "公平さ",
+      "factor_id": "F1",
+      "order": 19
+    },
+    {
+      "element_id": "19",
+      "element_name": "チーム力",
+      "factor_id": "F2",
+      "order": 20
     }
   ],
   "updated_at": "2026-02-07T12:34:05.588883"
