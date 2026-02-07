@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
-import { readJsonFile, findFileByName } from '@/lib/drive';
 import { QuestionsMaster } from '@/lib/types';
+import fs from 'fs';
+import path from 'path';
 
 export async function GET() {
   try {
@@ -10,15 +11,14 @@ export async function GET() {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const rootId = process.env.APP_DATA_ROOT_FOLDER_ID;
-    if (!rootId) throw new Error('APP_DATA_ROOT_FOLDER_ID undefined');
-
-    const questionsFile = await findFileByName('questions.json', rootId, 'application/json');
-    if (!questionsFile) {
+    // ローカルファイルから読み込み
+    const filePath = path.join(process.cwd(), 'data', 'questions.json');
+    if (!fs.existsSync(filePath)) {
       return NextResponse.json({ error: 'questions.json not found' }, { status: 404 });
     }
 
-    const data = await readJsonFile<QuestionsMaster>(questionsFile.id!);
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const data: QuestionsMaster = JSON.parse(fileContent);
 
     // role別にフィルタ
     const filteredQuestions = data.questions.filter(q =>
