@@ -163,10 +163,10 @@ export default function SurveyPage() {
         </div>
 
         <div className="space-y-4">
-          {sortedQuestions.map((q) => (
+          {sortedQuestions.map((q, idx) => (
             <div key={q.question_id} className="bg-white p-4 rounded-lg shadow-sm">
               <div className="flex mb-3">
-                <span className="text-gray-400 mr-2 shrink-0">Q{q.order}.</span>
+                <span className="text-gray-400 mr-2 shrink-0">Q{idx + 1}.</span>
                 <span className="text-gray-800" dangerouslySetInnerHTML={{
                   __html: q.text.replace(/\*\*(.+?)\*\*/g, '<strong class="text-blue-700 font-bold">$1</strong>')
                 }} />
