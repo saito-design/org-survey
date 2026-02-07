@@ -317,7 +317,7 @@
       "original_no": 27,
       "factor_id": "F1",
       "element_id": "6",
-      "text": "私は、これからも会社に積極的に貢献していきたいと考えている",
+      "text": "私は、これからも**会社に積極的に貢献していきたい**と考えている",
       "scale": "5point",
       "roles": [
         "MANAGER"

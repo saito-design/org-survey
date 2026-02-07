@@ -179,7 +179,9 @@ export default function SurveyPage() {
                 <div key={q.question_id} className="bg-white p-4 rounded-lg shadow-sm">
                   <div className="flex mb-3">
                     <span className="text-gray-400 mr-2 shrink-0">Q{q.order}.</span>
-                    <span className="text-gray-800">{q.text}</span>
+                    <span className="text-gray-800" dangerouslySetInnerHTML={{
+                      __html: q.text.replace(/\*\*(.+?)\*\*/g, '<strong class="text-blue-700 font-bold">$1</strong>')
+                    }} />
                   </div>
 
                   {q.scale === '5point' && (
