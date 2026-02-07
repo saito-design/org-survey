@@ -182,30 +182,34 @@ export default function SurveyPage() {
                     {q.text}
                   </p>
 
-                  <div className="flex justify-center gap-2">
-                    {q.scale === '5point' && (
-                      <>
-                        {[1, 2, 3, 4, 5].map(val => (
-                          <button
-                            key={val}
-                            onClick={() => handleAnswer(q.question_id, val)}
-                            className={`w-12 h-12 rounded-full border-2 font-medium transition-all ${
-                              answers[q.question_id] === val
-                                ? 'bg-blue-600 border-blue-600 text-white'
-                                : 'bg-white border-gray-300 text-gray-700 hover:border-blue-400'
-                            }`}
-                          >
-                            {val}
-                          </button>
-                        ))}
-                      </>
-                    )}
-                  </div>
-
                   {q.scale === '5point' && (
-                    <div className="flex justify-between text-xs text-gray-400 mt-2 px-4">
-                      <span>全くそう思わない</span>
-                      <span>非常にそう思う</span>
+                    <div className="flex justify-center gap-1 sm:gap-3">
+                      {[
+                        { val: 1, label: '全く\n思わない', selected: 'bg-red-100 border-red-500 text-red-700', num: 'text-red-600' },
+                        { val: 2, label: 'あまり\n思わない', selected: 'bg-orange-100 border-orange-500 text-orange-700', num: 'text-orange-600' },
+                        { val: 3, label: 'どちらとも\nいえない', selected: 'bg-gray-200 border-gray-500 text-gray-700', num: 'text-gray-600' },
+                        { val: 4, label: 'まあ\nそう思う', selected: 'bg-sky-100 border-sky-500 text-sky-700', num: 'text-sky-600' },
+                        { val: 5, label: '強く\nそう思う', selected: 'bg-blue-100 border-blue-500 text-blue-700', num: 'text-blue-600' },
+                      ].map(({ val, label, selected, num }) => (
+                        <button
+                          key={val}
+                          onClick={() => handleAnswer(q.question_id, val)}
+                          className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all min-w-[60px] sm:min-w-[72px] ${
+                            answers[q.question_id] === val
+                              ? selected
+                              : 'bg-white border-gray-200 text-gray-500 hover:border-gray-400'
+                          }`}
+                        >
+                          <span className={`text-xl font-bold ${
+                            answers[q.question_id] === val ? num : 'text-gray-700'
+                          }`}>
+                            {val}
+                          </span>
+                          <span className="text-[10px] leading-tight text-center whitespace-pre-line mt-1">
+                            {label}
+                          </span>
+                        </button>
+                      ))}
                     </div>
                   )}
                 </div>
