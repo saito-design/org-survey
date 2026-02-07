@@ -233,3 +233,50 @@ export async function ensureFolder(
   });
   return res.data.id!;
 }
+
+/**
+ * Moves a file/folder to a new parent.
+ */
+export async function moveFile(fileId: string, newParentId: string) {
+  try {
+    // 1. Get current parents
+    const file = await drive.files.get({
+      fileId: fileId,
+      fields: "parents",
+      supportsAllDrives: true,
+    });
+    const previousParents = (file.data.parents || []).join(",");
+
+    // 2. Move
+    const res = await drive.files.update({
+      fileId: fileId,
+      addParents: newParentId,
+      removeParents: previousParents,
+      fields: "id, parents",
+      supportsAllDrives: true,
+    });
+    return res.data;
+  } catch (error) {
+    console.error(`Error moving file ${fileId}:`, error);
+    throw error;
+  }
+}
+
+/**
+ * Deletes a file/folder (moves to trash).
+ */
+export async function deleteFile(fileId: string) {
+  try {
+    const res = await drive.files.update({
+      fileId: fileId,
+      requestBody: {
+        trashed: true,
+      },
+      supportsAllDrives: true,
+    });
+    return res.data;
+  } catch (error) {
+    console.error(`Error deleting file ${fileId}:`, error);
+    throw error;
+  }
+}

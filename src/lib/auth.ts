@@ -12,6 +12,7 @@ export interface SessionData {
   name?: string;
   anonymous: boolean;
   isLoggedIn: boolean;
+  is_admin: boolean;  // 管理者フラグ
 }
 
 export const sessionOptions: SessionOptions = {
@@ -35,11 +36,12 @@ export function hashPassword(password: string): string {
 
 export async function verifyCredentials(emp_no: string, passwordPlain: string): Promise<Respondent | null> {
   // 開発用: owner/owner1/owner2/owner3 でログイン可能
-  const devAccounts: Record<string, { role: 'MANAGER' | 'STAFF' | 'PA'; name: string }> = {
-    'owner': { role: 'MANAGER', name: '開発用（店長）' },
-    'owner1': { role: 'MANAGER', name: '開発用（店長）' },
-    'owner2': { role: 'STAFF', name: '開発用（社員）' },
-    'owner3': { role: 'PA', name: '開発用（PA）' },
+  // owner, owner1 は管理者権限あり
+  const devAccounts: Record<string, { role: 'MANAGER' | 'STAFF' | 'PA'; name: string; is_admin: boolean }> = {
+    'owner': { role: 'MANAGER', name: '開発用（店長・管理者）', is_admin: true },
+    'owner1': { role: 'MANAGER', name: '開発用（店長・管理者）', is_admin: true },
+    'owner2': { role: 'STAFF', name: '開発用（社員）', is_admin: false },
+    'owner3': { role: 'PA', name: '開発用（PA）', is_admin: false },
   };
 
   if (emp_no in devAccounts && passwordPlain === emp_no) {
@@ -52,6 +54,7 @@ export async function verifyCredentials(emp_no: string, passwordPlain: string): 
       name: account.name,
       active: true,
       password_hash: hashPassword(emp_no),
+      is_admin: account.is_admin,
     };
   }
 

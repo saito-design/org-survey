@@ -12,6 +12,7 @@ export interface Respondent {
   age_band?: string;
   anonymous?: boolean;
   active: boolean;
+  is_admin?: boolean;  // 管理者フラグ（未指定はfalse）
 }
 
 // 組織単位
@@ -134,4 +135,19 @@ export interface ReportMeta {
   org_version: string;
   generated_at: string;
   n_valid: number;
+}
+
+// Manifest (1人1JSON用インデックス)
+export interface ManifestEntry {
+  respondent_id: string;
+  file_id: string;
+  survey_id: string;
+  role: 'MANAGER' | 'STAFF' | 'PA';
+  store_code: string;
+  updated_at: string;
+}
+
+export interface ManifestData {
+  entries: ManifestEntry[];
+  updated_at: string;
 }

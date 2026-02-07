@@ -30,8 +30,12 @@ export default function LoginPage() {
         return;
       }
 
-      // ログイン成功 → 回答ページへ
-      router.push('/survey');
+      // ログイン成功 → 管理者は選択画面、それ以外は回答ページへ
+      if (data.is_admin) {
+        router.push('/select');
+      } else {
+        router.push('/survey');
+      }
     } catch {
       setError('通信エラーが発生しました');
     } finally {

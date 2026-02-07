@@ -30,10 +30,12 @@ export async function POST(req: NextRequest) {
     session.name = respondent.name;
     session.anonymous = anonymous || respondent.anonymous || false;
     session.isLoggedIn = true;
+    session.is_admin = respondent.is_admin ?? false;
     await session.save();
 
     return NextResponse.json({
       success: true,
+      is_admin: respondent.is_admin ?? false,
       respondent: {
         respondent_id: respondent.respondent_id,
         role: respondent.role,

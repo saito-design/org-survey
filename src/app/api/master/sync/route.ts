@@ -40,7 +40,9 @@ export async function POST() {
     }
 
     // 既存フォルダに直接保存（サービスアカウントは新規フォルダ作成不可）
-    const masterFolderId = rootId;
+    // フォルダ構成対応: setup フォルダを取得して保存先とする
+    const setupFolderId = await ensureFolder('setup', rootId);
+    const masterFolderId = setupFolderId;
     const results: string[] = [];
 
     // ソースフォルダのファイル一覧を取得
