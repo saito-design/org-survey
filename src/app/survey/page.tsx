@@ -177,10 +177,10 @@ export default function SurveyPage() {
             <div className="space-y-4">
               {factor.questions.map((q, idx) => (
                 <div key={q.question_id} className="bg-white p-4 rounded-lg shadow-sm">
-                  <p className="text-gray-800 mb-3">
-                    <span className="text-gray-400 mr-2">Q{q.order}.</span>
-                    {q.text}
-                  </p>
+                  <div className="flex mb-3">
+                    <span className="text-gray-400 mr-2 shrink-0">Q{q.order}.</span>
+                    <span className="text-gray-800">{q.text}</span>
+                  </div>
 
                   {q.scale === '5point' && (
                     <div className="flex justify-center gap-1 sm:gap-3">
