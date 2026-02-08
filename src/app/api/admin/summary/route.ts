@@ -159,22 +159,40 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'No data for specified period', asOf }, { status: 404 });
     }
 
-    // 全体平均の計算（今回は manifest にある全期間を簡易的に結合して集計）
+    // 全体平均の計算（全期間を結合して集計）
+    // ※ allSurveyIds が空の場合は current のデータのみで計算
     const fetchAllAndAggregate = async (): Promise<PeriodData | undefined> => {
-        const allResponsesPromises = allSurveyIds.map(id => loadResponses(recordingFolderId, id));
-        const results = await Promise.all(allResponsesPromises);
-        const combined = results.flat().filter(res => filteredRespondentIds.has(res.respondent_id));
-        if (combined.length === 0) return undefined;
-        
-        const summary = generateSurveySummary('overall', combined, filteredRespondents, questions, elements, factors);
-        
-        // 全体平均のセグメント別も同様に計算
-        const storeNameMap = new Map<string, string>();
-        orgUnits.forEach(ou => storeNameMap.set(ou.store_code, ou.store_name));
-        const segmentScoresMap = computeSegmentScores(combined, filteredRespondents, questions, elements, factors, segmentBy, (key) => segmentBy === 'store_code' ? storeNameMap.get(key) || key : key);
-        const segmentScores = segmentScoresMap;
+        try {
+            // サーベイIDがない場合は current のデータを全体平均として使用
+            const idsToLoad = allSurveyIds.length > 0 ? allSurveyIds : [asOf];
 
-        return { summary, segmentScores };
+            const allResponsesPromises = idsToLoad.map(id =>
+                loadResponses(recordingFolderId, id).catch(err => {
+                    console.warn(`Failed to load responses for ${id}:`, err);
+                    return [];
+                })
+            );
+            const results = await Promise.all(allResponsesPromises);
+            const combined = results.flat().filter(res => filteredRespondentIds.has(res.respondent_id));
+
+            if (combined.length === 0) {
+                console.warn('overallAvg: No responses after filtering');
+                return undefined;
+            }
+
+            const summary = generateSurveySummary('overall', combined, filteredRespondents, questions, elements, factors);
+
+            // 全体平均のセグメント別も同様に計算
+            const storeNameMap = new Map<string, string>();
+            orgUnits.forEach(ou => storeNameMap.set(ou.store_code, ou.store_name));
+            const segmentScoresMap = computeSegmentScores(combined, filteredRespondents, questions, elements, factors, segmentBy, (key) => segmentBy === 'store_code' ? storeNameMap.get(key) || key : key);
+            const segmentScores = segmentScoresMap;
+
+            return { summary, segmentScores };
+        } catch (err) {
+            console.error('Failed to compute overallAvg:', err);
+            return undefined;
+        }
     };
     const overallAvg = await fetchAllAndAggregate();
 

@@ -34,15 +34,37 @@ export async function loadManifest(rootId: string, surveyId: string): Promise<Ma
 
 /**
  * 利用可能なサーベイID（フォルダ名）の一覧を取得する
+ * indexesフォルダとresponsesフォルダの両方を確認して統合
  */
 export async function listSurveyIds(rootId: string): Promise<string[]> {
-  try {
-    const indexesFolder = await findFileByName(PATHS.INDEXES, rootId);
-    if (!indexesFolder) return [];
+  const surveyIdSet = new Set<string>();
+  const surveyIdPattern = /^\d{4}-\d{2}$/;
 
-    const files = await listFilesInFolder(indexesFolder.id!, `mimeType='application/vnd.google-apps.folder'`);
-    // フォルダ名がサーベイID (YYYY-MM形式) と想定
-    return files.map(f => f.name!).filter(n => /^\d{4}-\d{2}$/.test(n)).sort().reverse();
+  try {
+    // 1) indexesフォルダからサーベイIDを取得
+    const indexesFolder = await findFileByName(PATHS.INDEXES, rootId);
+    if (indexesFolder?.id) {
+      const indexFiles = await listFilesInFolder(indexesFolder.id, `mimeType='application/vnd.google-apps.folder'`);
+      for (const f of indexFiles) {
+        if (f.name && surveyIdPattern.test(f.name)) {
+          surveyIdSet.add(f.name);
+        }
+      }
+    }
+
+    // 2) responsesフォルダからもサーベイIDを取得（フォールバック＆補完）
+    const responsesFolder = await findFileByName(PATHS.RESPONSES, rootId);
+    if (responsesFolder?.id) {
+      const respFiles = await listFilesInFolder(responsesFolder.id, `mimeType='application/vnd.google-apps.folder'`);
+      for (const f of respFiles) {
+        if (f.name && surveyIdPattern.test(f.name)) {
+          surveyIdSet.add(f.name);
+        }
+      }
+    }
+
+    // 降順ソート（新しい順）
+    return Array.from(surveyIdSet).sort().reverse();
   } catch (error) {
     console.error('Error listing survey IDs:', error);
     return [];

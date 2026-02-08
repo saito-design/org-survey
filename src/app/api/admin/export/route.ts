@@ -24,10 +24,6 @@ interface QuestionMapping {
 // 会社名（環境変数またはデフォルト）
 const COMPANY_NAME = process.env.COMPANY_NAME || '株式会社サンプル';
 
-// Drive フォルダID
-const EXPORT_FOLDER_ID = '1vW76cFGsqYv6RwpOw91wwpRm2pKLljMO';
-const ARCHIVE_FOLDER_ID = '1CsDMByFlilNJCSj6HOR9kyE0qo3bFy-h';
-
 /**
  * GET /api/admin/export?type=markdown|csv&survey_id=2026-02
  *
@@ -86,15 +82,23 @@ export async function GET(req: NextRequest) {
       const bom = Buffer.from([0xEF, 0xBB, 0xBF]);
       const content = Buffer.concat([bom, Buffer.from(csv)]);
 
-      // Driveに保存（2箇所）
+      // Driveに保存（2箇所：顧客共有 + アーカイブ）
       try {
-        // 1. エクスポートフォルダに保存
-        await saveCsvToDrive(csv, fileName, EXPORT_FOLDER_ID, surveyId);
+        const exportFolderId = process.env.APP_EXPORT_FOLDER_ID;
 
-        // 2. アーカイブフォルダにも保存
-        await saveCsvToDrive(csv, fileName, ARCHIVE_FOLDER_ID, surveyId);
+        // 1. 顧客共有フォルダに保存（環境変数で設定）
+        if (exportFolderId) {
+          await saveCsvToDrive(csv, fileName, exportFolderId, surveyId);
+          console.log(`CSV saved to export folder: ${fileName}`);
+        } else {
+          console.warn('APP_EXPORT_FOLDER_ID not set, skipping export folder save');
+        }
 
-        console.log(`CSV saved to Drive: ${fileName}`);
+        // 2. recording配下にもアーカイブ保存
+        if (recordingFolderId && recordingFolderId !== rootId) {
+          await saveCsvToDrive(csv, fileName, recordingFolderId, surveyId);
+          console.log(`CSV archived to recording folder: ${fileName}`);
+        }
       } catch (driveError) {
         console.error('Failed to save CSV to Drive:', driveError);
         // Driveへの保存に失敗してもダウンロードは続行
