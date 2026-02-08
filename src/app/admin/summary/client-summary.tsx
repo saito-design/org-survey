@@ -153,11 +153,8 @@ export default function ClientSummary() {
       <header className="sticky top-0 z-20 bg-white shadow-sm border-b border-gray-200 px-6 py-4">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
           <div>
-            <h1 className="text-xl font-bold text-gray-800">{normalizeLabel(current.summary.surveyId)} 組織診断サマリー</h1>
-            <div className="text-[11px] text-gray-500 mt-1 flex gap-3 flex-wrap">
-              <span>有効回答: <strong className="text-gray-900">{current.summary.n}</strong>名</span>
-              <span>回答率: <strong className="text-gray-900">{(current.summary.responseRate.byRespondent.rate * 100).toFixed(1)}</strong>%</span>
-            </div>
+            <h1 className="text-2xl font-black text-gray-900 tracking-tight">{normalizeLabel(current.summary.surveyId)} 組織診断サマリー</h1>
+            <p className="text-sm text-gray-500 mt-1 font-medium">組織の現状を可視化し、改善のアクションを支援します</p>
           </div>
           {data.is_owner && (
             <div className="flex gap-2 w-full md:w-auto">
@@ -168,11 +165,11 @@ export default function ClientSummary() {
         </div>
 
         {/* フィルタスライサー */}
-        <div className="flex flex-wrap bg-gray-100 p-2 rounded gap-2 text-xs">
-          <select value={params.hq} onChange={e => updateParams({ hq: e.target.value, dept: 'all', area: 'all', office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1"><option value="all">本部: 全て</option>{hqs.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
-          <select value={params.dept} onChange={e => updateParams({ dept: e.target.value, area: 'all', office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1"><option value="all">部: 全て</option>{depts.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
-          <select value={params.area} onChange={e => updateParams({ area: e.target.value, office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1"><option value="all">エリア: 全て</option>{areas.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
-          <select value={params.office} onChange={e => updateParams({ office: e.target.value })} className="bg-white border-gray-300 rounded px-2 py-1"><option value="all">事業所: 全て</option>{offices.map(ou => <option key={ou.store_code} value={ou.store_code}>{ou.store_name}</option>)}</select>
+        <div className="flex flex-wrap bg-gray-100 p-2 rounded-lg gap-3 text-sm">
+          <select value={params.hq} onChange={e => updateParams({ hq: e.target.value, dept: 'all', area: 'all', office: 'all' })} className="bg-white border-gray-300 rounded-md px-3 py-1.5 font-bold shadow-sm"><option value="all">本部: 全て</option>{hqs.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
+          <select value={params.dept} onChange={e => updateParams({ dept: e.target.value, area: 'all', office: 'all' })} className="bg-white border-gray-300 rounded-md px-3 py-1.5 font-bold shadow-sm"><option value="all">部: 全て</option>{depts.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
+          <select value={params.area} onChange={e => updateParams({ area: e.target.value, office: 'all' })} className="bg-white border-gray-300 rounded-md px-3 py-1.5 font-bold shadow-sm"><option value="all">エリア: 全て</option>{areas.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
+          <select value={params.office} onChange={e => updateParams({ office: e.target.value })} className="bg-white border-gray-300 rounded-md px-3 py-1.5 font-bold shadow-sm"><option value="all">事業所: 全て</option>{offices.map(ou => <option key={ou.store_code} value={ou.store_code}>{ou.store_name}</option>)}</select>
         </div>
       </header>
 
@@ -180,18 +177,26 @@ export default function ClientSummary() {
         {/* KPI・信号表示 */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-stretch">
-            <div className="text-center md:border-r md:pr-10 border-gray-200 min-w-[200px]">
-              <h3 className="text-gray-500 text-xs font-bold mb-3">総合エンゲージメント</h3>
-              <div className="flex items-baseline gap-1 justify-center">
-                <span className="text-5xl font-black text-gray-900 leading-none">{current.summary.overallScore?.toFixed(2) ?? '-'}</span>
-                <span className="text-gray-300 text-sm font-bold">/ 5.0</span>
+            <div className="text-center md:border-r md:pr-10 border-gray-200 min-w-[240px] flex flex-col justify-center">
+              <div className="mb-6 p-4 bg-blue-50/50 rounded-2xl border border-blue-100 inline-block mx-auto">
+                <div className="text-xs font-black text-blue-600 uppercase tracking-widest mb-2 text-center">Response Data</div>
+                <div className="flex gap-6 justify-center">
+                  <div className="text-center"><div className="text-xs text-gray-500 mb-0.5">有効回答</div><div className="text-xl font-black text-gray-900 leading-none">{current.summary.n}<small className="text-[10px] ml-0.5 font-bold text-gray-400">名</small></div></div>
+                  <div className="text-center"><div className="text-xs text-gray-500 mb-0.5">回答率</div><div className="text-xl font-black text-gray-900 leading-none">{(current.summary.responseRate.byRespondent.rate * 100).toFixed(1)}<small className="text-[10px] ml-0.5 font-bold text-gray-400">%</small></div></div>
+                </div>
               </div>
-              <div className="mt-4"><SignalBadge score={current.summary.overallScore} /></div>
+
+              <h3 className="text-gray-400 text-xs font-black tracking-widest mb-3 uppercase">Total Engagement</h3>
+              <div className="flex items-baseline gap-1 justify-center">
+                <span className="text-6xl font-black text-gray-900 leading-none">{current.summary.overallScore?.toFixed(2) ?? '-'}</span>
+                <span className="text-gray-300 text-lg font-bold">/ 5.0</span>
+              </div>
+              <div className="mt-4 flex justify-center"><SignalBadge score={current.summary.overallScore} /></div>
               {/* Δ比較 */}
-              <div className="mt-4 p-2 bg-gray-50 rounded-lg flex flex-col items-center">
-                <DeltaDisplay current={current.summary.overallScore} target={prev1?.summary.overallScore} label="vs 前回" />
-                <DeltaDisplay current={current.summary.overallScore} target={prev2?.summary.overallScore} label="vs 前々回" />
-                <DeltaDisplay current={current.summary.overallScore} target={overallAvg?.summary.overallScore} label="vs 全体平均" />
+              <div className="mt-6 p-3 bg-gray-50/80 rounded-2xl border border-gray-100">
+                <DeltaDisplay current={current.summary.overallScore} target={prev1?.summary.overallScore} label="前回比" />
+                <DeltaDisplay current={current.summary.overallScore} target={prev2?.summary.overallScore} label="前々回比" />
+                <DeltaDisplay current={current.summary.overallScore} target={overallAvg?.summary.overallScore} label="全体平均比" />
               </div>
             </div>
 
@@ -204,13 +209,15 @@ export default function ClientSummary() {
                   const oa = overallAvg?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
                   
                   return (
-                    <div key={fs.factor_id} className={`p-4 rounded-xl border transition-all ${getSignalBgClass(signal)}`}>
-                      <div className="text-xs font-bold mb-1 opacity-70 truncate">{normalizeLabel(fs.factor_name)}</div>
-                      <div className="text-2xl font-black">{fs.mean?.toFixed(2) ?? '-'}</div>
-                      <div className="mt-1"><SignalBadge score={fs.mean} /></div>
-                      <div className="mt-3 pt-3 border-t border-black/5">
-                        <DeltaDisplay current={fs.mean} target={p1} label="前回" />
-                        <DeltaDisplay current={fs.mean} target={oa} label="平均" />
+                    <div key={fs.factor_id} className={`p-5 rounded-2xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between`}>
+                      <div>
+                        <div className="text-xs font-black mb-1 opacity-60 uppercase tracking-wider truncate">{normalizeLabel(fs.factor_name)}</div>
+                        <div className="text-3xl font-black leading-tight">{fs.mean?.toFixed(2) ?? '-'}</div>
+                        <div className="mt-1"><SignalBadge score={fs.mean} /></div>
+                      </div>
+                      <div className="mt-4 pt-4 border-t border-black/5 space-y-1">
+                        <DeltaDisplay current={fs.mean} target={p1} label="前回比較" />
+                        <DeltaDisplay current={fs.mean} target={oa} label="前回平均" />
                       </div>
                     </div>
                   );
@@ -223,29 +230,29 @@ export default function ClientSummary() {
         {/* 強み・課題 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-            <h3 className="text-xs font-bold text-blue-600 mb-4 tracking-wider">▲ 組織の強み (Top 3)</h3>
-            <div className="space-y-3">
+            <h3 className="text-sm font-black text-blue-600 mb-5 tracking-widest uppercase">▲ Strengths (Top 3)</h3>
+            <div className="space-y-4">
               {current.summary.strengths.map((el, i: number) => (
                 <div key={el.element_id} className="flex justify-between items-center group">
-                  <div className="flex items-center gap-3 overflow-hidden">
-                    <span className="text-blue-200 text-sm font-black italic">0{i + 1}</span>
-                    <span className="text-sm text-gray-700 font-bold truncate leading-tight">{normalizeLabel(el.element_name)}</span>
+                  <div className="flex items-center gap-4 overflow-hidden">
+                    <span className="text-blue-200 text-lg font-black italic">0{i + 1}</span>
+                    <span className="text-base text-gray-800 font-black truncate leading-tight">{normalizeLabel(el.element_name)}</span>
                   </div>
-                  <span className="text-sm font-black text-blue-700 bg-blue-50 px-2 py-0.5 rounded leading-none">{el.mean.toFixed(2)}</span>
+                  <span className="text-base font-black text-blue-800 bg-blue-50 px-3 py-1 rounded-lg leading-none shadow-sm">{el.mean.toFixed(2)}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-            <h3 className="text-xs font-bold text-red-600 mb-4 tracking-wider">▼ 組織の課題 (Bottom 3)</h3>
-            <div className="space-y-3">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 className="text-sm font-black text-red-600 mb-5 tracking-widest uppercase">▼ Weaknesses (Bottom 3)</h3>
+            <div className="space-y-4">
               {current.summary.weaknesses.map((el, i: number) => (
                 <div key={el.element_id} className="flex justify-between items-center group">
-                  <div className="flex items-center gap-3 overflow-hidden">
-                    <span className="text-red-200 text-sm font-black italic">0{i + 1}</span>
-                    <span className="text-sm text-gray-700 font-bold truncate leading-tight">{normalizeLabel(el.element_name)}</span>
+                  <div className="flex items-center gap-4 overflow-hidden">
+                    <span className="text-red-200 text-lg font-black italic">0{i + 1}</span>
+                    <span className="text-base text-gray-800 font-black truncate leading-tight">{normalizeLabel(el.element_name)}</span>
                   </div>
-                  <span className="text-sm font-black text-red-700 bg-red-50 px-2 py-0.5 rounded leading-none">{el.mean.toFixed(2)}</span>
+                  <span className="text-base font-black text-red-800 bg-red-50 px-3 py-1 rounded-lg leading-none shadow-sm">{el.mean.toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -281,7 +288,7 @@ export default function ClientSummary() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-[11px] text-left border-collapse">
+            <table className="w-full text-xs text-left border-collapse">
               <thead>
                 <tr className="bg-gray-50/80">
                   <th className="px-4 py-3 sticky left-0 z-10 bg-gray-50 border-r border-gray-200 min-w-[150px] font-bold text-gray-400 uppercase tracking-tighter">Segment</th>
