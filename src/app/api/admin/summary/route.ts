@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { findFileByName, readJsonFile, listFilesInFolder } from '@/lib/drive';
 import {
-  Response,
   Respondent,
   Question,
   Element,
@@ -12,17 +11,16 @@ import {
   OrgUnitsMaster,
   ManifestEntry,
   ManifestData,
+  SurveySummary,
+  Response as SurveyResponse,
+  SegmentScore,
 } from '@/lib/types';
 import {
   generateSurveySummary,
   computeSegmentScores,
-  SurveySummary,
-  SegmentScore,
 } from '@/lib/aggregation';
-import { loadManifest } from '@/lib/manifest';
+import { loadManifest, listSurveyIds } from '@/lib/manifest';
 import { PATHS } from '@/lib/paths';
-import { promises as fs } from 'fs';
-import path from 'path';
 
 import {
   loadQuestionsLocal,
@@ -31,11 +29,18 @@ import {
   loadOrgUnits,
 } from '@/lib/data-fetching';
 
-export interface SummaryResponse {
+export interface PeriodData {
   summary: SurveySummary;
   segmentScores?: SegmentScore[];
+}
+
+export interface SummaryResponse {
+  current: PeriodData;
+  prev1?: PeriodData;
+  prev2?: PeriodData;
+  overallAvg?: PeriodData;
   orgUnits?: OrgUnit[];
-  is_owner?: boolean;  // オーナー権限（エクスポート可）
+  is_owner?: boolean;
 }
 
 /**
@@ -56,84 +61,131 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
     }
 
-    const { searchParams } = new URL(req.url);
-    const surveyId = searchParams.get('survey_id') || getCurrentSurveyId();
-    const segmentBy = searchParams.get('segment') || undefined;
+    const { searchParams } = req.nextUrl;
+    const asOf = searchParams.get('as_of') || getCurrentSurveyId();
+    const segmentBy = (searchParams.get('segment') || 'store_code') as keyof Respondent;
+    
+    // 組織フィルタ
+    const filterHq = searchParams.get('hq') || 'all';
+    const filterDept = searchParams.get('dept') || 'all';
+    const filterArea = searchParams.get('area') || 'all';
+    const filterOffice = searchParams.get('office') || 'all';
 
     const rootId = process.env.APP_DATA_ROOT_FOLDER_ID;
     if (!rootId) {
       return NextResponse.json({ error: 'APP_DATA_ROOT_FOLDER_ID not configured' }, { status: 500 });
     }
 
-    // フォルダ構成対応
-    // 1. マスタデータ (setup)
+    // 利用可能なサーベイIDを取得し、比較対象を特定
+    const allSurveyIds = await listSurveyIds(rootId);
+    const currentIdx = allSurveyIds.indexOf(asOf);
+    const prev1Id = currentIdx !== -1 && allSurveyIds[currentIdx + 1] ? allSurveyIds[currentIdx + 1] : undefined;
+    const prev2Id = currentIdx !== -1 && allSurveyIds[currentIdx + 2] ? allSurveyIds[currentIdx + 2] : undefined;
+
+    // 共通マスタデータ読込
     const setupFolder = await findFileByName('setup', rootId);
-    const setupFolderId = setupFolder?.id || rootId; // fallback to root if setup not found (compatibility)
-
-    // 2. 記録データ (recording)
+    const setupFolderId = setupFolder?.id || rootId;
     const recordingFolder = await findFileByName('recording', rootId);
-    const recordingFolderId = recordingFolder?.id || rootId; // fallback to root
+    const recordingFolderId = recordingFolder?.id || rootId;
 
-    // データ読み込み（並列実行）
-    const [questionsData, respondents, responses, orgUnits] = await Promise.all([
+    const [questionsData, allRespondents, orgUnits] = await Promise.all([
       loadQuestionsLocal(),
       loadRespondents(setupFolderId),
-      loadResponses(recordingFolderId, surveyId),
       loadOrgUnits(setupFolderId),
     ]);
 
     const { questions, elements, factors } = questionsData;
 
-    // 回答がない場合
-    if (responses.length === 0) {
-      return NextResponse.json({
-        error: 'No responses found',
-        surveyId,
-      }, { status: 404 });
-    }
+    // 事業所コード -> 事業所情報のマップ（フィルタ用）
+    const orgUnitMap = new Map<string, OrgUnit>();
+    orgUnits.forEach(ou => orgUnitMap.set(ou.store_code, ou));
 
-    // サマリー生成
-    const summary = generateSurveySummary(
-      surveyId,
-      responses,
-      respondents,
-      questions,
-      elements,
-      factors
-    );
+    // 対象者フィルタリング関数
+    const filterRespondent = (r: Respondent) => {
+      if (!filterHq && !filterDept && !filterArea && !filterOffice) return true;
+      const ou = orgUnitMap.get(r.store_code);
+      if (!ou) return false;
 
-    const result: SummaryResponse = {
-      summary,
-      is_owner: session.is_owner ?? false,
+      if (filterHq !== 'all' && ou.hq !== filterHq) return false;
+      if (filterDept !== 'all' && ou.dept !== filterDept) return false;
+      if (filterArea !== 'all' && ou.area !== filterArea) return false;
+      if (filterOffice !== 'all' && ou.store_code !== filterOffice) return false;
+      return true;
     };
 
-    // セグメント別集計（オプション）
-    if (segmentBy === 'store_code') {
-      // store_code -> store_name のマップを作成
-      const storeNameMap = new Map<string, string>();
-      orgUnits.forEach(ou => {
-        storeNameMap.set(ou.store_code, ou.store_name);
-      });
+    // フィルタ適用後の対象者リスト
+    const filteredRespondents = allRespondents.filter(filterRespondent);
+    const filteredRespondentIds = new Set(filteredRespondents.map(r => r.respondent_id));
 
-      const segmentScores = computeSegmentScores(
-        responses,
-        respondents,
+    // 指定期間のデータを集計するヘルパー
+    const getPeriodData = async (id: string | undefined): Promise<PeriodData | undefined> => {
+      if (!id) return undefined;
+      const allResponses = await loadResponses(recordingFolderId, id);
+      // フィルタ適用
+      const filteredResponses = allResponses.filter(res => filteredRespondentIds.has(res.respondent_id));
+      if (filteredResponses.length === 0) return undefined;
+
+      const summary = generateSurveySummary(id, filteredResponses, filteredRespondents, questions, elements, factors);
+      
+      const storeNameMap = new Map<string, string>();
+      orgUnits.forEach(ou => storeNameMap.set(ou.store_code, ou.store_name));
+
+      const segmentScoresMap = computeSegmentScores(
+        filteredResponses,
+        filteredRespondents,
         questions,
         elements,
         factors,
-        'store_code',
-        (key) => storeNameMap.get(key) || key
+        segmentBy,
+        (key) => {
+            if (segmentBy === 'store_code') return storeNameMap.get(key) || key;
+            return key;
+        }
       );
 
-      // Map を plain object に変換（JSON化のため）
-      // ※ クライアント側では Map ではなく Object として受け取る
-      result.segmentScores = segmentScores.map(s => ({
-        ...s,
-        elementScores: Object.fromEntries(s.elementScores) as any,
-        factorScores: Object.fromEntries(s.factorScores) as any,
-      }));
-      result.orgUnits = orgUnits;
+      const segmentScores = segmentScoresMap;
+
+      return { summary, segmentScores };
+    };
+
+    // 並列で集計実行
+    const [current, prev1, prev2] = await Promise.all([
+      getPeriodData(asOf),
+      getPeriodData(prev1Id),
+      getPeriodData(prev2Id),
+    ]);
+
+    if (!current) {
+      return NextResponse.json({ error: 'No data for specified period', asOf }, { status: 404 });
     }
+
+    // 全体平均の計算（今回は manifest にある全期間を簡易的に結合して集計）
+    const fetchAllAndAggregate = async (): Promise<PeriodData | undefined> => {
+        const allResponsesPromises = allSurveyIds.map(id => loadResponses(recordingFolderId, id));
+        const results = await Promise.all(allResponsesPromises);
+        const combined = results.flat().filter(res => filteredRespondentIds.has(res.respondent_id));
+        if (combined.length === 0) return undefined;
+        
+        const summary = generateSurveySummary('overall', combined, filteredRespondents, questions, elements, factors);
+        
+        // 全体平均のセグメント別も同様に計算
+        const storeNameMap = new Map<string, string>();
+        orgUnits.forEach(ou => storeNameMap.set(ou.store_code, ou.store_name));
+        const segmentScoresMap = computeSegmentScores(combined, filteredRespondents, questions, elements, factors, segmentBy, (key) => segmentBy === 'store_code' ? storeNameMap.get(key) || key : key);
+        const segmentScores = segmentScoresMap;
+
+        return { summary, segmentScores };
+    };
+    const overallAvg = await fetchAllAndAggregate();
+
+    const result: SummaryResponse = {
+      current,
+      prev1,
+      prev2,
+      overallAvg,
+      orgUnits,
+      is_owner: session.is_owner ?? false,
+    };
 
     return NextResponse.json(result);
   } catch (error) {

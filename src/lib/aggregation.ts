@@ -5,6 +5,7 @@
  * - 回答率（人ベース / 設問ベース）
  */
 
+import { normalizeLabel } from './utils';
 import type {
   Question,
   Element,
@@ -14,6 +15,10 @@ import type {
   Distribution,
   ElementScore,
   FactorScore,
+  SurveySummary,
+  StrengthWeakness,
+  ResponseRate,
+  SegmentScore,
 } from './types';
 
 // ============================================================
@@ -92,7 +97,7 @@ export function computeElementScores(
     const values = elementValues.get(e.element_id) || [];
     return {
       element_id: e.element_id,
-      element_name: e.element_name,
+      element_name: normalizeLabel(e.element_name),
       mean: computeMean(values),
       distribution: computeDistribution(values),
     };
@@ -136,7 +141,7 @@ export function computeFactorScores(
 
     return {
       factor_id: f.factor_id,
-      factor_name: f.factor_name,
+      factor_name: normalizeLabel(f.factor_name),
       mean: factorMean,
       elements: factorElements,
     };
@@ -159,13 +164,6 @@ export function computeOverallScore(factorScores: FactorScore[]): number | null 
 // ============================================================
 // 強み・課題の抽出
 // ============================================================
-
-export interface StrengthWeakness {
-  element_id: string;
-  element_name: string;
-  mean: number;
-  rank: number;
-}
 
 /**
  * 強み（上位N要素）を抽出
@@ -204,21 +202,6 @@ export function getWeaknesses(
 // ============================================================
 // 回答率計算（固定仕様準拠）
 // ============================================================
-
-export interface ResponseRate {
-  // 人ベース: active対象者のうち「期待設問に1つでも回答した人」
-  byRespondent: {
-    answered: number;    // 回答者数
-    total: number;       // 対象者数
-    rate: number;        // 回答率（0-1）
-  };
-  // 設問ベース: 実回答件数 / 期待回答件数
-  byQuestion: {
-    answered: number;    // 回答済み設問数
-    total: number;       // 期待回答件数（Σ 対象者数(role) × 設問数(role)）
-    rate: number;        // 充足率（0-1）
-  };
-}
 
 /**
  * 役職ごとの設問数を計算
@@ -328,18 +311,6 @@ export function computeResponseRate(
 // サマリー生成（一括計算）
 // ============================================================
 
-export interface SurveySummary {
-  surveyId: string;
-  generatedAt: string;
-  overallScore: number | null;
-  factorScores: FactorScore[];
-  elementScores: ElementScore[];
-  strengths: StrengthWeakness[];
-  weaknesses: StrengthWeakness[];
-  responseRate: ResponseRate;
-  n: number;  // 有効回答者数
-}
-
 /**
  * サーベイ全体のサマリーを生成
  */
@@ -397,17 +368,8 @@ export function generateSurveySummary(
   };
 }
 
-// ============================================================
 // セグメント別集計（事業所×要素のヒートマップ用）
 // ============================================================
-
-export interface SegmentScore {
-  segmentKey: string;     // セグメントキー（store_code等）
-  segmentName: string;    // セグメント名（store_name等）
-  elementScores: Map<string, ElementScore>;  // element_id -> ElementScore (詳細情報保持)
-  factorScores: Map<string, FactorScore>;    // factor_id -> FactorScore (新規追加)
-  n: number;              // 回答者数
-}
 
 /**
  * セグメント別（事業所別など）のスコアを計算
@@ -456,8 +418,8 @@ export function computeSegmentScores(
     results.push({
       segmentKey: segKey,
       segmentName: segmentNameGetter ? segmentNameGetter(segKey) : segKey,
-      elementScores: elementMap,
-      factorScores: factorMap,
+      elementScores: Object.fromEntries(elementMap),
+      factorScores: Object.fromEntries(factorMap),
       n: uniqueRespondents.size,
     });
   });

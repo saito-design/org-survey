@@ -1,4 +1,4 @@
-import { findFileByName, readJsonFile, saveJsonFile, ensureFolder } from './drive';
+import { findFileByName, readJsonFile, saveJsonFile, ensureFolder, listFilesInFolder } from './drive';
 import { ManifestData, ManifestEntry, Respondent } from './types';
 import { PATHS } from './paths';
 
@@ -28,6 +28,23 @@ export async function loadManifest(rootId: string, surveyId: string): Promise<Ma
     return data.entries || [];
   } catch (error) {
     console.error('Error loading manifest:', error);
+    return [];
+  }
+}
+
+/**
+ * 利用可能なサーベイID（フォルダ名）の一覧を取得する
+ */
+export async function listSurveyIds(rootId: string): Promise<string[]> {
+  try {
+    const indexesFolder = await findFileByName(PATHS.INDEXES, rootId);
+    if (!indexesFolder) return [];
+
+    const files = await listFilesInFolder(indexesFolder.id!, `mimeType='application/vnd.google-apps.folder'`);
+    // フォルダ名がサーベイID (YYYY-MM形式) と想定
+    return files.map(f => f.name!).filter(n => /^\d{4}-\d{2}$/.test(n)).sort().reverse();
+  } catch (error) {
+    console.error('Error listing survey IDs:', error);
     return [];
   }
 }

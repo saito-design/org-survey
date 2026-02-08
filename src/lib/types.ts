@@ -152,3 +152,45 @@ export interface ManifestData {
   entries: ManifestEntry[];
   updated_at: string;
 }
+
+export interface StrengthWeakness {
+  element_id: string;
+  element_name: string;
+  mean: number;
+  rank: number;
+}
+
+export interface ResponseRate {
+  byRespondent: {
+    answered: number;
+    total: number;
+    rate: number;
+  };
+  byQuestion: {
+    answered: number;
+    total: number;
+    rate: number;
+  };
+}
+
+export interface SegmentScore {
+  segmentKey: string;
+  segmentName: string;
+  n: number;
+  factorScores: Record<string, FactorScore>;
+  elementScores: Record<string, ElementScore>;
+}
+
+export interface SurveySummary {
+  surveyId: string;
+  generatedAt: string;
+  overallScore: number | null;
+  factorScores: FactorScore[];
+  elementScores: ElementScore[];
+  summary?: any; // 一時的な互換性用
+  segmentScores?: SegmentScore[]; // 一時的な互換性用
+  strengths: StrengthWeakness[];
+  weaknesses: StrengthWeakness[];
+  responseRate: ResponseRate;
+  n: number;
+}
