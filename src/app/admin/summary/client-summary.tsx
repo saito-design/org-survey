@@ -21,14 +21,19 @@ function LoadingSpinner() {
 /**
  * ツールチップ
  */
-function Tooltip({ children, content }: { children: React.ReactNode; content: string }) {
+/**
+ * ツールチップ
+ */
+function Tooltip({ children, content }: { children: React.ReactNode; content: React.ReactNode }) {
   return (
-    <span className="relative group cursor-help">
+    <span className="relative group cursor-help inline-block">
       {children}
-      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 shadow-lg">
-        {content}
-        <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></span>
-      </span>
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-4 py-3 bg-gray-900/95 text-white text-xs rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-normal z-[100] shadow-2xl backdrop-blur-sm min-w-[200px] border border-white/10">
+        <div className="space-y-1">
+          {content}
+        </div>
+        <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900/95"></span>
+      </div>
     </span>
   );
 }
@@ -55,16 +60,19 @@ function SignalBadge({ score }: { score: number | null | undefined }) {
 /**
  * 差分（Δ）表示
  */
+/**
+ * 差分（Δ）表示
+ */
 function DeltaDisplay({ current, target, label }: { current?: number | null, target?: number | null, label: string }) {
   if (current == null || target == null) return null;
   const diff = current - target;
   const colorClass = diff > 0 ? 'text-green-600' : diff < 0 ? 'text-red-600' : 'text-gray-500';
-  const sign = diff > 0 ? '+' : '';
+  const sign = diff > 0 ? '+' : diff < 0 ? '' : '±'; // + は明示、- は数値に含まれる、0は±
   
   return (
-    <div className="text-[10px] leading-tight flex items-center gap-1 mt-0.5">
+    <div className="text-xs leading-tight flex items-center gap-1 mt-1 font-medium">
       <span className="text-gray-400">{label}:</span>
-      <span className={`font-bold ${colorClass}`}>{sign}{diff.toFixed(2)}</span>
+      <span className={`font-black ${colorClass}`}>{sign}{diff.toFixed(2)}</span>
     </div>
   );
 }
@@ -83,7 +91,7 @@ export default function ClientSummary() {
     area: searchParams.get('area') || 'all',
     office: searchParams.get('office') || 'all',
     mode: (searchParams.get('mode') || 'abs') as 'abs' | 'diff',
-    compare: (searchParams.get('compare') || 'prev1') as 'prev1' | 'prev2' | 'overall',
+    compare: (searchParams.get('compare') || 'overall') as 'prev1' | 'prev2' | 'overall',
   }), [searchParams]);
 
   const [data, setData] = useState<SummaryResponse | null>(null);
@@ -153,8 +161,8 @@ export default function ClientSummary() {
       <header className="sticky top-0 z-20 bg-white shadow-sm border-b border-gray-200 px-6 py-4">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
           <div>
-            <h1 className="text-2xl font-black text-gray-900 tracking-tight">{normalizeLabel(current.summary.surveyId)} 組織診断サマリー</h1>
-            <p className="text-sm text-gray-500 mt-1 font-medium">組織の現状を可視化し、改善のアクションを支援します</p>
+            <h1 className="text-3xl font-black text-gray-900 tracking-tight">{normalizeLabel(current.summary.surveyId)} 組織診断サマリー</h1>
+            <p className="text-base text-gray-600 mt-1 font-medium italic opacity-70">組織のコンディションを定量的に把握し、対話を促進します</p>
           </div>
           {data.is_owner && (
             <div className="flex gap-2 w-full md:w-auto">
@@ -177,23 +185,31 @@ export default function ClientSummary() {
         {/* KPI・信号表示 */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-stretch">
-            <div className="text-center md:border-r md:pr-10 border-gray-200 min-w-[240px] flex flex-col justify-center">
-              <div className="mb-6 p-4 bg-blue-50/50 rounded-2xl border border-blue-100 inline-block mx-auto">
-                <div className="text-xs font-black text-blue-600 uppercase tracking-widest mb-2 text-center">Response Data</div>
-                <div className="flex gap-6 justify-center">
-                  <div className="text-center"><div className="text-xs text-gray-500 mb-0.5">有効回答</div><div className="text-xl font-black text-gray-900 leading-none">{current.summary.n}<small className="text-[10px] ml-0.5 font-bold text-gray-400">名</small></div></div>
-                  <div className="text-center"><div className="text-xs text-gray-500 mb-0.5">回答率</div><div className="text-xl font-black text-gray-900 leading-none">{(current.summary.responseRate.byRespondent.rate * 100).toFixed(1)}<small className="text-[10px] ml-0.5 font-bold text-gray-400">%</small></div></div>
+            <div className="text-center md:border-r md:pr-10 border-gray-200 min-w-[280px] flex flex-col justify-center">
+              <div className="mb-6 p-5 bg-blue-50/50 rounded-2xl border border-blue-100 inline-block mx-auto shadow-sm">
+                <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-3 text-center opacity-80">回答の集計状況</div>
+                <div className="flex gap-8 justify-center">
+                  <div className="text-center"><div className="text-xs text-gray-500 mb-1 font-bold">有効回答</div><div className="text-2xl font-black text-gray-900 leading-none">{current.summary.n}<small className="text-xs ml-0.5 font-bold text-gray-400">名</small></div></div>
+                  <div className="text-center"><div className="text-xs text-gray-500 mb-1 font-bold">回答率</div><div className="text-2xl font-black text-gray-900 leading-none">{(current.summary.responseRate.byRespondent.rate * 100).toFixed(1)}<small className="text-xs ml-0.5 font-bold text-gray-400">%</small></div></div>
                 </div>
               </div>
 
-              <h3 className="text-gray-400 text-xs font-black tracking-widest mb-3 uppercase">Total Engagement</h3>
+              <h3 className="text-gray-400 text-[10px] font-black tracking-[0.2em] mb-3 uppercase">Total Engagement</h3>
               <div className="flex items-baseline gap-1 justify-center">
-                <span className="text-6xl font-black text-gray-900 leading-none">{current.summary.overallScore?.toFixed(2) ?? '-'}</span>
-                <span className="text-gray-300 text-lg font-bold">/ 5.0</span>
+                <Tooltip content={
+                    <>
+                        <div className="font-black border-b border-white/20 pb-1 mb-1">【総合スコア】</div>
+                        <div>算出方法: 全因子スコアの単純平均</div>
+                        <div>回答者数(N): {current.summary.n}名</div>
+                    </>
+                }>
+                    <span className="text-7xl font-black text-gray-900 leading-none hover:text-blue-600 transition-colors">{current.summary.overallScore?.toFixed(2) ?? '-'}</span>
+                </Tooltip>
+                <span className="text-gray-300 text-xl font-black">/5.0</span>
               </div>
-              <div className="mt-4 flex justify-center"><SignalBadge score={current.summary.overallScore} /></div>
+              <div className="mt-4 flex justify-center scale-110"><SignalBadge score={current.summary.overallScore} /></div>
               {/* Δ比較 */}
-              <div className="mt-6 p-3 bg-gray-50/80 rounded-2xl border border-gray-100">
+              <div className="mt-8 p-4 bg-gray-50/80 rounded-2xl border border-gray-100 shadow-inner">
                 <DeltaDisplay current={current.summary.overallScore} target={prev1?.summary.overallScore} label="前回比" />
                 <DeltaDisplay current={current.summary.overallScore} target={prev2?.summary.overallScore} label="前々回比" />
                 <DeltaDisplay current={current.summary.overallScore} target={overallAvg?.summary.overallScore} label="全体平均比" />
@@ -209,13 +225,22 @@ export default function ClientSummary() {
                   const oa = overallAvg?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
                   
                   return (
-                    <div key={fs.factor_id} className={`p-5 rounded-2xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between`}>
+                    <div key={fs.factor_id} className={`p-6 rounded-2xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
                       <div>
-                        <div className="text-xs font-black mb-1 opacity-60 uppercase tracking-wider truncate">{normalizeLabel(fs.factor_name)}</div>
-                        <div className="text-3xl font-black leading-tight">{fs.mean?.toFixed(2) ?? '-'}</div>
+                        <div className="text-[10px] font-black mb-1 opacity-60 uppercase tracking-widest truncate">{normalizeLabel(fs.factor_name)}</div>
+                        <Tooltip content={
+                            <>
+                                <div className="font-black border-b border-white/20 pb-1 mb-1">【因子別スコア】</div>
+                                <div>要因: {normalizeLabel(fs.factor_name)}</div>
+                                <div>算出方法: 配下要素平均の平均</div>
+                                <div>回答者数(N): {current.summary.n}名</div>
+                            </>
+                        }>
+                            <div className="text-4xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{fs.mean?.toFixed(2) ?? '-'}</div>
+                        </Tooltip>
                         <div className="mt-1"><SignalBadge score={fs.mean} /></div>
                       </div>
-                      <div className="mt-4 pt-4 border-t border-black/5 space-y-1">
+                      <div className="mt-5 pt-5 border-t border-black/5 space-y-1.5">
                         <DeltaDisplay current={fs.mean} target={p1} label="前回比較" />
                         <DeltaDisplay current={fs.mean} target={oa} label="前回平均" />
                       </div>
@@ -230,29 +255,53 @@ export default function ClientSummary() {
         {/* 強み・課題 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-            <h3 className="text-sm font-black text-blue-600 mb-5 tracking-widest uppercase">▲ Strengths (Top 3)</h3>
-            <div className="space-y-4">
+            <h3 className="text-base font-black text-blue-600 mb-6 tracking-widest uppercase flex items-center gap-2">
+              <span className="w-2 h-6 bg-blue-600 rounded-full"></span>
+              ▲ Strengths (Top 3)
+            </h3>
+            <div className="space-y-5">
               {current.summary.strengths.map((el, i: number) => (
                 <div key={el.element_id} className="flex justify-between items-center group">
-                  <div className="flex items-center gap-4 overflow-hidden">
-                    <span className="text-blue-200 text-lg font-black italic">0{i + 1}</span>
-                    <span className="text-base text-gray-800 font-black truncate leading-tight">{normalizeLabel(el.element_name)}</span>
+                  <div className="flex items-center gap-5 overflow-hidden">
+                    <span className="text-blue-200 text-2xl font-black italic">0{i + 1}</span>
+                    <Tooltip content={
+                        <>
+                            <div className="font-black border-b border-white/20 pb-1 mb-1">【要素別詳細】</div>
+                            <div>要素名: {normalizeLabel(el.element_name)}</div>
+                            <div>算出方法: 該当設問の有効回答平均</div>
+                            <div>回答者数(N): {current.summary.n}名</div>
+                        </>
+                    }>
+                        <span className="text-lg text-gray-800 font-black truncate leading-tight hover:text-blue-600 transition-colors">{normalizeLabel(el.element_name)}</span>
+                    </Tooltip>
                   </div>
-                  <span className="text-base font-black text-blue-800 bg-blue-50 px-3 py-1 rounded-lg leading-none shadow-sm">{el.mean.toFixed(2)}</span>
+                  <span className="text-lg font-black text-blue-800 bg-blue-50 px-4 py-1.5 rounded-xl leading-none shadow-sm min-w-[60px] text-center">{el.mean.toFixed(2)}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 className="text-sm font-black text-red-600 mb-5 tracking-widest uppercase">▼ Weaknesses (Bottom 3)</h3>
-            <div className="space-y-4">
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+            <h3 className="text-base font-black text-red-600 mb-6 tracking-widest uppercase flex items-center gap-2">
+              <span className="w-2 h-6 bg-red-600 rounded-full"></span>
+              ▼ Weaknesses (Bottom 3)
+            </h3>
+            <div className="space-y-5">
               {current.summary.weaknesses.map((el, i: number) => (
                 <div key={el.element_id} className="flex justify-between items-center group">
-                  <div className="flex items-center gap-4 overflow-hidden">
-                    <span className="text-red-200 text-lg font-black italic">0{i + 1}</span>
-                    <span className="text-base text-gray-800 font-black truncate leading-tight">{normalizeLabel(el.element_name)}</span>
+                  <div className="flex items-center gap-5 overflow-hidden">
+                    <span className="text-red-200 text-2xl font-black italic">0{i + 1}</span>
+                    <Tooltip content={
+                        <>
+                            <div className="font-black border-b border-white/20 pb-1 mb-1">【要素別詳細】</div>
+                            <div>要素名: {normalizeLabel(el.element_name)}</div>
+                            <div>算出方法: 該当設問の有効回答平均</div>
+                            <div>回答者数(N): {current.summary.n}名</div>
+                        </>
+                    }>
+                        <span className="text-lg text-gray-800 font-black truncate leading-tight hover:text-red-600 transition-colors">{normalizeLabel(el.element_name)}</span>
+                    </Tooltip>
                   </div>
-                  <span className="text-base font-black text-red-800 bg-red-50 px-3 py-1 rounded-lg leading-none shadow-sm">{el.mean.toFixed(2)}</span>
+                  <span className="text-lg font-black text-red-800 bg-red-50 px-4 py-1.5 rounded-xl leading-none shadow-sm min-w-[60px] text-center">{el.mean.toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -260,7 +309,7 @@ export default function ClientSummary() {
         </div>
 
         {/* ヒートマップ */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-visible">
           <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gray-50/50">
             <h3 className="font-black text-gray-800 flex items-center gap-2 text-sm uppercase tracking-widest">
               Segment Heatmap
@@ -287,8 +336,8 @@ export default function ClientSummary() {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs text-left border-collapse">
+          <div className="overflow-x-auto overflow-y-visible">
+            <table className="w-full text-base text-left border-collapse">
               <thead>
                 <tr className="bg-gray-50/80">
                   <th className="px-4 py-3 sticky left-0 z-10 bg-gray-50 border-r border-gray-200 min-w-[150px] font-bold text-gray-400 uppercase tracking-tighter">Segment</th>
@@ -335,8 +384,21 @@ export default function ClientSummary() {
                         }
 
                         return (
-                          <td key={f.factor_id} className={`px-2 py-3 text-center font-black border-r border-gray-50 ${cellClass}`}>
-                            {displayValue}
+                          <td key={f.factor_id} className={`px-2 py-4 text-center font-black border-r border-gray-50 ${cellClass}`}>
+                            <Tooltip content={
+                                <>
+                                    <div className="font-black border-b border-white/20 pb-1 mb-1">【セグメント別母数】</div>
+                                    <div>対象: {row.segmentName}</div>
+                                    <div>回答者数(N): {n}名</div>
+                                    {params.mode === 'diff' && (
+                                        <div className="mt-1 pt-1 border-t border-white/10 text-[10px]">
+                                            定義: Δ = 現在値 - {params.compare === 'overall' ? '全体平均' : params.compare === 'prev1' ? '前回' : '前々回'}
+                                        </div>
+                                    )}
+                                </>
+                            }>
+                                <div className="cursor-default">{displayValue}</div>
+                            </Tooltip>
                           </td>
                         );
                       })}
