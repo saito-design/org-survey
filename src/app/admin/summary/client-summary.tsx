@@ -192,17 +192,17 @@ export default function ClientSummary() {
 
       <main className="px-4 md:px-6 py-4 space-y-4 max-w-7xl mx-auto">
         {/* KPI・信号表示 */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center md:items-stretch">
-            <div className="text-center md:border-r md:pr-6 border-gray-200 min-w-[220px] flex flex-col justify-center">
-              {/* 回答状況 - コンパクト化 */}
-              <div className="mb-3 px-3 py-2 bg-blue-50/50 rounded-xl border border-blue-100 inline-flex gap-4 mx-auto items-center">
-                <div className="text-center"><div className="text-[10px] text-gray-500 font-bold">有効回答</div><div className="text-lg font-black text-gray-900 leading-none">{current.summary.n}<small className="text-[10px] ml-0.5 font-bold text-gray-400">名</small></div></div>
-                <div className="w-px h-6 bg-blue-200"></div>
-                <div className="text-center"><div className="text-[10px] text-gray-500 font-bold">回答率</div><div className="text-lg font-black text-gray-900 leading-none">{(current.summary.responseRate.byRespondent.rate * 100).toFixed(1)}<small className="text-[10px] ml-0.5 font-bold text-gray-400">%</small></div></div>
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 md:p-6">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-stretch">
+            <div className="text-center md:border-r md:pr-8 border-gray-200 min-w-[260px] flex flex-col justify-center">
+              {/* 回答状況 */}
+              <div className="mb-4 px-4 py-3 bg-blue-50/50 rounded-xl border border-blue-100 inline-flex gap-6 mx-auto items-center">
+                <div className="text-center"><div className="text-xs text-gray-500 font-bold">有効回答</div><div className="text-2xl font-black text-gray-900 leading-none">{current.summary.n}<small className="text-sm ml-0.5 font-bold text-gray-400">名</small></div></div>
+                <div className="w-px h-8 bg-blue-200"></div>
+                <div className="text-center"><div className="text-xs text-gray-500 font-bold">回答率</div><div className="text-2xl font-black text-gray-900 leading-none">{(current.summary.responseRate.byRespondent.rate * 100).toFixed(1)}<small className="text-sm ml-0.5 font-bold text-gray-400">%</small></div></div>
               </div>
 
-              <h3 className="text-gray-400 text-[9px] font-black tracking-[0.15em] mb-1 uppercase">Total Engagement</h3>
+              <h3 className="text-gray-400 text-[10px] font-black tracking-[0.15em] mb-2 uppercase">Total Engagement</h3>
               <div className="flex items-baseline gap-1 justify-center">
                 <Tooltip content={
                     <>
@@ -211,30 +211,30 @@ export default function ClientSummary() {
                         <div>回答者数(N): {current.summary.n}名</div>
                     </>
                 }>
-                    <span className="text-5xl md:text-6xl font-black text-gray-900 leading-none hover:text-blue-600 transition-colors">{current.summary.overallScore?.toFixed(2) ?? '-'}</span>
+                    <span className="text-6xl md:text-7xl font-black text-gray-900 leading-none hover:text-blue-600 transition-colors">{current.summary.overallScore?.toFixed(2) ?? '-'}</span>
                 </Tooltip>
-                <span className="text-gray-300 text-lg font-black">/5.0</span>
+                <span className="text-gray-300 text-xl font-black">/5.0</span>
               </div>
-              <div className="mt-2 flex justify-center"><SignalBadge score={current.summary.overallScore} /></div>
+              <div className="mt-3 flex justify-center"><SignalBadge score={current.summary.overallScore} /></div>
               {/* Δ比較 - 常時表示、全体平均を先頭に */}
-              <div className="mt-3 px-3 py-2 bg-gray-50/80 rounded-xl border border-gray-100">
+              <div className="mt-4 px-4 py-3 bg-gray-50/80 rounded-xl border border-gray-100">
                 <DeltaDisplay current={current.summary.overallScore} target={overallAvg?.summary.overallScore} label="Δ全体平均" />
                 <DeltaDisplay current={current.summary.overallScore} target={prev1?.summary.overallScore} label="Δ前回" />
               </div>
             </div>
 
             <div className="flex-1">
-              <h3 className="text-gray-500 text-[10px] font-bold mb-2 uppercase tracking-wider">因子別分析</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <h3 className="text-gray-500 text-xs font-bold mb-3 uppercase tracking-wider">因子別分析</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {current.summary.factorScores.map((fs) => {
                   const signal = getSignal(fs.mean);
                   const p1 = prev1?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
                   const oa = overallAvg?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
 
                   return (
-                    <div key={fs.factor_id} className={`p-4 rounded-xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
+                    <div key={fs.factor_id} className={`p-5 rounded-xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
                       <div>
-                        <div className="text-[9px] font-black mb-0.5 opacity-60 uppercase tracking-widest truncate">{normalizeLabel(fs.factor_name)}</div>
+                        <div className="text-[10px] font-black mb-1 opacity-60 uppercase tracking-widest truncate">{normalizeLabel(fs.factor_name)}</div>
                         <Tooltip content={
                             <>
                                 <div className="font-black border-b border-white/20 pb-1 mb-1">【因子別スコア】</div>
@@ -243,11 +243,11 @@ export default function ClientSummary() {
                                 <div>回答者数(N): {current.summary.n}名</div>
                             </>
                         }>
-                            <div className="text-3xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{fs.mean?.toFixed(2) ?? '-'}</div>
+                            <div className="text-4xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{fs.mean?.toFixed(2) ?? '-'}</div>
                         </Tooltip>
-                        <div className="mt-1"><SignalBadge score={fs.mean} /></div>
+                        <div className="mt-2"><SignalBadge score={fs.mean} /></div>
                       </div>
-                      <div className="mt-2 pt-2 border-t border-black/5 space-y-0">
+                      <div className="mt-3 pt-3 border-t border-black/5 space-y-0.5">
                         <DeltaDisplay current={fs.mean} target={oa} label="Δ全体平均" />
                         <DeltaDisplay current={fs.mean} target={p1} label="Δ前回" />
                       </div>
