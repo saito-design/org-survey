@@ -234,7 +234,7 @@ export default function ClientSummary() {
                   return (
                     <div key={fs.factor_id} className={`p-5 rounded-xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
                       <div>
-                        <div className="text-[10px] font-black mb-1 opacity-60 uppercase tracking-widest truncate">{normalizeLabel(fs.factor_name)}</div>
+                        <div className="text-xs md:text-sm font-black mb-1 opacity-70 tracking-wide truncate">{normalizeLabel(fs.factor_name)}</div>
                         <Tooltip content={
                             <>
                                 <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(fs.factor_name)}</div>
