@@ -297,19 +297,18 @@ export default function ClientSummary() {
                 <div key={el.element_id} className="flex justify-between items-center group">
                   <div className="flex items-center gap-3 overflow-hidden">
                     <span className="text-blue-200 text-lg font-black italic w-6">0{i + 1}</span>
-                    <Tooltip content={
-                        <>
-                            <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(el.element_name)}</div>
-                            <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
-                              = Σ回答値 / 有効回答数
-                            </div>
-                            <div className="text-gray-300">有効回答: {current.summary.n}名</div>
-                        </>
-                    }>
-                        <span className="text-sm text-gray-800 font-bold truncate leading-tight hover:text-blue-600 transition-colors">{normalizeLabel(el.element_name)}</span>
-                    </Tooltip>
+                    <span className="text-sm text-gray-800 font-bold truncate leading-tight">{normalizeLabel(el.element_name)}</span>
                   </div>
-                  <span className="text-sm font-black text-blue-800 bg-blue-50 px-3 py-1 rounded-lg leading-none shadow-sm min-w-[50px] text-center">{el.mean.toFixed(2)}</span>
+                  <Tooltip content={
+                      <>
+                          <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(el.element_name)}</div>
+                          <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
+                            = {(el.mean * current.summary.n).toLocaleString('ja-JP', { maximumFractionDigits: 0 })} / {current.summary.n}
+                          </div>
+                      </>
+                  }>
+                      <span className="text-sm font-black text-blue-800 bg-blue-50 px-3 py-1 rounded-lg leading-none shadow-sm min-w-[50px] text-center hover:bg-blue-100 transition-colors cursor-help">{el.mean.toFixed(2)}</span>
+                  </Tooltip>
                 </div>
               ))}
             </div>
@@ -324,19 +323,18 @@ export default function ClientSummary() {
                 <div key={el.element_id} className="flex justify-between items-center group">
                   <div className="flex items-center gap-3 overflow-hidden">
                     <span className="text-red-200 text-lg font-black italic w-6">0{i + 1}</span>
-                    <Tooltip content={
-                        <>
-                            <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(el.element_name)}</div>
-                            <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
-                              = Σ回答値 / 有効回答数
-                            </div>
-                            <div className="text-gray-300">有効回答: {current.summary.n}名</div>
-                        </>
-                    }>
-                        <span className="text-sm text-gray-800 font-bold truncate leading-tight hover:text-red-600 transition-colors">{normalizeLabel(el.element_name)}</span>
-                    </Tooltip>
+                    <span className="text-sm text-gray-800 font-bold truncate leading-tight">{normalizeLabel(el.element_name)}</span>
                   </div>
-                  <span className="text-sm font-black text-red-800 bg-red-50 px-3 py-1 rounded-lg leading-none shadow-sm min-w-[50px] text-center">{el.mean.toFixed(2)}</span>
+                  <Tooltip content={
+                      <>
+                          <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(el.element_name)}</div>
+                          <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
+                            = {(el.mean * current.summary.n).toLocaleString('ja-JP', { maximumFractionDigits: 0 })} / {current.summary.n}
+                          </div>
+                      </>
+                  }>
+                      <span className="text-sm font-black text-red-800 bg-red-50 px-3 py-1 rounded-lg leading-none shadow-sm min-w-[50px] text-center hover:bg-red-100 transition-colors cursor-help">{el.mean.toFixed(2)}</span>
+                  </Tooltip>
                 </div>
               ))}
             </div>
@@ -422,17 +420,16 @@ export default function ClientSummary() {
                           <td key={f.factor_id} className={`px-2 py-4 text-center font-black border-r border-gray-50 ${cellClass}`}>
                             <Tooltip content={
                                 <>
-                                    <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{row.segmentName}</div>
+                                    <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{row.segmentName} / {normalizeLabel(f.factor_name)}</div>
                                     <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
                                       {params.mode === 'diff'
                                         ? `Δ = 現在値 - ${params.compare === 'overall' ? '全社平均' : params.compare === 'prev1' ? '前回' : '前々回'}`
-                                        : '= Σ回答値 / 有効回答数'
+                                        : `= ${val != null ? (val * n).toLocaleString('ja-JP', { maximumFractionDigits: 0 }) : '-'} / ${n}`
                                       }
                                     </div>
-                                    <div className="text-gray-300">有効回答: {n}名</div>
                                 </>
                             }>
-                                <div className="cursor-default">{displayValue}</div>
+                                <div className="cursor-help">{displayValue}</div>
                             </Tooltip>
                           </td>
                         );
