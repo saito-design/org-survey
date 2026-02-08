@@ -19,20 +19,17 @@ function LoadingSpinner() {
 }
 
 /**
- * ツールチップ
- */
-/**
- * ツールチップ
+ * ツールチップ（薄め・透過）
  */
 function Tooltip({ children, content }: { children: React.ReactNode; content: React.ReactNode }) {
   return (
     <span className="relative group cursor-help inline-block">
       {children}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-4 py-3 bg-gray-900/95 text-white text-xs rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-normal z-[100] shadow-2xl backdrop-blur-sm min-w-[200px] border border-white/10">
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-4 py-3 bg-gray-700/80 text-gray-100 text-xs rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-normal z-[100] shadow-lg backdrop-blur-md min-w-[220px] border border-gray-500/30">
         <div className="space-y-1">
           {content}
         </div>
-        <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900/95"></span>
+        <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-700/80"></span>
       </div>
     </span>
   );
@@ -206,9 +203,12 @@ export default function ClientSummary() {
               <div className="flex items-baseline gap-1 justify-center">
                 <Tooltip content={
                     <>
-                        <div className="font-black border-b border-white/20 pb-1 mb-1">【総合スコア】</div>
-                        <div>算出方法: 全因子スコアの単純平均</div>
-                        <div>回答者数(N): {current.summary.n}名</div>
+                        <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">総合スコア</div>
+                        <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
+                          = Σ因子スコア / 因子数<br/>
+                          = {current.summary.factorScores.filter(f => f.mean != null).map(f => f.mean!.toFixed(2)).join(' + ')} / {current.summary.factorScores.filter(f => f.mean != null).length}
+                        </div>
+                        <div className="text-gray-300">有効回答: {current.summary.n}名</div>
                     </>
                 }>
                     <span className="text-6xl md:text-7xl font-black text-gray-900 leading-none hover:text-blue-600 transition-colors">{current.summary.overallScore?.toFixed(2) ?? '-'}</span>
@@ -237,10 +237,12 @@ export default function ClientSummary() {
                         <div className="text-[10px] font-black mb-1 opacity-60 uppercase tracking-widest truncate">{normalizeLabel(fs.factor_name)}</div>
                         <Tooltip content={
                             <>
-                                <div className="font-black border-b border-white/20 pb-1 mb-1">【因子別スコア】</div>
-                                <div>要因: {normalizeLabel(fs.factor_name)}</div>
-                                <div>算出方法: 配下要素平均の平均</div>
-                                <div>回答者数(N): {current.summary.n}名</div>
+                                <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(fs.factor_name)}</div>
+                                <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
+                                  = Σ要素スコア / 要素数<br/>
+                                  = {fs.elements.filter(e => e.mean != null).map(e => e.mean!.toFixed(2)).join(' + ')} / {fs.elements.filter(e => e.mean != null).length}
+                                </div>
+                                <div className="text-gray-300">有効回答: {current.summary.n}名</div>
                             </>
                         }>
                             <div className="text-4xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{fs.mean?.toFixed(2) ?? '-'}</div>
@@ -273,10 +275,11 @@ export default function ClientSummary() {
                     <span className="text-blue-200 text-lg font-black italic w-6">0{i + 1}</span>
                     <Tooltip content={
                         <>
-                            <div className="font-black border-b border-white/20 pb-1 mb-1">【要素別詳細】</div>
-                            <div>要素名: {normalizeLabel(el.element_name)}</div>
-                            <div>算出方法: 該当設問の有効回答平均</div>
-                            <div>回答者数(N): {current.summary.n}名</div>
+                            <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(el.element_name)}</div>
+                            <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
+                              = Σ回答値 / 有効回答数
+                            </div>
+                            <div className="text-gray-300">有効回答: {current.summary.n}名</div>
                         </>
                     }>
                         <span className="text-sm text-gray-800 font-bold truncate leading-tight hover:text-blue-600 transition-colors">{normalizeLabel(el.element_name)}</span>
@@ -299,10 +302,11 @@ export default function ClientSummary() {
                     <span className="text-red-200 text-lg font-black italic w-6">0{i + 1}</span>
                     <Tooltip content={
                         <>
-                            <div className="font-black border-b border-white/20 pb-1 mb-1">【要素別詳細】</div>
-                            <div>要素名: {normalizeLabel(el.element_name)}</div>
-                            <div>算出方法: 該当設問の有効回答平均</div>
-                            <div>回答者数(N): {current.summary.n}名</div>
+                            <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(el.element_name)}</div>
+                            <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
+                              = Σ回答値 / 有効回答数
+                            </div>
+                            <div className="text-gray-300">有効回答: {current.summary.n}名</div>
                         </>
                     }>
                         <span className="text-sm text-gray-800 font-bold truncate leading-tight hover:text-red-600 transition-colors">{normalizeLabel(el.element_name)}</span>
@@ -394,14 +398,14 @@ export default function ClientSummary() {
                           <td key={f.factor_id} className={`px-2 py-4 text-center font-black border-r border-gray-50 ${cellClass}`}>
                             <Tooltip content={
                                 <>
-                                    <div className="font-black border-b border-white/20 pb-1 mb-1">【セグメント別母数】</div>
-                                    <div>対象: {row.segmentName}</div>
-                                    <div>回答者数(N): {n}名</div>
-                                    {params.mode === 'diff' && (
-                                        <div className="mt-1 pt-1 border-t border-white/10 text-[10px]">
-                                            定義: Δ = 現在値 - {params.compare === 'overall' ? '全体平均' : params.compare === 'prev1' ? '前回' : '前々回'}
-                                        </div>
-                                    )}
+                                    <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{row.segmentName}</div>
+                                    <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
+                                      {params.mode === 'diff'
+                                        ? `Δ = 現在値 - ${params.compare === 'overall' ? '全社平均' : params.compare === 'prev1' ? '前回' : '前々回'}`
+                                        : '= Σ回答値 / 有効回答数'
+                                      }
+                                    </div>
+                                    <div className="text-gray-300">有効回答: {n}名</div>
                                 </>
                             }>
                                 <div className="cursor-default">{displayValue}</div>

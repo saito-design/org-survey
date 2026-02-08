@@ -159,11 +159,12 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'No data for specified period', asOf }, { status: 404 });
     }
 
-    // 全体平均の計算（全期間を結合して集計）
-    // ※ allSurveyIds が空の場合は current のデータのみで計算
+    // 全体平均の計算（全社全体 - フィルタ適用なし）
+    // ※ 事業部等でフィルタしても、全体平均は常に全社の値
+    const allRespondentIds = new Set(allRespondents.map(r => r.respondent_id));
+
     const fetchAllAndAggregate = async (): Promise<PeriodData | undefined> => {
         try {
-            // サーベイIDがない場合は current のデータを全体平均として使用
             const idsToLoad = allSurveyIds.length > 0 ? allSurveyIds : [asOf];
 
             const allResponsesPromises = idsToLoad.map(id =>
@@ -173,19 +174,21 @@ export async function GET(req: NextRequest) {
                 })
             );
             const results = await Promise.all(allResponsesPromises);
-            const combined = results.flat().filter(res => filteredRespondentIds.has(res.respondent_id));
+            // 全社全体なのでフィルタ適用なし（全対象者）
+            const combined = results.flat().filter(res => allRespondentIds.has(res.respondent_id));
 
             if (combined.length === 0) {
-                console.warn('overallAvg: No responses after filtering');
+                console.warn('overallAvg: No responses');
                 return undefined;
             }
 
-            const summary = generateSurveySummary('overall', combined, filteredRespondents, questions, elements, factors);
+            // 全社全体で集計（フィルタなし）
+            const summary = generateSurveySummary('overall', combined, allRespondents, questions, elements, factors);
 
-            // 全体平均のセグメント別も同様に計算
+            // 全体平均のセグメント別も全社で計算
             const storeNameMap = new Map<string, string>();
             orgUnits.forEach(ou => storeNameMap.set(ou.store_code, ou.store_name));
-            const segmentScoresMap = computeSegmentScores(combined, filteredRespondents, questions, elements, factors, segmentBy, (key) => segmentBy === 'store_code' ? storeNameMap.get(key) || key : key);
+            const segmentScoresMap = computeSegmentScores(combined, allRespondents, questions, elements, factors, segmentBy, (key) => segmentBy === 'store_code' ? storeNameMap.get(key) || key : key);
             const segmentScores = segmentScoresMap;
 
             return { summary, segmentScores };
