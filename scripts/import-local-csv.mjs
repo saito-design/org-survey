@@ -155,9 +155,10 @@ async function run() {
 
   // 5. ダミー回答の生成とアップロード & Manifest 保存
   const now = new Date().toISOString();
-  const manifestEntries = [];
+  const allResponses = [];
+  const respondentResponses = [];
 
-  console.log('Generating and uploading responses...');
+  console.log('Generating responses in memory...');
   for (const r of respondents) {
     const roleQuestions = questions.filter(q => q.roles.includes(r.role));
     // 店舗ごとに多少スコアを変える
@@ -173,22 +174,26 @@ async function run() {
       submitted_at: now,
     }));
 
-    const fileId = await saveJsonFile({ responses, updated_at: now }, `${r.respondent_id}.json`, byRespondentDir);
-    
-    manifestEntries.push({
-      respondent_id: r.respondent_id,
-      file_id: fileId,
-      survey_id: SURVEY_ID,
-      role: r.role,
-      store_code: r.store_code,
-      updated_at: now,
-    });
-    
-    if (manifestEntries.length % 50 === 0) console.log(`Processed ${manifestEntries.length} respondents...`);
+    allResponses.push(...responses);
+    respondentResponses.push({ respondent_id: r.respondent_id, responses });
   }
 
-  await saveJsonFile({ entries: manifestEntries, updated_at: now }, 'manifest.json', surveyIndexDir);
-  console.log('Import complete!');
+  // 先に一括回答ファイルを保存（これが本番での集計のベースになる）
+  console.log('Uploading consolidated responses.json...');
+  await saveJsonFile({ responses: allResponses, updated_at: now }, 'responses.json', surveyDir);
+  
+  // Manifest は空で保存（新規回答用として空けておく）
+  await saveJsonFile({ entries: [], updated_at: now }, 'manifest.json', surveyIndexDir);
+
+  console.log('Uploading individual response files (for personal view)...');
+  let count = 0;
+  for (const item of respondentResponses) {
+    await saveJsonFile({ responses: item.responses, updated_at: now }, `${item.respondent_id}.json`, byRespondentDir);
+    count++;
+    if (count % 50 === 0) console.log(`Processed ${count} individual files...`);
+  }
+  
+  console.log('Import complete! All data synchronized.');
 }
 
 run().catch(console.error);

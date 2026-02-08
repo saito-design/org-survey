@@ -95,11 +95,12 @@ export async function loadResponses(rootId: string, surveyId: string): Promise<R
 
   let fileIds: string[] = [];
   if (manifestEntries.length > 0) {
+    // マニフェストに記載があるファイルのみを読み込む
     fileIds = manifestEntries.map(e => e.file_id).filter(Boolean);
-  } else if (byRespondentFolderId) {
-    const files = await listFilesInFolder(byRespondentFolderId, `mimeType='application/json'`);
-    fileIds = files.map(f => f.id!).filter(Boolean);
   }
+  // ※ ここで byRespondentFolderId の全件リスト読込を行わないように変更。
+  // 大規模データの場合に Vercel でタイムアウトするため。
+  // 過去の個別回答は manifest に登録されるか、一括 responses.json に含まれる運用とする。
 
   const newResponsesProm = Promise.all(
     fileIds.map(async (fileId) => {
