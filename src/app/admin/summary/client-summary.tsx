@@ -237,6 +237,14 @@ export default function ClientSummary() {
                 <DeltaDisplay current={current.summary.overallScore} target={overallAvg?.summary.overallScore} label="Δ全体平均" />
                 <DeltaDisplay current={current.summary.overallScore} target={prev1?.summary.overallScore} label="Δ前回" />
               </div>
+              {/* 信号判定の凡例 */}
+              <div className="mt-3 text-[10px] text-gray-400 leading-relaxed px-2">
+                <div className="font-bold text-gray-500 mb-1">信号判定基準</div>
+                <div><span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1"></span>良好: スコア≧3.8 & Bot2&lt;10%</div>
+                <div><span className="inline-block w-2 h-2 rounded-full bg-yellow-500 mr-1"></span>注意: どちらか一方のみ</div>
+                <div><span className="inline-block w-2 h-2 rounded-full bg-red-500 mr-1"></span>要改善: スコア&lt;3.8 & Bot2≧10%</div>
+                <div className="text-[9px] text-gray-300 mt-1">※Bot2 = 回答「1」または「2」の比率</div>
+              </div>
             </div>
 
             <div className="flex-1">
