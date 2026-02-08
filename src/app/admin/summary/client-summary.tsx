@@ -161,11 +161,11 @@ export default function ClientSummary() {
   const areas = Array.from(new Set(orgUnits?.filter(ou => (params.hq === 'all' || ou.hq === params.hq) && (params.dept === 'all' || ou.dept === params.dept)).map(ou => ou.area).filter(Boolean)));
   const offices = orgUnits?.filter(ou => (params.hq === 'all' || ou.hq === params.hq) && (params.dept === 'all' || ou.dept === params.dept) && (params.area === 'all' || ou.area === params.area)) || [];
 
-  const handleExport = async (type: 'markdown' | 'csv') => {
+  const handleExport = async () => {
     setExporting(true);
     try {
-      const query = new URLSearchParams(searchParams.toString());
-      query.set('type', type);
+      const query = new URLSearchParams();
+      query.set('survey_id', current.summary.surveyId);
       window.location.href = `/api/admin/export?${query.toString()}`;
     } finally {
       setTimeout(() => setExporting(false), 2000);
@@ -181,10 +181,9 @@ export default function ClientSummary() {
             <p className="hidden md:block text-sm text-gray-500 mt-0.5 font-medium italic">組織のコンディションを定量的に把握し、対話を促進します</p>
           </div>
           {data.is_owner && (
-            <div className="flex gap-2 w-full md:w-auto">
-              <button onClick={() => handleExport('markdown')} disabled={exporting} className="flex-1 md:flex-none px-2 py-1 bg-white border border-gray-300 rounded text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50">NotebookLM用</button>
-              <button onClick={() => handleExport('csv')} disabled={exporting} className="flex-1 md:flex-none px-2 py-1 bg-blue-600 text-white rounded text-xs font-medium hover:bg-blue-700 disabled:opacity-50">{exporting ? '処理中...' : 'CSV保存'}</button>
-            </div>
+            <button onClick={handleExport} disabled={exporting} className="px-3 py-1.5 bg-blue-600 text-white rounded text-xs font-bold hover:bg-blue-700 disabled:opacity-50 shadow-sm">
+              {exporting ? '処理中...' : 'CSVダウンロード'}
+            </button>
           )}
         </div>
 
