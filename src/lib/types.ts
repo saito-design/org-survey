@@ -13,6 +13,7 @@ export interface Respondent {
   anonymous?: boolean;
   active: boolean;
   is_admin?: boolean;  // 管理者フラグ（未指定はfalse）
+  is_owner?: boolean;  // オーナーフラグ（エクスポート権限）
 }
 
 // 組織単位

@@ -127,14 +127,18 @@ export default function ClientSummary() {
 
   // 因子スコアの計算根拠を生成
   const getFactorTooltip = (fs: FactorScore) => {
-    const elemCount = fs.elements.filter(e => e.mean !== null).length;
-    return `${elemCount}要素の平均値`;
+    const validElements = fs.elements.filter(e => e.mean !== null);
+    const elemCount = validElements.length;
+    const elemDetails = validElements.slice(0, 3).map(e => `${e.element_name}: ${e.mean?.toFixed(2)}`).join(', ');
+    const more = validElements.length > 3 ? ` 他${validElements.length - 3}件` : '';
+    return `${elemCount}要素の平均 (${elemDetails}${more})`;
   };
 
   // 総合スコアの計算根拠
   const getOverallTooltip = () => {
-    const factorCount = summary.factorScores.filter(f => f.mean !== null).length;
-    return `${factorCount}因子の平均値 (因子 = 要素平均の平均)`;
+    const validFactors = summary.factorScores.filter(f => f.mean !== null);
+    const factorDetails = validFactors.map(f => `${f.factor_name}: ${f.mean?.toFixed(2)}`).join(' / ');
+    return `${validFactors.length}因子の平均 (${factorDetails})`;
   };
 
   return (
@@ -154,22 +158,25 @@ export default function ClientSummary() {
               </Tooltip>
             </div>
           </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => handleExport('markdown')}
-              disabled={exporting}
-              className="px-4 py-2 bg-white border border-gray-300 rounded hover:bg-gray-50 text-sm font-medium text-gray-700 disabled:opacity-50"
-            >
-              NotebookLM用出力
-            </button>
-            <button
-              onClick={() => handleExport('csv')}
-              disabled={exporting}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-medium shadow-sm disabled:opacity-50"
-            >
-              {exporting ? '保存中...' : 'CSVダウンロード'}
-            </button>
-          </div>
+          {/* オーナーのみエクスポートボタンを表示 */}
+          {data.is_owner && (
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleExport('markdown')}
+                disabled={exporting}
+                className="px-4 py-2 bg-white border border-gray-300 rounded hover:bg-gray-50 text-sm font-medium text-gray-700 disabled:opacity-50"
+              >
+                NotebookLM用出力
+              </button>
+              <button
+                onClick={() => handleExport('csv')}
+                disabled={exporting}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-medium shadow-sm disabled:opacity-50"
+              >
+                {exporting ? '保存中...' : 'CSVダウンロード'}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* フィルタ (UIのみ) */}
@@ -202,7 +209,7 @@ export default function ClientSummary() {
             {/* 因子スコア（横並び） */}
             <div className="flex-1">
               <h3 className="text-gray-500 font-medium mb-4 text-center md:text-left">因子別スコア</h3>
-              <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {summary.factorScores.map(fs => {
                   const signal = evaluateFactorSignal(fs);
                   return (

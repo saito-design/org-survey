@@ -35,6 +35,7 @@ export interface SummaryResponse {
   summary: SurveySummary;
   segmentScores?: SegmentScore[];
   orgUnits?: OrgUnit[];
+  is_owner?: boolean;  // オーナー権限（エクスポート可）
 }
 
 /**
@@ -101,7 +102,10 @@ export async function GET(req: NextRequest) {
       factors
     );
 
-    const result: SummaryResponse = { summary };
+    const result: SummaryResponse = {
+      summary,
+      is_owner: session.is_owner ?? false,
+    };
 
     // セグメント別集計（オプション）
     if (segmentBy === 'store_code') {

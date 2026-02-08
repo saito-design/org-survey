@@ -7,6 +7,19 @@ import {
   loadResponses,
 } from '@/lib/data-fetching';
 import { generateSurveySummary } from '@/lib/aggregation';
+import { promises as fs } from 'fs';
+import path from 'path';
+
+// 統一設問マッピングの型
+interface QuestionMapping {
+  mgmt_no: number;
+  category: string;
+  question_text: string;
+  note: string;
+  MANAGER: string | null;
+  STAFF: string | null;
+  PA: string | null;
+}
 
 // 会社名（環境変数またはデフォルト）
 const COMPANY_NAME = process.env.COMPANY_NAME || '株式会社サンプル';
@@ -66,7 +79,7 @@ export async function GET(req: NextRequest) {
         },
       });
     } else if (type === 'csv') {
-      const csv = generateRawDataCsv(responses, respondents, questions);
+      const csv = await generateRawDataCsv(responses, respondents, questions);
       const fileName = `${safeCompanyName}_回答データ_${surveyId}_${timestamp}.csv`;
 
       // UTF-8 with BOM for Excel
@@ -198,7 +211,80 @@ function generateMarkdownReport(surveyId: string, summary: any) {
   return md;
 }
 
-function generateRawDataCsv(responses: any[], respondents: any[], questions: any[]) {
+async function loadQuestionMapping(): Promise<QuestionMapping[]> {
+  const mappingPath = path.join(process.cwd(), 'questions', 'question_id_mapping.json');
+  const data = await fs.readFile(mappingPath, 'utf-8');
+  return JSON.parse(data);
+}
+
+async function generateRawDataCsv(responses: any[], respondents: any[], questions: any[]): Promise<string> {
+  const respMap = new Map(respondents.map(r => [r.respondent_id, r]));
+
+  // マッピングを読み込み
+  let mapping: QuestionMapping[];
+  try {
+    mapping = await loadQuestionMapping();
+  } catch {
+    // マッピングがない場合は従来の形式
+    return generateLegacyCsv(responses, respondents, questions);
+  }
+
+  // メタデータ列
+  const metaCols = ['診断期間', '事業所コード', '事業所名', '役職', '回答者ID'];
+
+  // 1行目: カテゴリ名（メタ列は空）
+  const row1 = [...metaCols.map(() => ''), ...mapping.map(m => m.category)];
+
+  // 2行目: メタ列名 + 管理番号
+  const row2 = [...metaCols, ...mapping.map(m => String(m.mgmt_no))];
+
+  // 個人ごとに回答をまとめる
+  const respondentResponses = new Map<string, Record<string, number>>();
+  responses.forEach(r => {
+    if (!respondentResponses.has(r.respondent_id)) {
+      respondentResponses.set(r.respondent_id, {});
+    }
+    respondentResponses.get(r.respondent_id)![r.question_id] = r.value;
+  });
+
+  // データ行を生成
+  const dataRows = Array.from(respondentResponses.entries()).map(([rid, answers]) => {
+    const res = respMap.get(rid);
+    const role = res?.role || '';
+    const surveyId = responses.find(r => r.respondent_id === rid)?.survey_id || '';
+
+    // メタデータ
+    const meta = [
+      surveyId,
+      res?.store_code || '',
+      '', // 事業所名（現在未対応）
+      role,
+      rid,
+    ];
+
+    // 各管理番号に対応する回答を取得
+    const answerCols = mapping.map(m => {
+      // 役職に応じた設問IDを取得
+      const questionId = m[role as 'MANAGER' | 'STAFF' | 'PA'];
+      if (!questionId) return ''; // この役職では回答対象外
+      return answers[questionId] ?? '';
+    });
+
+    return [...meta, ...answerCols];
+  });
+
+  // CSV組み立て
+  const escape = (v: any) => `"${String(v).replace(/"/g, '""')}"`;
+  const lines = [
+    row1.map(escape).join(','),
+    row2.map(escape).join(','),
+    ...dataRows.map(row => row.map(escape).join(','))
+  ];
+
+  return lines.join('\n');
+}
+
+function generateLegacyCsv(responses: any[], respondents: any[], questions: any[]): string {
   const respMap = new Map(respondents.map(r => [r.respondent_id, r]));
 
   // ヘッダー

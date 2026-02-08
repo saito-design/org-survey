@@ -11,6 +11,7 @@ export async function GET() {
   return NextResponse.json({
     isLoggedIn: true,
     is_admin: session.is_admin ?? false,
+    is_owner: session.is_owner ?? false,
     respondent_id: session.respondent_id,
     emp_no: session.emp_no,
     role: session.role,

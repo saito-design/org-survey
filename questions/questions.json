@@ -51,7 +51,7 @@
     {
       "question_id": "MANAGER-Q05",
       "original_no": 5,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "16",
       "text": "私は、私の考えで計画、決定し、**仕事を進めることが出来ていると思う**",
       "scale": "5point",
@@ -303,8 +303,8 @@
     {
       "question_id": "MANAGER-Q26",
       "original_no": 26,
-      "factor_id": "F1",
-      "element_id": "6",
+      "factor_id": "F3",
+      "element_id": "20",
       "text": "私は、今後もこの会社に**勤めていたい**と思う",
       "scale": "5point",
       "roles": [
@@ -315,8 +315,8 @@
     {
       "question_id": "MANAGER-Q27",
       "original_no": 27,
-      "factor_id": "F1",
-      "element_id": "6",
+      "factor_id": "F3",
+      "element_id": "16",
       "text": "私は、これからも**会社に積極的に貢献していきたい**と考えている",
       "scale": "5point",
       "roles": [
@@ -589,6 +589,198 @@
       "order": 49
     },
     {
+      "question_id": "MANAGER-Q50",
+      "original_no": 50,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "専門的な能力を持つメンバー、問題解決や意思決定力に長けたメンバー、対人コミュニケーションを備えたメンバーなど、バランスよい構成だと思う",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 50
+    },
+    {
+      "question_id": "MANAGER-Q51",
+      "original_no": 51,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "メンバーは、外向性、人当たりのよさ、誠実さ、安定した感情といったパーソナリティを備えている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 51
+    },
+    {
+      "question_id": "MANAGER-Q52",
+      "original_no": 52,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "メンバーの能力や好みを考慮して、それぞれが貢献できるように役割分担されている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 52
+    },
+    {
+      "question_id": "MANAGER-Q53",
+      "original_no": 53,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "メンバーは、それぞれの経験や考え方を出し合い協力して仕事を進めている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 53
+    },
+    {
+      "question_id": "MANAGER-Q54",
+      "original_no": 54,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "メンバーの人数はちょうどよく、面倒を見れないということはない",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 54
+    },
+    {
+      "question_id": "MANAGER-Q55",
+      "original_no": 55,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "メンバーは、多能工化され、誰でも２つ以上のポジションを担当できる",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 55
+    },
+    {
+      "question_id": "MANAGER-Q56",
+      "original_no": 56,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "メンバーは、チームで働くことを好むタイプで構成されている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 56
+    },
+    {
+      "question_id": "MANAGER-Q57",
+      "original_no": 57,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "チーム（店舗）が目指すビジョンが明確になっておりメンバーと共有・合意が出来ている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 57
+    },
+    {
+      "question_id": "MANAGER-Q58",
+      "original_no": 58,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "チーム（店舗）が目指すビジョンは、具体的で現実的な目標に落とし込まれている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 58
+    },
+    {
+      "question_id": "MANAGER-Q59",
+      "original_no": 59,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "チームは、目標達成に向けて自信を持って取り組んでいる",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 59
+    },
+    {
+      "question_id": "MANAGER-Q60",
+      "original_no": 60,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "チームはいい意味で緊張感を持ち、お互いの考え方の違いについてよく話し合っている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 60
+    },
+    {
+      "question_id": "MANAGER-Q61",
+      "original_no": 61,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "店長に限らず、ときにはスタッフもリーダーとなり、チームを引っ張っている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 61
+    },
+    {
+      "question_id": "MANAGER-Q62",
+      "original_no": 62,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "メンバー同士（店長も含めて）で信頼感があると思う",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 62
+    },
+    {
+      "question_id": "MANAGER-Q63",
+      "original_no": 63,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "努力に対する報酬は、個人よりもチーム（店舗）に対して行われている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 63
+    },
+    {
+      "question_id": "MANAGER-Q64",
+      "original_no": 64,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "会社は店舗に対して、適切な設備・人員、奨励、事務支援など、十分な資源を提供してくれていると思う",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 64
+    },
+    {
+      "question_id": "MANAGER-Q65",
+      "original_no": 65,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "チームは、メンバーのスキル、会社の支援が整い、生産性が高いと感じている",
+      "scale": "5point",
+      "roles": [
+        "MANAGER"
+      ],
+      "order": 65
+    },
+    {
       "question_id": "STAFF-Q01",
       "original_no": 1,
       "factor_id": "F1",
@@ -639,7 +831,7 @@
     {
       "question_id": "STAFF-Q05",
       "original_no": 5,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "16",
       "text": "私は、**私の考えで仕事を進めることが出来ていると思う**",
       "scale": "5point",
@@ -855,8 +1047,8 @@
     {
       "question_id": "STAFF-Q26",
       "original_no": 26,
-      "factor_id": "F1",
-      "element_id": "6",
+      "factor_id": "F3",
+      "element_id": "20",
       "text": "私は、今後もこの会社に**勤めていたい**と思う",
       "scale": "5point",
       "roles": [
@@ -867,8 +1059,8 @@
     {
       "question_id": "STAFF-Q27",
       "original_no": 27,
-      "factor_id": "F1",
-      "element_id": "6",
+      "factor_id": "F3",
+      "element_id": "16",
       "text": "私は、これからも会社やお店に積極的に**貢献していきたい**と考えている",
       "scale": "5point",
       "roles": [
@@ -1119,7 +1311,7 @@
     {
       "question_id": "STAFF-Q51",
       "original_no": 51,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "メンバーは、人当たりが良く、誠実で、**落ち着いた人が多いと思う**",
       "scale": "5point",
@@ -1131,7 +1323,7 @@
     {
       "question_id": "STAFF-Q52",
       "original_no": 52,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "メンバーの能力や好みを考慮して、**それぞれが貢献できるように役割分担されていると思う**",
       "scale": "5point",
@@ -1143,7 +1335,7 @@
     {
       "question_id": "STAFF-Q53",
       "original_no": 53,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "メンバーは、**それぞれの経験や考え方を出し合い協力して仕事を進めていると思う**",
       "scale": "5point",
@@ -1155,7 +1347,7 @@
     {
       "question_id": "STAFF-Q54",
       "original_no": 54,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "メンバーの人数は**ちょうどよい**と思う",
       "scale": "5point",
@@ -1167,7 +1359,7 @@
     {
       "question_id": "STAFF-Q55",
       "original_no": 55,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "メンバーは、誰でも２つ以上のポジションを担当できる",
       "scale": "5point",
@@ -1179,7 +1371,7 @@
     {
       "question_id": "STAFF-Q56",
       "original_no": 56,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "メンバーは、**みなチームで働くことを楽しんでいると思う**",
       "scale": "5point",
@@ -1191,7 +1383,7 @@
     {
       "question_id": "STAFF-Q57",
       "original_no": 57,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "私たちのお店が目指す方向性は明確で、**みんなしっかり認識できていると思う**",
       "scale": "5point",
@@ -1203,7 +1395,7 @@
     {
       "question_id": "STAFF-Q58",
       "original_no": 58,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "目指す方向へ向かって、具体的で現実的な目標が立てられている",
       "scale": "5point",
@@ -1215,7 +1407,7 @@
     {
       "question_id": "STAFF-Q59",
       "original_no": 59,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "メンバーは、目標達成に向けて自信を持って取り組んでいる",
       "scale": "5point",
@@ -1227,7 +1419,7 @@
     {
       "question_id": "STAFF-Q60",
       "original_no": 60,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "19",
       "text": "メンバーはいい意味で緊張感を持ち、お互いの考え方の違いについてよく話し合っている",
       "scale": "5point",
@@ -1235,6 +1427,42 @@
         "STAFF"
       ],
       "order": 60
+    },
+    {
+      "question_id": "STAFF-Q61",
+      "original_no": 61,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "上司に限らず、ときには私達もリーダーとなり、チームを引っ張っている",
+      "scale": "5point",
+      "roles": [
+        "STAFF"
+      ],
+      "order": 61
+    },
+    {
+      "question_id": "STAFF-Q62",
+      "original_no": 62,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "メンバー同士（上司も含めて）で信頼感があると思う",
+      "scale": "5point",
+      "roles": [
+        "STAFF"
+      ],
+      "order": 62
+    },
+    {
+      "question_id": "STAFF-Q63",
+      "original_no": 63,
+      "factor_id": "F3",
+      "element_id": "19",
+      "text": "私のいるチームは、メンバーのスキル、会社の支援が整い、生産性が高いと感じている",
+      "scale": "5point",
+      "roles": [
+        "STAFF"
+      ],
+      "order": 63
     },
     {
       "question_id": "PA-Q01",
@@ -1287,7 +1515,7 @@
     {
       "question_id": "PA-Q05",
       "original_no": 5,
-      "factor_id": "F1",
+      "factor_id": "F3",
       "element_id": "16",
       "text": "私は、**私の考えで仕事を進めることが出来ていると思う**",
       "scale": "5point",
@@ -1431,8 +1659,8 @@
     {
       "question_id": "PA-Q20",
       "original_no": 20,
-      "factor_id": "F1",
-      "element_id": "5",
+      "factor_id": "F3",
+      "element_id": "16",
       "text": "私は、これからも会社やお店に積極的に**貢献していきたい**と考えている",
       "scale": "5point",
       "roles": [
@@ -1673,12 +1901,20 @@
     {
       "factor_id": "F1",
       "factor_name": "組織活性化の源泉",
+      "description": "会社満足度、職務満足度",
       "order": 1
     },
     {
       "factor_id": "F2",
       "factor_name": "収益性向上に繋がるエンゲージメント",
+      "description": "理念・ビジョンへの共感、顧客視点意識",
       "order": 2
+    },
+    {
+      "factor_id": "F3",
+      "factor_name": "業績拡大に繋がるチーム力と持続性",
+      "description": "効果的なチーム、貢献意欲、勤続意思",
+      "order": 3
     }
   ],
   "elements": [
@@ -1781,7 +2017,7 @@
     {
       "element_id": "16",
       "element_name": "貢献意欲",
-      "factor_id": "F1",
+      "factor_id": "F3",
       "order": 17
     },
     {
@@ -1799,9 +2035,15 @@
     {
       "element_id": "19",
       "element_name": "チーム力",
-      "factor_id": "F2",
+      "factor_id": "F3",
       "order": 20
+    },
+    {
+      "element_id": "20",
+      "element_name": "勤続意思",
+      "factor_id": "F3",
+      "order": 21
     }
   ],
-  "updated_at": "2026-02-07T12:34:05.588883"
+  "updated_at": "2026-02-08T10:00:00.000000"
 }

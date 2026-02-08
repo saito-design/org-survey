@@ -12,7 +12,8 @@ export interface SessionData {
   name?: string;
   anonymous: boolean;
   isLoggedIn: boolean;
-  is_admin: boolean;  // 管理者フラグ
+  is_admin: boolean;  // 管理者フラグ（サマリー閲覧可）
+  is_owner?: boolean; // オーナーフラグ（エクスポート可）
 }
 
 export const sessionOptions: SessionOptions = {
@@ -36,12 +37,12 @@ export function hashPassword(password: string): string {
 
 export async function verifyCredentials(emp_no: string, passwordPlain: string): Promise<Respondent | null> {
   // 開発用: owner/owner1/owner2/owner3 でログイン可能
-  // owner, owner1 は管理者権限あり
-  const devAccounts: Record<string, { role: 'MANAGER' | 'STAFF' | 'PA'; name: string; is_admin: boolean }> = {
-    'owner': { role: 'MANAGER', name: '開発用（店長・管理者）', is_admin: true },
-    'owner1': { role: 'MANAGER', name: '開発用（店長・管理者）', is_admin: true },
-    'owner2': { role: 'STAFF', name: '開発用（社員）', is_admin: false },
-    'owner3': { role: 'PA', name: '開発用（PA）', is_admin: false },
+  // owner はオーナー権限（エクスポート可）、owner1 は管理者権限（閲覧のみ）
+  const devAccounts: Record<string, { role: 'MANAGER' | 'STAFF' | 'PA'; name: string; is_admin: boolean; is_owner: boolean }> = {
+    'owner': { role: 'MANAGER', name: '開発用（オーナー）', is_admin: true, is_owner: true },
+    'owner1': { role: 'MANAGER', name: '開発用（店長・管理者）', is_admin: true, is_owner: false },
+    'owner2': { role: 'STAFF', name: '開発用（社員）', is_admin: false, is_owner: false },
+    'owner3': { role: 'PA', name: '開発用（PA）', is_admin: false, is_owner: false },
   };
 
   if (emp_no in devAccounts && passwordPlain === emp_no) {
@@ -55,6 +56,7 @@ export async function verifyCredentials(emp_no: string, passwordPlain: string): 
       active: true,
       password_hash: hashPassword(emp_no),
       is_admin: account.is_admin,
+      is_owner: account.is_owner,
     };
   }
 

@@ -1,0 +1,587 @@
+[
+  {
+    "mgmt_no": 1,
+    "category": "会社の満足度",
+    "question_text": "私は、総合的に会社に満足している",
+    "note": "",
+    "MANAGER": "MANAGER-Q29",
+    "STAFF": "STAFF-Q29",
+    "PA": "PA-Q22"
+  },
+  {
+    "mgmt_no": 2,
+    "category": "職務満足度",
+    "question_text": "私は、総合的に職場・仕事に満足している",
+    "note": "",
+    "MANAGER": "MANAGER-Q28",
+    "STAFF": "STAFF-Q28",
+    "PA": "PA-Q21"
+  },
+  {
+    "mgmt_no": 3,
+    "category": "会社の将来像への期待",
+    "question_text": "私は、会社の将来ビジョンに共感し、期待している",
+    "note": "",
+    "MANAGER": "MANAGER-Q18",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 4,
+    "category": "顧客視点意識",
+    "question_text": "私は、お客さまに喜んでもらえることが何よりも嬉しい",
+    "note": "",
+    "MANAGER": "MANAGER-Q49",
+    "STAFF": "STAFF-Q46",
+    "PA": "PA-Q33"
+  },
+  {
+    "mgmt_no": 5,
+    "category": "貢献意欲",
+    "question_text": "私は、これからも会社に積極的に貢献していきたいと考えている",
+    "note": "",
+    "MANAGER": "MANAGER-Q27",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 6,
+    "category": "勤続意思",
+    "question_text": "私は、今後もこの会社に勤めていたいと思う",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q26",
+    "STAFF": "STAFF-Q26",
+    "PA": null
+  },
+  {
+    "mgmt_no": 7,
+    "category": "効果的チーム",
+    "question_text": "チームは、メンバーのスキル、会社の支援が整い、生産性が高いと感じている",
+    "note": "",
+    "MANAGER": "MANAGER-Q65",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 8,
+    "category": "理念・ビジョンの認知",
+    "question_text": "私は、会社の理念（お客様や地域に対する会社の想い）やビジョンを知っている",
+    "note": "",
+    "MANAGER": "MANAGER-Q16",
+    "STAFF": "STAFF-Q16",
+    "PA": "PA-Q13"
+  },
+  {
+    "mgmt_no": 9,
+    "category": "理念・ビジョンの理解",
+    "question_text": "私は、会社の理念を私なりに理解して行動できていると思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q17",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 10,
+    "category": "公平な評価",
+    "question_text": "私の仕事に対する評価は、明確・公平にされていると感じる",
+    "note": "",
+    "MANAGER": "MANAGER-Q06",
+    "STAFF": "STAFF-Q06",
+    "PA": "PA-Q06"
+  },
+  {
+    "mgmt_no": 11,
+    "category": "活躍のチャンス",
+    "question_text": "私は今の仕事を通じて、社内で活躍するチャンスが大いにあると思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q07",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 12,
+    "category": "内容が変化に富んでいるか",
+    "question_text": "日々、変化や刺激を感じられる仕事だと思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q02",
+    "STAFF": "STAFF-Q02",
+    "PA": "PA-Q02"
+  },
+  {
+    "mgmt_no": 13,
+    "category": "技能多様性",
+    "question_text": "仕事を通じていろいろなスキルを身につけることができるし、活かせると思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q03",
+    "STAFF": "STAFF-Q03",
+    "PA": "PA-Q03"
+  },
+  {
+    "mgmt_no": 14,
+    "category": "タスク完結性",
+    "question_text": "私は、店舗業務の全体（人・モノ・金の管理）について自身で完結することができている",
+    "note": "",
+    "MANAGER": "MANAGER-Q04",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 15,
+    "category": "タスク重要性",
+    "question_text": "私の仕事は、会社にとって、お客さまにとって、大きな影響があり重要だと思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q01",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 16,
+    "category": "自由・決定権があるか（自律性）",
+    "question_text": "私は、私の考えで計画、決定し、仕事を進めることが出来ていると思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q05",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 17,
+    "category": "フィードバックはあるか",
+    "question_text": "上司は、日頃から又は面談を通じて、自身の仕事について結果やアドバイス等のフィードバックをしてくれる",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q20",
+    "STAFF": "STAFF-Q20",
+    "PA": null
+  },
+  {
+    "mgmt_no": 18,
+    "category": "賃金の納得性",
+    "question_text": "私は、今の賃金に納得している",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q23",
+    "STAFF": "STAFF-Q23",
+    "PA": null
+  },
+  {
+    "mgmt_no": 19,
+    "category": "福利厚生の充実",
+    "question_text": "私は、今の福利厚生に納得している",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q24",
+    "STAFF": "STAFF-Q24",
+    "PA": null
+  },
+  {
+    "mgmt_no": 20,
+    "category": "ハラスメント",
+    "question_text": "私の職場にはハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全だと思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q10",
+    "STAFF": "STAFF-Q10",
+    "PA": "PA-Q09"
+  },
+  {
+    "mgmt_no": 21,
+    "category": "不平不満",
+    "question_text": "私の職場には不平不満等をこぼす人がいない",
+    "note": "",
+    "MANAGER": "MANAGER-Q08",
+    "STAFF": "STAFF-Q08",
+    "PA": "PA-Q08"
+  },
+  {
+    "mgmt_no": 22,
+    "category": "社会的手抜き",
+    "question_text": "私の職場には手抜きをしている人はいなく、みんな積極的に仕事をしていると思う",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q09",
+    "STAFF": "STAFF-Q09",
+    "PA": null
+  },
+  {
+    "mgmt_no": 23,
+    "category": "安全管理",
+    "question_text": "私の職場に、危険と思う箇所なはい",
+    "note": "",
+    "MANAGER": "MANAGER-Q11",
+    "STAFF": "STAFF-Q11",
+    "PA": "PA-Q10"
+  },
+  {
+    "mgmt_no": 24,
+    "category": "衛生管理",
+    "question_text": "私の職場は、ウィルス対策や食中毒対策にしっかりと取組めていると思う",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q12",
+    "STAFF": "STAFF-Q12",
+    "PA": null
+  },
+  {
+    "mgmt_no": 25,
+    "category": "５Ｓ",
+    "question_text": "私の職場は、整理整頓が行き届き、清潔だと思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q13",
+    "STAFF": "STAFF-Q13",
+    "PA": "PA-Q11"
+  },
+  {
+    "mgmt_no": 26,
+    "category": "労務管理",
+    "question_text": "私の職場は、休暇の取得や残業の改善が図られていると思う",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q14",
+    "STAFF": "STAFF-Q14",
+    "PA": null
+  },
+  {
+    "mgmt_no": 27,
+    "category": "その他気になる箇所",
+    "question_text": "その他、室温・湿度、照明、雑音など、特に気になる箇所はない",
+    "note": "",
+    "MANAGER": "MANAGER-Q15",
+    "STAFF": "STAFF-Q15",
+    "PA": "PA-Q12"
+  },
+  {
+    "mgmt_no": 28,
+    "category": "知識付与（自身が受ける側）",
+    "question_text": "仕事に必要な知識について、会社が十分な教育の機会を与えてくれていると思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q25",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 29,
+    "category": "部下育成知識（自身が教える側）",
+    "question_text": "私は部下やスタッフ教えるにあたり、十分な知識を得られていると思う",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q36",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 30,
+    "category": "部下育成ツール（自身が教える側）",
+    "question_text": "部下やスタッフを教えるにあたり、教育ツールなどの整備が行き届き、教えやすい環境だと思う",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q37",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 31,
+    "category": "店長のリーダーシップ（指示型）",
+    "question_text": "私は、スタッフに期待することや、やるべきことを具体的に細かく指示・指導するタイプだと思う ⇔ 【してほしい】",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q30",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 32,
+    "category": "店長のリーダーシップ（支援・参加型）",
+    "question_text": "私は、スタッフの考えや思いに気を配り、提案も聞くタイプだと思う ⇔ 【考えを伝え一緒に取り組みたい】",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q31",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 33,
+    "category": "店長のリーダーシップ（課題達成志向型）",
+    "question_text": "私は、スタッフに期待し、高い目標を立てて全力を尽くすよう鼓舞するタイプだと思う ⇔ 【鼓舞してほしい】",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q32",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 34,
+    "category": "店長の承認行動",
+    "question_text": "私は、スタッフの仕事を良く観察し、スタッフの仕事について、日頃から又は面談を通じて承認行動をとっている ⇔ 【してくれている】",
+    "note": "",
+    "MANAGER": "MANAGER-Q33",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 35,
+    "category": "店長の育成マインド",
+    "question_text": "私は、スタッフを熱心に育成していると思う ⇔ 【してくれている】",
+    "note": "",
+    "MANAGER": "MANAGER-Q34",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 36,
+    "category": "意見具申",
+    "question_text": "私に対してスタッフが自分の意見を言うことができる関係性だと思う ⇔ 【思う】",
+    "note": "",
+    "MANAGER": "MANAGER-Q35",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 37,
+    "category": "上司の承認行動",
+    "question_text": "上司は、わたしの仕事を良く見てくれ、わたしの仕事を認めてくれる",
+    "note": "(※1)",
+    "MANAGER": "MANAGER-Q19",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 38,
+    "category": "上司の育成マインド",
+    "question_text": "上司は、わたしを熱心に育成してくれていると思う",
+    "note": "(※1)",
+    "MANAGER": "MANAGER-Q21",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 39,
+    "category": "上司への意見具申",
+    "question_text": "上司に対して自分の意見を言うことができる関係性だと思う",
+    "note": "(※1)",
+    "MANAGER": "MANAGER-Q22",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 40,
+    "category": "同僚との関係（フォロー）",
+    "question_text": "スタッフは、同僚同士、お互いフォローしあいながら仕事をしていると思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q38",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 41,
+    "category": "同僚との関係（指摘）",
+    "question_text": "スタッフは、同僚同士、お互い指摘し合える関係性だと思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q39",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 42,
+    "category": "同僚との関係（仕事以外）",
+    "question_text": "スタッフは、同僚同士、仕事に限らず仲良くしている",
+    "note": "",
+    "MANAGER": "MANAGER-Q40",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 43,
+    "category": "同僚（他店店長）との関係",
+    "question_text": "同僚（他店店長）とは、お互いフォローしあいながら仕事をしていると思う",
+    "note": "(※1)",
+    "MANAGER": "MANAGER-Q41",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 44,
+    "category": "同僚（他店店長）との関係（指摘）",
+    "question_text": "同僚（他店店長）とは、お互い指摘し合える関係性だと思う",
+    "note": "(※1)",
+    "MANAGER": "MANAGER-Q42",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 45,
+    "category": "同僚（他店店長）との関係（仕事以外）",
+    "question_text": "同僚（他店店長）とは、仕事に限らず仲良くしている",
+    "note": "(※1)",
+    "MANAGER": "MANAGER-Q43",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 46,
+    "category": "従業員のタイプ",
+    "question_text": "私は、社交的で人と仲良くなるのが得意なタイプだと思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q44",
+    "STAFF": "STAFF-Q41",
+    "PA": "PA-Q29"
+  },
+  {
+    "mgmt_no": 47,
+    "category": "権限委譲",
+    "question_text": "お客さまが喜ぶと思うサービスを自身の判断で行うことが出来ている",
+    "note": "",
+    "MANAGER": "MANAGER-Q47",
+    "STAFF": "STAFF-Q44",
+    "PA": "PA-Q31"
+  },
+  {
+    "mgmt_no": 48,
+    "category": "公式化の度合い",
+    "question_text": "そのような判断をすることが、はっきり職務として明確になっている",
+    "note": "",
+    "MANAGER": "MANAGER-Q48",
+    "STAFF": "STAFF-Q45",
+    "PA": "PA-Q32"
+  },
+  {
+    "mgmt_no": 49,
+    "category": "傾聴スキル",
+    "question_text": "私は、人と話すときは聴き手として相手の話を理解しようと努めている",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q45",
+    "STAFF": "STAFF-Q42",
+    "PA": null
+  },
+  {
+    "mgmt_no": 50,
+    "category": "役割の明確化",
+    "question_text": "私の仕事が、お客さまにどのようなサービスを提供する役割か、はっきりとわかっている",
+    "note": "",
+    "MANAGER": "MANAGER-Q46",
+    "STAFF": "STAFF-Q43",
+    "PA": "PA-Q30"
+  },
+  {
+    "mgmt_no": 51,
+    "category": "十分な資源",
+    "question_text": "会社は店舗に対して、適切な設備・人員、奨励、事務支援など、十分な資源を提供してくれていると思う",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q64",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 52,
+    "category": "効果的なリーダーシップ",
+    "question_text": "店長に限らず、ときにはスタッフもリーダーとなり、チームを引っ張っている",
+    "note": "",
+    "MANAGER": "MANAGER-Q61",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 53,
+    "category": "信頼関係のある環境",
+    "question_text": "メンバー同士（店長も含めて）で信頼感があると思う",
+    "note": "",
+    "MANAGER": "MANAGER-Q62",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 54,
+    "category": "業績評価と報酬システム",
+    "question_text": "努力に対する報酬は、個人よりもチーム（店舗）に対して行われている",
+    "note": "(※1)",
+    "MANAGER": "MANAGER-Q63",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 55,
+    "category": "メンバーの能力",
+    "question_text": "専門的な能力を持つメンバー、問題解決や意思決定力に長けたメンバー、対人コミュニケーションを備えたメンバーなど、バランスよい構成だと思う",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q50",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 56,
+    "category": "パーソナリティ",
+    "question_text": "メンバーは、外向性、人当たりのよさ、誠実さ、安定した感情といったパーソナリティを備えている",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q51",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 57,
+    "category": "役割の割り当て",
+    "question_text": "メンバーの能力や好みを考慮して、それぞれが貢献できるように役割分担されている",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q52",
+    "STAFF": "STAFF-Q52",
+    "PA": null
+  },
+  {
+    "mgmt_no": 58,
+    "category": "多様性",
+    "question_text": "メンバーは、それぞれの経験や考え方を出し合い協力して仕事を進めている",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q53",
+    "STAFF": "STAFF-Q53",
+    "PA": null
+  },
+  {
+    "mgmt_no": 59,
+    "category": "チームの規模",
+    "question_text": "メンバーの人数はちょうどよく、面倒を見れないということはない",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q54",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 60,
+    "category": "メンバーの柔軟性",
+    "question_text": "メンバーは、多能工化され、誰でも２つ以上のポジションを担当できる",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q55",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 61,
+    "category": "メンバーの嗜好",
+    "question_text": "メンバーは、チームで働くことを好むタイプで構成されている",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q56",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 62,
+    "category": "共通の目的",
+    "question_text": "チーム（店舗）が目指すビジョンが明確になっておりメンバーと共有・合意が出来ている",
+    "note": "",
+    "MANAGER": "MANAGER-Q57",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 63,
+    "category": "具体的な目標",
+    "question_text": "チーム（店舗）が目指すビジョンは、具体的で現実的な目標に落とし込まれている",
+    "note": "",
+    "MANAGER": "MANAGER-Q57",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 64,
+    "category": "チームの自信感",
+    "question_text": "チームは、目標達成に向けて自信を持って取り組んでいる",
+    "note": "",
+    "MANAGER": "MANAGER-Q59",
+    "STAFF": null,
+    "PA": null
+  },
+  {
+    "mgmt_no": 65,
+    "category": "コンフリクトの程度",
+    "question_text": "チームはいい意味で緊張感を持ち、お互いの考え方の違いについてよく話し合っている",
+    "note": "(※2)",
+    "MANAGER": "MANAGER-Q60",
+    "STAFF": null,
+    "PA": null
+  }
+]
