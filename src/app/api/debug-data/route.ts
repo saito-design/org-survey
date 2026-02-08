@@ -16,6 +16,26 @@ export async function GET(req: NextRequest) {
 
     const setupFolder = await findFileByName('setup', rootId!);
     const recordingFolder = await findFileByName('recording', rootId!);
+    
+    let pathTrace = {
+        recording: recordingFolder?.id,
+        responses: null as string | null,
+        survey: null as string | null,
+        responsesFile: null as string | null,
+    };
+
+    if (recordingFolder) {
+        const resFolder = await findFileByName('responses', recordingFolder.id!);
+        pathTrace.responses = resFolder?.id || null;
+        if (resFolder && resFolder.id) {
+            const sFolder = await findFileByName(surveyId, resFolder.id);
+            pathTrace.survey = sFolder?.id || null;
+            if (sFolder && sFolder.id) {
+                const rFile = await findFileByName('responses.json', sFolder.id);
+                pathTrace.responsesFile = rFile?.id || null;
+            }
+        }
+    }
 
     const respondents = await loadRespondents(setupFolder?.id || rootId!);
     const orgUnits = await loadOrgUnits(setupFolder?.id || rootId!);
@@ -27,6 +47,7 @@ export async function GET(req: NextRequest) {
         surveyId,
         setupFolderId: setupFolder?.id,
         recordingFolderId: recordingFolder?.id,
+        pathTrace,
       },
       counts: {
         respondents: respondents.length,
@@ -35,6 +56,6 @@ export async function GET(req: NextRequest) {
       }
     });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : String(error) }, { status: 500 });
   }
 }
