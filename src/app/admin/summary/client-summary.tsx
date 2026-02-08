@@ -36,10 +36,20 @@ function Tooltip({ children, content }: { children: React.ReactNode; content: Re
 }
 
 /**
- * 信号バッジ
+ * 因子のBottom2比率を計算（配下要素のBottom2を平均）
  */
-function SignalBadge({ score }: { score: number | null | undefined }) {
-  const signal = getSignal(score);
+function calcFactorBottom2(elements: ElementScore[]): number | null {
+  const validElements = elements.filter(e => e.distribution && e.distribution.n > 0);
+  if (validElements.length === 0) return null;
+  const totalBottom2 = validElements.reduce((sum, e) => sum + e.distribution.bottom2, 0);
+  return totalBottom2 / validElements.length;
+}
+
+/**
+ * 信号バッジ（スコア＋Bottom2比率で判定）
+ */
+function SignalBadge({ score, bottom2Rate }: { score: number | null | undefined; bottom2Rate?: number | null }) {
+  const signal = getSignal(score, bottom2Rate);
   const label = getSignalLabel(signal);
   const classes = {
     bad: 'bg-red-100 text-red-800 border-red-200',
@@ -215,7 +225,13 @@ export default function ClientSummary() {
                 </Tooltip>
                 <span className="text-gray-300 text-xl font-black">/5.0</span>
               </div>
-              <div className="mt-3 flex justify-center"><SignalBadge score={current.summary.overallScore} /></div>
+              <div className="mt-3 flex justify-center"><SignalBadge score={current.summary.overallScore} bottom2Rate={
+                // 全因子のBottom2を平均
+                (() => {
+                  const rates = current.summary.factorScores.map(fs => calcFactorBottom2(fs.elements)).filter((r): r is number => r != null);
+                  return rates.length > 0 ? rates.reduce((a, b) => a + b, 0) / rates.length : null;
+                })()
+              } /></div>
               {/* Δ比較 - 常時表示、全体平均を先頭に */}
               <div className="mt-4 px-4 py-3 bg-gray-50/80 rounded-xl border border-gray-100">
                 <DeltaDisplay current={current.summary.overallScore} target={overallAvg?.summary.overallScore} label="Δ全体平均" />
@@ -247,7 +263,7 @@ export default function ClientSummary() {
                         }>
                             <div className="text-4xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{fs.mean?.toFixed(2) ?? '-'}</div>
                         </Tooltip>
-                        <div className="mt-2"><SignalBadge score={fs.mean} /></div>
+                        <div className="mt-2"><SignalBadge score={fs.mean} bottom2Rate={calcFactorBottom2(fs.elements)} /></div>
                       </div>
                       <div className="mt-3 pt-3 border-t border-black/5 space-y-0.5">
                         <DeltaDisplay current={fs.mean} target={oa} label="Δ全体平均" />
