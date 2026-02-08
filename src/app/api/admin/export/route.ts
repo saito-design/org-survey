@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
-import { findFileByName } from '@/lib/drive';
+import { findFileByName, saveJsonFile, ensureFolder } from '@/lib/drive';
 import {
   loadQuestionsLocal,
   loadRespondents,
@@ -8,10 +8,18 @@ import {
 } from '@/lib/data-fetching';
 import { generateSurveySummary } from '@/lib/aggregation';
 
+// 会社名（環境変数またはデフォルト）
+const COMPANY_NAME = process.env.COMPANY_NAME || '株式会社サンプル';
+
+// Drive フォルダID
+const EXPORT_FOLDER_ID = '1vW76cFGsqYv6RwpOw91wwpRm2pKLljMO';
+const ARCHIVE_FOLDER_ID = '1CsDMByFlilNJCSj6HOR9kyE0qo3bFy-h';
+
 /**
  * GET /api/admin/export?type=markdown|csv&survey_id=2026-02
- * 
+ *
  * 分析用データ（NotebookLM向レポート または CSV）を出力
+ * CSVの場合はDriveにも保存する
  */
 export async function GET(req: NextRequest) {
   try {
@@ -41,27 +49,48 @@ export async function GET(req: NextRequest) {
     ]);
 
     const { questions, elements, factors } = questionsData;
+    const summary = generateSurveySummary(surveyId, responses, respondents, questions, elements, factors);
+
+    // ファイル名に会社名と日時を含める
+    const timestamp = new Date().toISOString().slice(0, 19).replace(/[:-]/g, '');
+    const safeCompanyName = COMPANY_NAME.replace(/[\/\\:*?"<>|]/g, '_');
 
     if (type === 'markdown') {
-      const summary = generateSurveySummary(surveyId, responses, respondents, questions, elements, factors);
       const markdown = generateMarkdownReport(surveyId, summary);
-      
+      const fileName = `${safeCompanyName}_診断レポート_${surveyId}.md`;
+
       return new NextResponse(markdown, {
         headers: {
           'Content-Type': 'text/markdown; charset=utf-8',
-          'Content-Disposition': `attachment; filename="survey-report-${surveyId}.md"`,
+          'Content-Disposition': `attachment; filename*=UTF-8''${encodeURIComponent(fileName)}`,
         },
       });
     } else if (type === 'csv') {
       const csv = generateRawDataCsv(responses, respondents, questions);
+      const fileName = `${safeCompanyName}_回答データ_${surveyId}_${timestamp}.csv`;
+
       // UTF-8 with BOM for Excel
       const bom = Buffer.from([0xEF, 0xBB, 0xBF]);
       const content = Buffer.concat([bom, Buffer.from(csv)]);
 
+      // Driveに保存（2箇所）
+      try {
+        // 1. エクスポートフォルダに保存
+        await saveCsvToDrive(csv, fileName, EXPORT_FOLDER_ID, surveyId);
+
+        // 2. アーカイブフォルダにも保存
+        await saveCsvToDrive(csv, fileName, ARCHIVE_FOLDER_ID, surveyId);
+
+        console.log(`CSV saved to Drive: ${fileName}`);
+      } catch (driveError) {
+        console.error('Failed to save CSV to Drive:', driveError);
+        // Driveへの保存に失敗してもダウンロードは続行
+      }
+
       return new NextResponse(content, {
         headers: {
           'Content-Type': 'text/csv; charset=utf-8',
-          'Content-Disposition': `attachment; filename="survey-data-${surveyId}.csv"`,
+          'Content-Disposition': `attachment; filename*=UTF-8''${encodeURIComponent(fileName)}`,
         },
       });
     }
@@ -73,49 +102,108 @@ export async function GET(req: NextRequest) {
   }
 }
 
-function generateMarkdownReport(surveyId: string, summary: any) {
-  const { overallScore, factorScores } = summary;
+/**
+ * CSVをDriveに保存
+ */
+async function saveCsvToDrive(csv: string, fileName: string, parentFolderId: string, surveyId: string) {
+  // CSV用フォルダを作成
+  const csvFolderId = await ensureFolder('CSV出力', parentFolderId);
+  const surveyFolderId = await ensureFolder(surveyId, csvFolderId);
 
-  let md = `# 組織診断分析レポート (${surveyId})\n\n`;
-  md += `## 1. 総合評価\n`;
-  md += `- **総合スコア: ${overallScore.overallMean.toFixed(2)}**\n`;
-  md += `- 回答者数: ${overallScore.totaln}名\n\n`;
+  // CSVファイルを保存（テキストとして保存）
+  const { google } = await import('googleapis');
+  const auth = await getGoogleAuth();
+  const drive = google.drive({ version: 'v3', auth });
 
-  md += `## 2. 因子別分析\n`;
-  md += `| 因子名 | スコア | 信号 | 評価 |\n`;
-  md += `| :--- | :---: | :---: | :--- |\n`;
-  
-  factorScores.forEach((fs: any) => {
-    md += `| ${fs.factor_name} | ${fs.mean?.toFixed(2) || '-'} | ${fs.signal.color === 'green' ? '🔵' : fs.signal.color === 'yellow' ? '🟡' : '🔴'} | ${fs.signal.label} |\n`;
+  // 既存ファイルをチェック
+  const existing = await findFileByName(fileName, surveyFolderId, 'text/csv');
+
+  const media = {
+    mimeType: 'text/csv',
+    body: require('stream').Readable.from([Buffer.from('\ufeff' + csv, 'utf-8')]),
+  };
+
+  if (existing?.id) {
+    // 更新
+    await drive.files.update({
+      fileId: existing.id,
+      media,
+    });
+  } else {
+    // 新規作成
+    await drive.files.create({
+      requestBody: {
+        name: fileName,
+        parents: [surveyFolderId],
+        mimeType: 'text/csv',
+      },
+      media,
+    });
+  }
+}
+
+async function getGoogleAuth() {
+  const { GoogleAuth } = await import('google-auth-library');
+
+  const credentials = {
+    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+  };
+
+  const auth = new GoogleAuth({
+    credentials,
+    scopes: ['https://www.googleapis.com/auth/drive'],
   });
-  
-  md += `\n### 分析コメント（NotebookLM用）\n`;
-  md += `この組織においては、特に「${factorScores[0]?.factor_name}」が主な特徴として現れています。`;
-  md += `改善が必要なポイントとしては、信号が赤または黄色の項目に注目してください。\n\n`;
 
-  md += `## 3. 具体的な強み・弱み（要素別）\n`;
-  md += `### 強み項目 (Top 3)\n`;
+  return auth;
+}
+
+function generateMarkdownReport(surveyId: string, summary: any) {
+  const { overallScore, factorScores, responseRate } = summary;
+
+  let md = `# ${COMPANY_NAME} 組織診断分析レポート\n\n`;
+  md += `**診断期間:** ${surveyId}\n\n`;
+
+  md += `## 1. 総合評価\n\n`;
+  md += `| 指標 | 値 |\n`;
+  md += `| :--- | :---: |\n`;
+  md += `| 総合スコア | **${overallScore?.toFixed(2) || '-'}** / 5.00 |\n`;
+  md += `| 回答者数 | ${summary.n}名 |\n`;
+  md += `| 回答率 | ${(responseRate.byRespondent.rate * 100).toFixed(1)}% |\n\n`;
+
+  md += `## 2. 因子別分析\n\n`;
+  md += `| 因子名 | スコア | 判定 |\n`;
+  md += `| :--- | :---: | :---: |\n`;
+
+  factorScores.forEach((fs: any) => {
+    const signal = fs.mean !== null && fs.mean >= 3.8 ? '良好' : fs.mean !== null && fs.mean >= 3.0 ? '注意' : '要改善';
+    md += `| ${fs.factor_name} | ${fs.mean?.toFixed(2) || '-'} | ${signal} |\n`;
+  });
+
+  md += `\n## 3. 強み・弱み分析\n\n`;
+  md += `### 組織の強み (Top 3)\n\n`;
   summary.strengths.slice(0, 3).forEach((s: any, i: number) => {
     md += `${i + 1}. **${s.element_name}** (スコア: ${s.mean.toFixed(2)})\n`;
   });
 
-  md += `\n### 改善、注目項目 (Bottom 3)\n`;
+  md += `\n### 改善が必要な項目 (Bottom 3)\n\n`;
   summary.weaknesses.slice(0, 3).forEach((w: any, i: number) => {
     md += `${i + 1}. **${w.element_name}** (スコア: ${w.mean.toFixed(2)})\n`;
   });
 
-  md += `\n---\n*このレポートはシステムによって自動生成されました。NotebookLMなどのAIツールに読み込ませることで、より詳細な背景分析や施策立案が可能です。*`;
+  md += `\n---\n\n`;
+  md += `*このレポートは ${new Date().toLocaleDateString('ja-JP')} に自動生成されました。*\n`;
+  md += `*NotebookLMなどのAIツールに読み込ませることで、詳細な分析や施策立案が可能です。*\n`;
 
   return md;
 }
 
 function generateRawDataCsv(responses: any[], respondents: any[], questions: any[]) {
   const respMap = new Map(respondents.map(r => [r.respondent_id, r]));
-  const qMap = new Map(questions.map(q => [q.question_id, q.text]));
 
-  // ヘッダー: RespondentID, StoreCode, Role, Q1, Q2, ...
-  const headers = ['RespondentID', 'StoreCode', 'Role', ...questions.map(q => q.text.replace(/"/g, '""'))];
-  
+  // ヘッダー
+  const headers = ['回答者ID', '事業所コード', '役職', ...questions.map(q => q.text.replace(/"/g, '""').replace(/\*\*/g, ''))];
+
   // 個人ごとに回答をまとめる
   const respondentResponses = new Map<string, Record<string, number>>();
   responses.forEach(r => {
@@ -131,12 +219,12 @@ function generateRawDataCsv(responses: any[], respondents: any[], questions: any
       rid,
       res?.store_code || '',
       res?.role || '',
-      ...questions.map(q => answers[q.question_id] || '')
+      ...questions.map(q => answers[q.question_id] ?? '')
     ];
     return row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',');
   });
 
-  return [headers.join(','), ...rows].join('\n');
+  return [headers.map(h => `"${h}"`).join(','), ...rows].join('\n');
 }
 
 function getCurrentSurveyId(): string {

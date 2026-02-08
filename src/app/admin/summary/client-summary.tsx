@@ -13,6 +13,19 @@ function LoadingSpinner() {
   );
 }
 
+// ツールチップコンポーネント
+function Tooltip({ children, content }: { children: React.ReactNode; content: string }) {
+  return (
+    <span className="relative group cursor-help">
+      {children}
+      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 shadow-lg">
+        {content}
+        <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></span>
+      </span>
+    </span>
+  );
+}
+
 // 信号バッジコンポーネント
 function SignalBadge({ result }: { result: SignalResult }) {
   const colors = {
@@ -20,7 +33,7 @@ function SignalBadge({ result }: { result: SignalResult }) {
     yellow: 'bg-yellow-100 text-yellow-800 border-yellow-200',
     green: 'bg-green-100 text-green-800 border-green-200',
   };
-  
+
   return (
     <span className={`px-2 py-0.5 rounded text-xs border ${colors[result.color]}`}>
       {result.label}
@@ -28,10 +41,21 @@ function SignalBadge({ result }: { result: SignalResult }) {
   );
 }
 
+// 信号の色を取得
+function getSignalBgColor(color: 'red' | 'yellow' | 'green') {
+  const colors = {
+    red: 'bg-red-50 border-red-200',
+    yellow: 'bg-yellow-50 border-yellow-200',
+    green: 'bg-blue-50 border-blue-200',
+  };
+  return colors[color];
+}
+
 export default function ClientSummary() {
   const [data, setData] = useState<SummaryResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [exporting, setExporting] = useState(false);
 
   // ヒートマップ設定
   const [heatmapTab, setHeatmapTab] = useState<'store_code' | 'role' | 'age'>('store_code');
@@ -68,14 +92,13 @@ export default function ClientSummary() {
   if (!data?.summary) return <div className="p-4">データがありません</div>;
 
   const { summary, segmentScores } = data;
-  
+
   // KPI計算
-  const overallScore = summary.overallScore?.toFixed(2) ?? '-';
-  const responseCount = summary.overallScore !== null ? summary.n : 0; // summary.n は有効回答者数
+  const overallScore = summary.overallScore;
+  const responseCount = summary.n;
   const responseRateVal = (summary.responseRate.byRespondent.rate * 100).toFixed(1);
 
   // 総合スコアの信号判定
-  // elementScoresを使って計算
   const overallSignal = evaluateOverallSignal(summary.overallScore, summary.elementScores);
 
   // 強み・弱み
@@ -83,8 +106,6 @@ export default function ClientSummary() {
   const weaknesses = summary.weaknesses;
 
   // ヒートマップ用データ
-  // segmentScores は Plain Object に変換されているため、型キャストが必要
-  // APIレスポンスでは Map ではなく Object (Record<string, FactorScore>) になっている
   const heatmapRows = (segmentScores || []).map(row => ({
     ...row,
     factorScores: row.factorScores as unknown as Record<string, FactorScore>,
@@ -93,10 +114,27 @@ export default function ClientSummary() {
   // Factor定義順序（列）
   const factors = summary.factorScores.map(f => ({ id: f.factor_id, name: f.factor_name }));
 
-  const handleExport = (type: 'markdown' | 'csv') => {
+  const handleExport = async (type: 'markdown' | 'csv') => {
     const surveyId = data?.summary?.surveyId || '';
-    const url = `/api/admin/export?type=${type}&survey_id=${surveyId}`;
-    window.location.href = url;
+    setExporting(true);
+    try {
+      const url = `/api/admin/export?type=${type}&survey_id=${surveyId}`;
+      window.location.href = url;
+    } finally {
+      setTimeout(() => setExporting(false), 2000);
+    }
+  };
+
+  // 因子スコアの計算根拠を生成
+  const getFactorTooltip = (fs: FactorScore) => {
+    const elemCount = fs.elements.filter(e => e.mean !== null).length;
+    return `${elemCount}要素の平均値`;
+  };
+
+  // 総合スコアの計算根拠
+  const getOverallTooltip = () => {
+    const factorCount = summary.factorScores.filter(f => f.mean !== null).length;
+    return `${factorCount}因子の平均値 (因子 = 要素平均の平均)`;
   };
 
   return (
@@ -108,22 +146,28 @@ export default function ClientSummary() {
             <h1 className="text-xl font-bold text-gray-800">全社組織診断サマリー</h1>
             <div className="text-sm text-gray-500 mt-1 flex gap-4">
               <span>期間: {summary.surveyId}</span>
-              <span>有効回答: <strong className="text-gray-900">{responseCount}</strong>名</span>
-              <span>回答率: <strong className="text-gray-900">{responseRateVal}</strong>%</span>
+              <Tooltip content={`対象者${summary.responseRate.byRespondent.total}名中${summary.responseRate.byRespondent.answered}名が回答`}>
+                <span>有効回答: <strong className="text-gray-900">{responseCount}</strong>名</span>
+              </Tooltip>
+              <Tooltip content={`人ベース回答率 = 回答者数 / 対象者数`}>
+                <span>回答率: <strong className="text-gray-900">{responseRateVal}</strong>%</span>
+              </Tooltip>
             </div>
           </div>
           <div className="flex gap-2">
-            <button 
+            <button
               onClick={() => handleExport('markdown')}
-              className="px-4 py-2 bg-white border border-gray-300 rounded hover:bg-gray-50 text-sm font-medium text-gray-700"
+              disabled={exporting}
+              className="px-4 py-2 bg-white border border-gray-300 rounded hover:bg-gray-50 text-sm font-medium text-gray-700 disabled:opacity-50"
             >
               NotebookLM用出力
             </button>
-            <button 
+            <button
               onClick={() => handleExport('csv')}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-medium shadow-sm"
+              disabled={exporting}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-medium shadow-sm disabled:opacity-50"
             >
-              CSVダウンロード
+              {exporting ? '保存中...' : 'CSVダウンロード'}
             </button>
           </div>
         </div>
@@ -138,20 +182,53 @@ export default function ClientSummary() {
       </header>
 
       <main className="px-6 py-6 space-y-6 max-w-7xl mx-auto">
-        {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* 総合スコア */}
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col justify-center items-center">
-             <h3 className="text-gray-500 font-medium mb-2">総合エンゲージメントスコア</h3>
-             <div className="flex items-baseline gap-2">
-               <span className="text-5xl font-bold text-gray-900">{overallScore}</span>
-               <span className="text-gray-400 text-lg">/ 5.0</span>
-             </div>
-             <div className="mt-3">
-               <SignalBadge result={overallSignal} />
-             </div>
-          </div>
+        {/* === 総合スコア + 因子スコア（上部に配置）=== */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            {/* 総合スコア */}
+            <div className="text-center md:border-r md:pr-8 border-gray-200">
+              <h3 className="text-gray-500 font-medium mb-2">総合エンゲージメント</h3>
+              <Tooltip content={getOverallTooltip()}>
+                <div className="flex items-baseline gap-2 justify-center">
+                  <span className="text-5xl font-bold text-gray-900">{overallScore?.toFixed(2) ?? '-'}</span>
+                  <span className="text-gray-400 text-lg">/ 5.0</span>
+                </div>
+              </Tooltip>
+              <div className="mt-3">
+                <SignalBadge result={overallSignal} />
+              </div>
+            </div>
 
+            {/* 因子スコア（横並び） */}
+            <div className="flex-1">
+              <h3 className="text-gray-500 font-medium mb-4 text-center md:text-left">因子別スコア</h3>
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
+                {summary.factorScores.map(fs => {
+                  const signal = evaluateFactorSignal(fs);
+                  return (
+                    <div
+                      key={fs.factor_id}
+                      className={`p-4 rounded-lg border ${getSignalBgColor(signal.color)}`}
+                    >
+                      <div className="text-sm font-medium text-gray-700 mb-1">{fs.factor_name}</div>
+                      <Tooltip content={getFactorTooltip(fs)}>
+                        <div className="text-2xl font-bold text-gray-900">
+                          {fs.mean?.toFixed(2) ?? '-'}
+                        </div>
+                      </Tooltip>
+                      <div className="mt-1">
+                        <SignalBadge result={signal} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* === 強み・弱み === */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* 強み TOP3 */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <h3 className="text-gray-500 font-medium mb-4 flex items-center gap-2">
@@ -161,12 +238,14 @@ export default function ClientSummary() {
               {strengths.map((el, i) => (
                 <div key={el.element_id} className="flex justify-between items-center text-sm">
                   <div className="flex items-center gap-2 overflow-hidden">
-                    <span className="text-gray-400 w-4 font-mono">{i+1}</span>
+                    <span className="text-gray-400 w-4 font-mono">{i + 1}</span>
                     <span className="truncate text-gray-800 font-medium">{el.element_name}</span>
                   </div>
-                  <span className="font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded ml-2">
-                    {el.mean.toFixed(2)}
-                  </span>
+                  <Tooltip content={`要素「${el.element_name}」の平均スコア`}>
+                    <span className="font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded ml-2">
+                      {el.mean.toFixed(2)}
+                    </span>
+                  </Tooltip>
                 </div>
               ))}
             </div>
@@ -181,19 +260,21 @@ export default function ClientSummary() {
               {weaknesses.map((el, i) => (
                 <div key={el.element_id} className="flex justify-between items-center text-sm">
                   <div className="flex items-center gap-2 overflow-hidden">
-                     <span className="text-gray-400 w-4 font-mono">{i+1}</span>
-                     <span className="truncate text-gray-800 font-medium">{el.element_name}</span>
+                    <span className="text-gray-400 w-4 font-mono">{i + 1}</span>
+                    <span className="truncate text-gray-800 font-medium">{el.element_name}</span>
                   </div>
-                  <span className="font-bold bg-red-50 text-red-700 px-2 py-0.5 rounded ml-2">
-                    {el.mean.toFixed(2)}
-                  </span>
+                  <Tooltip content={`要素「${el.element_name}」の平均スコア`}>
+                    <span className="font-bold bg-red-50 text-red-700 px-2 py-0.5 rounded ml-2">
+                      {el.mean.toFixed(2)}
+                    </span>
+                  </Tooltip>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* ヒートマップ */}
+        {/* === ヒートマップ === */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <div className="p-4 border-b border-gray-200 flex justify-between items-center bg-gray-50">
             <h3 className="font-bold text-gray-800 flex items-center gap-2">
@@ -201,19 +282,19 @@ export default function ClientSummary() {
               セグメント別スコア ヒートマップ
             </h3>
             <div className="flex gap-2 text-xs">
-                {['store_code', 'role', 'age'].map(tab => (
-                  <button 
-                    key={tab}
-                    className={`px-3 py-1.5 rounded border transition-colors ${
-                      heatmapTab === tab 
-                      ? 'bg-blue-600 text-white border-blue-600' 
+              {['store_code', 'role', 'age'].map(tab => (
+                <button
+                  key={tab}
+                  className={`px-3 py-1.5 rounded border transition-colors ${
+                    heatmapTab === tab
+                      ? 'bg-blue-600 text-white border-blue-600'
                       : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
-                    }`}
-                    onClick={() => setHeatmapTab(tab as any)}
-                  >
-                    {tab === 'store_code' ? '事業所別' : tab === 'role' ? '役職別' : '年代別'}
-                  </button>
-                ))}
+                  }`}
+                  onClick={() => setHeatmapTab(tab as any)}
+                >
+                  {tab === 'store_code' ? '事業所別' : tab === 'role' ? '役職別' : '年代別'}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -237,44 +318,39 @@ export default function ClientSummary() {
                   if (row.n < minN) return null;
                   return (
                     <tr key={row.segmentKey} className="hover:bg-gray-50 group">
-                       <td className="px-4 py-2.5 font-medium sticky left-0 bg-white group-hover:bg-gray-50 border-r border-gray-200 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] text-gray-800 truncate max-w-[200px]" title={row.segmentName || row.segmentKey}>
-                         {row.segmentName || row.segmentKey}
-                       </td>
-                       <td className="px-2 py-2.5 text-center text-gray-500 border-r border-gray-200 text-xs">{row.n}</td>
-                       {factors.map(f => {
-                         const fScore = row.factorScores[f.id];
-                         // 信号判定
-                         // fScoreがundefinedの場合もありうる（回答ゼロなど）
-                         const result = fScore ? evaluateFactorSignal(fScore) : { color: 'red' as const, level: 0, label: '-' };
-                         const mean = fScore?.mean ?? null;
+                      <td className="px-4 py-2.5 font-medium sticky left-0 bg-white group-hover:bg-gray-50 border-r border-gray-200 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] text-gray-800 truncate max-w-[200px]" title={row.segmentName || row.segmentKey}>
+                        {row.segmentName || row.segmentKey}
+                      </td>
+                      <td className="px-2 py-2.5 text-center text-gray-500 border-r border-gray-200 text-xs">{row.n}</td>
+                      {factors.map(f => {
+                        const fScore = row.factorScores[f.id];
+                        const result = fScore ? evaluateFactorSignal(fScore) : { color: 'red' as const, level: 0, label: '-' };
+                        const mean = fScore?.mean ?? null;
 
-                         // 背景色は信号判定に基づくが、セルの背景全体に使用
-                         const bgColors = {
-                           red: 'bg-red-50 text-red-900',
-                           yellow: 'bg-yellow-50 text-yellow-900',
-                           green: 'bg-blue-50 text-blue-900', // デザイン上はBlue系が見やすい
-                         };
-                         
-                         // 色の濃さをスコアに応じて変えたい場合は別途ロジックが必要だが、
-                         // ここではSafety判定結果で色分けする
-                         const cellClass = bgColors[result.color];
+                        const bgColors = {
+                          red: 'bg-red-50 text-red-900',
+                          yellow: 'bg-yellow-50 text-yellow-900',
+                          green: 'bg-blue-50 text-blue-900',
+                        };
 
-                         return (
-                           <td key={f.id} className={`px-2 py-2.5 text-center border-r border-gray-100 ${cellClass}`}>
-                             <div className="flex flex-col items-center">
-                               <span className="font-bold">{mean?.toFixed(2) ?? '-'}</span>
-                             </div>
-                           </td>
-                         );
-                       })}
+                        const cellClass = bgColors[result.color];
+
+                        return (
+                          <td key={f.id} className={`px-2 py-2.5 text-center border-r border-gray-100 ${cellClass}`}>
+                            <Tooltip content={`${row.segmentName || row.segmentKey} × ${f.name}`}>
+                              <span className="font-bold">{mean?.toFixed(2) ?? '-'}</span>
+                            </Tooltip>
+                          </td>
+                        );
+                      })}
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
           </div>
           <div className="p-3 bg-gray-50 text-xs text-center text-gray-500 border-t border-gray-200">
-             ※ 回答者数 {minN}名未満のセグメントは表示されません
+            ※ 回答者数 {minN}名未満のセグメントは表示されません
           </div>
         </div>
       </main>
