@@ -46,6 +46,55 @@ function calcFactorBottom2(elements: ElementScore[]): number | null {
 }
 
 /**
+ * 因子の分布を計算（配下要素の分布を平均）
+ */
+function calcFactorDistribution(elements: ElementScore[]): { top2: number; mid: number; bottom2: number } | null {
+  const validElements = elements.filter(e => e.distribution && e.distribution.n > 0);
+  if (validElements.length === 0) return null;
+  const top2 = validElements.reduce((sum, e) => sum + e.distribution.top2, 0) / validElements.length;
+  const mid = validElements.reduce((sum, e) => sum + e.distribution.mid, 0) / validElements.length;
+  const bottom2 = validElements.reduce((sum, e) => sum + e.distribution.bottom2, 0) / validElements.length;
+  return { top2, mid, bottom2 };
+}
+
+/**
+ * 分布バー（Top2/Mid/Bottom2を色分け表示）
+ */
+function DistributionBar({ top2, mid, bottom2 }: { top2: number; mid: number; bottom2: number }) {
+  const top2Pct = Math.round(top2 * 100);
+  const midPct = Math.round(mid * 100);
+  const bottom2Pct = Math.round(bottom2 * 100);
+
+  return (
+    <Tooltip content={
+      <div className="text-xs">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>ポジティブ（4-5）: {top2Pct}%</span>
+        </div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="w-2 h-2 rounded-full bg-gray-400"></span>
+          <span>中立（3）: {midPct}%</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-rose-500"></span>
+          <span>ネガティブ（1-2）: {bottom2Pct}%</span>
+        </div>
+      </div>
+    }>
+      <div className="flex items-center gap-1.5 cursor-help">
+        <div className="flex h-2 w-20 rounded-full overflow-hidden bg-gray-200">
+          <div className="bg-emerald-500" style={{ width: `${top2Pct}%` }}></div>
+          <div className="bg-gray-400" style={{ width: `${midPct}%` }}></div>
+          <div className="bg-rose-500" style={{ width: `${bottom2Pct}%` }}></div>
+        </div>
+        <span className="text-[10px] text-gray-400 font-mono w-8">{bottom2Pct}%</span>
+      </div>
+    </Tooltip>
+  );
+}
+
+/**
  * 信号バッジ（スコア＋Bottom2比率で判定）
  */
 function SignalBadge({ score, bottom2Rate }: { score: number | null | undefined; bottom2Rate?: number | null }) {
@@ -239,13 +288,21 @@ export default function ClientSummary() {
                 </Tooltip>
                 <span className="text-gray-300 text-xl font-black">/5.0</span>
               </div>
-              <div className="mt-3 flex justify-center"><SignalBadge score={current.summary.overallScore} bottom2Rate={
-                // 全因子のBottom2を平均
-                (() => {
-                  const rates = current.summary.factorScores.map(fs => calcFactorBottom2(fs.elements)).filter((r): r is number => r != null);
-                  return rates.length > 0 ? rates.reduce((a, b) => a + b, 0) / rates.length : null;
-                })()
-              } /></div>
+              {(() => {
+                // 全因子の分布を平均
+                const allDists = current.summary.factorScores.map(fs => calcFactorDistribution(fs.elements)).filter((d): d is { top2: number; mid: number; bottom2: number } => d != null);
+                const avgDist = allDists.length > 0 ? {
+                  top2: allDists.reduce((s, d) => s + d.top2, 0) / allDists.length,
+                  mid: allDists.reduce((s, d) => s + d.mid, 0) / allDists.length,
+                  bottom2: allDists.reduce((s, d) => s + d.bottom2, 0) / allDists.length,
+                } : null;
+                return (
+                  <div className="mt-3 flex flex-col items-center gap-2">
+                    <SignalBadge score={current.summary.overallScore} bottom2Rate={avgDist?.bottom2} />
+                    {avgDist && <DistributionBar top2={avgDist.top2} mid={avgDist.mid} bottom2={avgDist.bottom2} />}
+                  </div>
+                );
+              })()}
               {/* Δ比較 - 常時表示、全体平均を先頭に */}
               <div className="mt-4 px-4 py-3 bg-gray-50/80 rounded-xl border border-gray-100">
                 <DeltaDisplay current={current.summary.overallScore} target={overallAvg?.summary.overallScore} label="Δ全体平均" />
@@ -260,6 +317,8 @@ export default function ClientSummary() {
                   const signal = getSignal(fs.mean);
                   const p1 = prev1?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
                   const oa = overallAvg?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
+
+                  const dist = calcFactorDistribution(fs.elements);
 
                   return (
                     <div key={fs.factor_id} className={`p-5 rounded-xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
@@ -277,7 +336,10 @@ export default function ClientSummary() {
                         }>
                             <div className="text-4xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{fs.mean?.toFixed(2) ?? '-'}</div>
                         </Tooltip>
-                        <div className="mt-2"><SignalBadge score={fs.mean} bottom2Rate={calcFactorBottom2(fs.elements)} /></div>
+                        <div className="mt-2 flex items-center gap-2 flex-wrap">
+                          <SignalBadge score={fs.mean} bottom2Rate={calcFactorBottom2(fs.elements)} />
+                          {dist && <DistributionBar top2={dist.top2} mid={dist.mid} bottom2={dist.bottom2} />}
+                        </div>
                       </div>
                       <div className="mt-3 pt-3 border-t border-black/5 space-y-0.5">
                         <DeltaDisplay current={fs.mean} target={oa} label="Δ全体平均" />
@@ -290,10 +352,10 @@ export default function ClientSummary() {
               {/* 信号判定の凡例 */}
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-gray-400">
                 <span className="font-bold text-gray-500">信号判定:</span>
-                <span><span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1"></span>良好: スコア≧3.8 & Bot2&lt;10%</span>
+                <span><span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1"></span>良好: スコア≧3.8 & ネガティブ&lt;10%</span>
                 <span><span className="inline-block w-2 h-2 rounded-full bg-yellow-500 mr-1"></span>注意: どちらか一方のみ</span>
-                <span><span className="inline-block w-2 h-2 rounded-full bg-red-500 mr-1"></span>要改善: スコア&lt;3.8 & Bot2≧10%</span>
-                <span className="text-[9px] text-gray-300">※Bot2 = 回答「1」または「2」の比率</span>
+                <span><span className="inline-block w-2 h-2 rounded-full bg-red-500 mr-1"></span>要改善: スコア&lt;3.8 & ネガティブ≧10%</span>
+                <span className="text-[9px] text-gray-300">※ネガティブ = 回答「1」または「2」の比率</span>
               </div>
             </div>
           </div>
