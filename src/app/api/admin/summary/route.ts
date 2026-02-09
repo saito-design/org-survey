@@ -68,7 +68,9 @@ export async function GET(req: NextRequest) {
     // 組織フィルタ
     const filterHq = searchParams.get('hq') || 'all';
     const filterDept = searchParams.get('dept') || 'all';
+    const filterSection = searchParams.get('section') || 'all';
     const filterArea = searchParams.get('area') || 'all';
+    const filterBusinessType = searchParams.get('business_type') || 'all';
     const filterOffice = searchParams.get('office') || 'all';
 
     const rootId = process.env.APP_DATA_ROOT_FOLDER_ID;
@@ -102,13 +104,14 @@ export async function GET(req: NextRequest) {
 
     // 対象者フィルタリング関数
     const filterRespondent = (r: Respondent) => {
-      if (!filterHq && !filterDept && !filterArea && !filterOffice) return true;
       const ou = orgUnitMap.get(r.store_code);
       if (!ou) return false;
 
       if (filterHq !== 'all' && ou.hq !== filterHq) return false;
       if (filterDept !== 'all' && ou.dept !== filterDept) return false;
+      if (filterSection !== 'all' && ou.section !== filterSection) return false;
       if (filterArea !== 'all' && ou.area !== filterArea) return false;
+      if (filterBusinessType !== 'all' && ou.business_type !== filterBusinessType) return false;
       if (filterOffice !== 'all' && ou.store_code !== filterOffice) return false;
       return true;
     };

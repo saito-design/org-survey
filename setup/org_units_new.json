@@ -1,0 +1,205 @@
+{
+  "org_units": [
+    {
+      "store_code": "1001",
+      "store_name": "1001店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営1部",
+      "section": "課1",
+      "area": "関東",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1002",
+      "store_name": "1002店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営2部",
+      "section": "課2",
+      "area": "関西",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1003",
+      "store_name": "1003店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営3部",
+      "section": "課3",
+      "area": "中部",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1004",
+      "store_name": "1004店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営1部",
+      "section": "課4",
+      "area": "東北",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1005",
+      "store_name": "1005店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営2部",
+      "section": "課1",
+      "area": "九州",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1006",
+      "store_name": "1006店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営3部",
+      "section": "課2",
+      "area": "関東",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1007",
+      "store_name": "1007店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営1部",
+      "section": "課3",
+      "area": "関西",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1008",
+      "store_name": "1008店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営2部",
+      "section": "課4",
+      "area": "中部",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1009",
+      "store_name": "1009店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営3部",
+      "section": "課1",
+      "area": "東北",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1010",
+      "store_name": "1010店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営1部",
+      "section": "課2",
+      "area": "九州",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1011",
+      "store_name": "1011店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営2部",
+      "section": "課3",
+      "area": "関東",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1012",
+      "store_name": "1012店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営3部",
+      "section": "課4",
+      "area": "関西",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1013",
+      "store_name": "1013店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営1部",
+      "section": "課1",
+      "area": "中部",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1014",
+      "store_name": "1014店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営2部",
+      "section": "課2",
+      "area": "東北",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1015",
+      "store_name": "1015店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営3部",
+      "section": "課3",
+      "area": "九州",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1016",
+      "store_name": "1016店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営1部",
+      "section": "課4",
+      "area": "関東",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1017",
+      "store_name": "1017店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営2部",
+      "section": "課1",
+      "area": "関西",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1018",
+      "store_name": "1018店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営3部",
+      "section": "課2",
+      "area": "中部",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1019",
+      "store_name": "1019店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営1部",
+      "section": "課3",
+      "area": "東北",
+      "business_type": "居酒屋",
+      "active": true
+    },
+    {
+      "store_code": "1020",
+      "store_name": "1020店",
+      "hq": "外食事業本部",
+      "dept": "店舗運営2部",
+      "section": "課4",
+      "area": "九州",
+      "business_type": "居酒屋",
+      "active": true
+    }
+  ],
+  "updated_at": "2026-02-09T00:31:37.772Z"
+}

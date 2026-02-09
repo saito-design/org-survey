@@ -104,7 +104,9 @@ export default function ClientSummary() {
     segment: searchParams.get('segment') || 'store_code',
     hq: searchParams.get('hq') || 'all',
     dept: searchParams.get('dept') || 'all',
+    section: searchParams.get('section') || 'all',
     area: searchParams.get('area') || 'all',
+    business_type: searchParams.get('business_type') || 'all',
     office: searchParams.get('office') || 'all',
     mode: (searchParams.get('mode') || 'abs') as 'abs' | 'diff',
     compare: (searchParams.get('compare') || 'overall') as 'prev1' | 'prev2' | 'overall',
@@ -155,11 +157,22 @@ export default function ClientSummary() {
   const { current, prev1, prev2, overallAvg, orgUnits } = data;
   const heatmapTarget = params.compare === 'prev1' ? prev1 : params.compare === 'prev2' ? prev2 : overallAvg;
 
-  // フィルタ選択肢
+  // フィルタ選択肢（階層: 本部 → 事業部 → 課 → エリア → 業態 → 事業所）
+  const filterByParent = (ou: any) => {
+    if (params.hq !== 'all' && ou.hq !== params.hq) return false;
+    if (params.dept !== 'all' && ou.dept !== params.dept) return false;
+    if (params.section !== 'all' && ou.section !== params.section) return false;
+    if (params.area !== 'all' && ou.area !== params.area) return false;
+    if (params.business_type !== 'all' && ou.business_type !== params.business_type) return false;
+    return true;
+  };
+
   const hqs = Array.from(new Set(orgUnits?.map(ou => ou.hq).filter(Boolean)));
   const depts = Array.from(new Set(orgUnits?.filter(ou => params.hq === 'all' || ou.hq === params.hq).map(ou => ou.dept).filter(Boolean)));
-  const areas = Array.from(new Set(orgUnits?.filter(ou => (params.hq === 'all' || ou.hq === params.hq) && (params.dept === 'all' || ou.dept === params.dept)).map(ou => ou.area).filter(Boolean)));
-  const offices = orgUnits?.filter(ou => (params.hq === 'all' || ou.hq === params.hq) && (params.dept === 'all' || ou.dept === params.dept) && (params.area === 'all' || ou.area === params.area)) || [];
+  const sections = Array.from(new Set(orgUnits?.filter(ou => (params.hq === 'all' || ou.hq === params.hq) && (params.dept === 'all' || ou.dept === params.dept)).map(ou => ou.section).filter(Boolean)));
+  const areas = Array.from(new Set(orgUnits?.filter(ou => (params.hq === 'all' || ou.hq === params.hq) && (params.dept === 'all' || ou.dept === params.dept) && (params.section === 'all' || ou.section === params.section)).map(ou => ou.area).filter(Boolean)));
+  const businessTypes = Array.from(new Set(orgUnits?.filter(ou => (params.hq === 'all' || ou.hq === params.hq) && (params.dept === 'all' || ou.dept === params.dept) && (params.section === 'all' || ou.section === params.section) && (params.area === 'all' || ou.area === params.area)).map(ou => ou.business_type).filter(Boolean)));
+  const offices = orgUnits?.filter(filterByParent) || [];
 
   const handleExport = async () => {
     setExporting(true);
@@ -188,11 +201,13 @@ export default function ClientSummary() {
         </div>
 
         {/* フィルタスライサー */}
-        <div className="grid grid-cols-2 md:flex md:flex-nowrap bg-gray-100 p-1.5 rounded-lg gap-1.5 md:gap-2 text-sm">
-          <select value={params.hq} onChange={e => updateParams({ hq: e.target.value, dept: 'all', area: 'all', office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate"><option value="all">本部: 全て</option>{hqs.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
-          <select value={params.dept} onChange={e => updateParams({ dept: e.target.value, area: 'all', office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate"><option value="all">部: 全て</option>{depts.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
-          <select value={params.area} onChange={e => updateParams({ area: e.target.value, office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate"><option value="all">エリア: 全て</option>{areas.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
-          <select value={params.office} onChange={e => updateParams({ office: e.target.value })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate"><option value="all">事業所: 全て</option>{offices.map(ou => <option key={ou.store_code} value={ou.store_code}>{ou.store_name}</option>)}</select>
+        <div className="grid grid-cols-3 md:flex md:flex-nowrap bg-gray-100 p-1.5 rounded-lg gap-1.5 md:gap-2 text-sm overflow-x-auto">
+          <select value={params.hq} onChange={e => updateParams({ hq: e.target.value, dept: 'all', section: 'all', area: 'all', business_type: 'all', office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate min-w-0"><option value="all">本部: 全て</option>{hqs.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
+          <select value={params.dept} onChange={e => updateParams({ dept: e.target.value, section: 'all', area: 'all', business_type: 'all', office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate min-w-0"><option value="all">事業部: 全て</option>{depts.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
+          <select value={params.section} onChange={e => updateParams({ section: e.target.value, area: 'all', business_type: 'all', office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate min-w-0"><option value="all">課: 全て</option>{sections.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
+          <select value={params.area} onChange={e => updateParams({ area: e.target.value, business_type: 'all', office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate min-w-0"><option value="all">エリア: 全て</option>{areas.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
+          <select value={params.business_type} onChange={e => updateParams({ business_type: e.target.value, office: 'all' })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate min-w-0"><option value="all">業態: 全て</option>{businessTypes.map(v => <option key={v as string} value={v as string}>{v as string}</option>)}</select>
+          <select value={params.office} onChange={e => updateParams({ office: e.target.value })} className="bg-white border-gray-300 rounded px-2 py-1 text-xs font-bold shadow-sm truncate min-w-0"><option value="all">事業所: 全て</option>{offices.map(ou => <option key={ou.store_code} value={ou.store_code}>{ou.store_name}</option>)}</select>
         </div>
       </header>
 

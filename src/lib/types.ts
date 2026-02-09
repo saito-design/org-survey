@@ -21,11 +21,12 @@ export interface OrgUnit {
   store_code: string;
   store_name: string;
   active: boolean;
-  area?: string;
-  manager?: string;
-  business_type?: string;
-  dept?: string;
-  section?: string;
+  hq?: string;           // 事業本部
+  dept?: string;         // 事業部
+  section?: string;      // 課
+  area?: string;         // エリア
+  business_type?: string; // 業態
+  manager?: string;      // 管理者
   [key: string]: unknown;
 }
 
