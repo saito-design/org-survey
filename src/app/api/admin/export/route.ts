@@ -176,6 +176,7 @@ function generateCustomerCsv(
     const currentYear = new Date().getFullYear();
     const joinYear = resp?.join_year;
     const tenure = joinYear ? currentYear - joinYear : '';
+    const ageBand = calcAgeBand(resp?.birth_date);
 
     // メタデータ列
     const meta = [
@@ -204,7 +205,7 @@ function generateCustomerCsv(
       resp?.anonymous ? '' : (resp?.name || ''),   // 氏名（匿名時は空白）
       joinYear || '',                              // 入社年
       resp?.birth_date || '',                      // 生年月日
-      resp?.age_band || '',                        // 年代
+      ageBand,                                     // 年代（生年月日から計算）
       tenure,                                      // 在籍年数
       resp?.anonymous ? 1 : 0,                     // 匿名希望
       resp?.is_admin ? 1 : 0,                      // is_admin
@@ -342,4 +343,31 @@ function getJstTimestamp(): string {
   const min = String(jst.getUTCMinutes()).padStart(2, '0');
   const sec = String(jst.getUTCSeconds()).padStart(2, '0');
   return `${year}${month}${day}-${hour}${min}${sec}`;
+}
+
+/**
+ * 生年月日から年代を計算
+ * @param birthDate - 生年月日（YYYY-MM-DD形式）
+ * @returns 年代（例: "10代", "20代", "30代"）、無効な場合は空文字
+ */
+function calcAgeBand(birthDate: string | undefined): string {
+  if (!birthDate) return '';
+
+  const birth = new Date(birthDate);
+  if (isNaN(birth.getTime())) return '';
+
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+
+  // 誕生日がまだ来ていない場合は1歳引く
+  const monthDiff = today.getMonth() - birth.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+
+  if (age < 10) return '10代未満';
+  if (age >= 70) return '70代以上';
+
+  const decade = Math.floor(age / 10) * 10;
+  return `${decade}代`;
 }
