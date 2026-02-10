@@ -297,9 +297,13 @@ function formatSurveyMonthShort(surveyId: string): string {
 
 /**
  * CSVをDriveに保存
+ * 保存先: parentFolderId/CSV出力/surveyId/fileName
  */
 async function saveCsvToDrive(csv: string, fileName: string, parentFolderId: string, surveyId: string) {
-  const surveyFolderId = await ensureFolder(surveyId, parentFolderId);
+  // 「CSV出力」フォルダを作成/取得
+  const csvOutputFolderId = await ensureFolder('CSV出力', parentFolderId);
+  // surveyIdフォルダを作成/取得
+  const surveyFolderId = await ensureFolder(surveyId, csvOutputFolderId);
 
   const { google } = await import('googleapis');
   const auth = await getGoogleAuth();
