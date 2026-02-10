@@ -7,6 +7,17 @@ import { FactorScore, ElementScore, SurveySummary } from '@/lib/types';
 import { normalizeLabel } from '@/lib/utils';
 import { getSignal, getSignalBgClass, getSignalLabel } from '@/lib/signal';
 
+// 7つのキー設問（管理No 1〜7）- question_id_mapping.jsonと完全一致
+const KEY_QUESTIONS = [
+  { mgmt_no: 1, category: '会社の満足度', concept: 'F1', questions: { MANAGER: 'MANAGER-Q29', STAFF: 'STAFF-Q29', PA: 'PA-Q22' } },
+  { mgmt_no: 2, category: '職務満足度', concept: 'F1', questions: { MANAGER: 'MANAGER-Q28', STAFF: 'STAFF-Q28', PA: 'PA-Q21' } },
+  { mgmt_no: 3, category: '会社の将来像への期待', concept: 'F2', questions: { MANAGER: 'MANAGER-Q18', STAFF: null, PA: null } },
+  { mgmt_no: 4, category: '顧客視点意識', concept: 'F2', questions: { MANAGER: 'MANAGER-Q49', STAFF: 'STAFF-Q46', PA: 'PA-Q33' } },
+  { mgmt_no: 5, category: '貢献意欲', concept: 'F3', questions: { MANAGER: 'MANAGER-Q27', STAFF: null, PA: null } },
+  { mgmt_no: 6, category: '勤続意思', concept: 'F3', questions: { MANAGER: 'MANAGER-Q26', STAFF: 'STAFF-Q26', PA: null } },
+  { mgmt_no: 7, category: '効果的チーム', concept: 'F3', questions: { MANAGER: 'MANAGER-Q65', STAFF: null, PA: null } },
+];
+
 /**
  * ローディングスピナー
  */
@@ -14,6 +25,20 @@ function LoadingSpinner() {
   return (
     <div className="flex justify-center items-center h-64">
       <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent"></div>
+    </div>
+  );
+}
+
+/**
+ * ローディングオーバーレイ（データ更新中）
+ */
+function LoadingOverlay() {
+  return (
+    <div className="fixed inset-0 bg-white/60 backdrop-blur-sm z-50 flex items-center justify-center">
+      <div className="bg-white rounded-xl shadow-lg px-8 py-6 flex items-center gap-4 border border-gray-200">
+        <div className="animate-spin h-6 w-6 border-3 border-blue-500 rounded-full border-t-transparent"></div>
+        <span className="text-gray-700 font-bold">Loading...</span>
+      </div>
     </div>
   );
 }
@@ -236,6 +261,9 @@ export default function ClientSummary() {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
+      {/* ローディングオーバーレイ */}
+      {loading && data && <LoadingOverlay />}
+
       <header className="sticky top-0 z-20 bg-white shadow-sm border-b border-gray-200 px-4 md:px-6 py-2 md:py-3">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mb-2">
           <div>
@@ -313,41 +341,69 @@ export default function ClientSummary() {
             <div className="flex-1">
               <h3 className="text-gray-500 text-xs font-bold mb-3 uppercase tracking-wider">因子別分析</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {current.summary.factorScores.map((fs) => {
-                  const signal = getSignal(fs.mean);
-                  const p1 = prev1?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
-                  const oa = overallAvg?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
+                {(() => {
+                  // ランキング計算（選択された階層内での順位）
+                  const allSegmentScores = current.segmentScores || [];
+                  const factorRanks: Record<string, { rank: number; total: number }> = {};
 
-                  const dist = calcFactorDistribution(fs.elements);
+                  if (params.office !== 'all') {
+                    // 事業所が選択されている場合、同階層内でランキング
+                    current.summary.factorScores.forEach(fs => {
+                      const scores = allSegmentScores
+                        .filter(s => s.n >= 5)
+                        .map(s => ({ key: s.segmentKey, mean: (s.factorScores as any)[fs.factor_id]?.mean }))
+                        .filter(s => s.mean != null)
+                        .sort((a, b) => (b.mean ?? 0) - (a.mean ?? 0));
+                      const idx = scores.findIndex(s => s.key === params.office);
+                      if (idx >= 0) {
+                        factorRanks[fs.factor_id] = { rank: idx + 1, total: scores.length };
+                      }
+                    });
+                  }
 
-                  return (
-                    <div key={fs.factor_id} className={`p-5 rounded-xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
-                      <div>
-                        <div className="text-xs md:text-sm font-black mb-1 opacity-70 tracking-wide truncate">{normalizeLabel(fs.factor_name)}</div>
-                        <Tooltip content={
-                            <>
-                                <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(fs.factor_name)}</div>
-                                <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
-                                  = Σ要素スコア / 要素数<br/>
-                                  = {fs.elements.filter(e => e.mean != null).map(e => e.mean!.toFixed(2)).join(' + ')} / {fs.elements.filter(e => e.mean != null).length}
-                                </div>
-                                <div className="text-gray-300">有効回答: {current.summary.n}名</div>
-                            </>
-                        }>
-                            <div className="text-4xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{fs.mean?.toFixed(2) ?? '-'}</div>
-                        </Tooltip>
-                        <div className="mt-2 flex items-center gap-2 flex-wrap">
-                          <SignalBadge score={fs.mean} bottom2Rate={calcFactorBottom2(fs.elements)} />
-                          {dist && <DistributionBar top2={dist.top2} mid={dist.mid} bottom2={dist.bottom2} />}
+                  return current.summary.factorScores.map((fs) => {
+                    const signal = getSignal(fs.mean);
+                    const p1 = prev1?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
+                    const oa = overallAvg?.summary.factorScores.find((f) => f.factor_id === fs.factor_id)?.mean;
+                    const dist = calcFactorDistribution(fs.elements);
+                    const rank = factorRanks[fs.factor_id];
+
+                    return (
+                      <div key={fs.factor_id} className={`p-5 rounded-xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
+                        <div>
+                          <div className="flex items-center justify-between gap-2 mb-1">
+                            <div className="text-xs md:text-sm font-black opacity-70 tracking-wide truncate">{normalizeLabel(fs.factor_name)}</div>
+                            {rank && (
+                              <span className="text-[10px] font-bold text-gray-500 bg-white/50 px-1.5 py-0.5 rounded shrink-0">
+                                {rank.rank}/{rank.total}位
+                              </span>
+                            )}
+                          </div>
+                          <Tooltip content={
+                              <>
+                                  <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(fs.factor_name)}</div>
+                                  <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
+                                    = Σ要素スコア / 要素数<br/>
+                                    = {fs.elements.filter(e => e.mean != null).map(e => e.mean!.toFixed(2)).join(' + ')} / {fs.elements.filter(e => e.mean != null).length}
+                                  </div>
+                                  <div className="text-gray-300">有効回答: {current.summary.n}名</div>
+                              </>
+                          }>
+                              <div className="text-4xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{fs.mean?.toFixed(2) ?? '-'}</div>
+                          </Tooltip>
+                          <div className="mt-2 flex items-center gap-2 flex-wrap">
+                            <SignalBadge score={fs.mean} bottom2Rate={calcFactorBottom2(fs.elements)} />
+                            {dist && <DistributionBar top2={dist.top2} mid={dist.mid} bottom2={dist.bottom2} />}
+                          </div>
+                        </div>
+                        <div className="mt-3 pt-3 border-t border-black/5 space-y-0.5">
+                          <DeltaDisplay current={fs.mean} target={oa} label="Δ全体平均" />
+                          <DeltaDisplay current={fs.mean} target={p1} label="Δ前回" />
                         </div>
                       </div>
-                      <div className="mt-3 pt-3 border-t border-black/5 space-y-0.5">
-                        <DeltaDisplay current={fs.mean} target={oa} label="Δ全体平均" />
-                        <DeltaDisplay current={fs.mean} target={p1} label="Δ前回" />
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  });
+                })()}
               </div>
               {/* 信号判定の凡例 */}
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-gray-400">
@@ -361,67 +417,11 @@ export default function ClientSummary() {
           </div>
         </div>
 
-        {/* 強み・課題 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-            <h3 className="text-sm font-black text-blue-600 mb-3 tracking-wider uppercase flex items-center gap-2">
-              <span className="w-1.5 h-5 bg-blue-600 rounded-full"></span>
-              ▲ Strengths (Top 3)
-            </h3>
-            <div className="space-y-3">
-              {current.summary.strengths.map((el, i: number) => (
-                <div key={el.element_id} className="flex justify-between items-center group">
-                  <div className="flex items-center gap-3 overflow-hidden">
-                    <span className="text-blue-200 text-lg font-black italic w-6">0{i + 1}</span>
-                    <span className="text-sm text-gray-800 font-bold truncate leading-tight">{normalizeLabel(el.element_name)}</span>
-                  </div>
-                  <Tooltip content={
-                      <>
-                          <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(el.element_name)}</div>
-                          <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
-                            = {(el.mean * current.summary.n).toLocaleString('ja-JP', { maximumFractionDigits: 0 })} / {current.summary.n}
-                          </div>
-                      </>
-                  }>
-                      <span className="text-sm font-black text-blue-800 bg-blue-50 px-3 py-1 rounded-lg leading-none shadow-sm min-w-[50px] text-center hover:bg-blue-100 transition-colors cursor-help">{el.mean.toFixed(2)}</span>
-                  </Tooltip>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-            <h3 className="text-sm font-black text-red-600 mb-3 tracking-wider uppercase flex items-center gap-2">
-              <span className="w-1.5 h-5 bg-red-600 rounded-full"></span>
-              ▼ Weaknesses (Bottom 3)
-            </h3>
-            <div className="space-y-3">
-              {current.summary.weaknesses.map((el, i: number) => (
-                <div key={el.element_id} className="flex justify-between items-center group">
-                  <div className="flex items-center gap-3 overflow-hidden">
-                    <span className="text-red-200 text-lg font-black italic w-6">0{i + 1}</span>
-                    <span className="text-sm text-gray-800 font-bold truncate leading-tight">{normalizeLabel(el.element_name)}</span>
-                  </div>
-                  <Tooltip content={
-                      <>
-                          <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{normalizeLabel(el.element_name)}</div>
-                          <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
-                            = {(el.mean * current.summary.n).toLocaleString('ja-JP', { maximumFractionDigits: 0 })} / {current.summary.n}
-                          </div>
-                      </>
-                  }>
-                      <span className="text-sm font-black text-red-800 bg-red-50 px-3 py-1 rounded-lg leading-none shadow-sm min-w-[50px] text-center hover:bg-red-100 transition-colors cursor-help">{el.mean.toFixed(2)}</span>
-                  </Tooltip>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ヒートマップ */}
+        {/* 7つのキー設問ヒートマップ */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-visible">
           <div className="p-3 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 bg-gray-50/50">
             <h3 className="font-black text-gray-800 flex items-center gap-2 text-sm uppercase tracking-widest">
-              Segment Heatmap
+              7 Key Indicators
             </h3>
             <div className="flex flex-wrap gap-2">
               <div className="flex bg-white rounded-lg p-1 shadow-inner border border-gray-200 mr-2">
@@ -446,14 +446,18 @@ export default function ClientSummary() {
           </div>
 
           <div className="overflow-x-auto overflow-y-visible">
-            <table className="w-full text-base text-left border-collapse">
+            <table className="w-full text-sm text-left border-collapse">
               <thead>
                 <tr className="bg-gray-50/80">
-                  <th className="px-4 py-3 sticky left-0 z-10 bg-gray-50 border-r border-gray-200 min-w-[150px] font-bold text-gray-400 uppercase tracking-tighter">Segment</th>
-                  <th className="px-2 py-3 text-center border-r border-gray-200 min-w-[40px] font-bold text-gray-400 lowercase">n</th>
-                  {current.summary.factorScores.map((f) => (
-                    <th key={f.factor_id} className="px-2 py-3 text-center border-b border-gray-200 min-w-[80px] font-black text-gray-600 leading-[1.1] whitespace-normal break-words">
-                      {normalizeLabel(f.factor_name)}
+                  <th className="px-3 py-2 sticky left-0 z-10 bg-gray-50 border-r border-gray-200 min-w-[120px] font-bold text-gray-400 uppercase text-[10px]">Segment</th>
+                  <th className="px-2 py-2 text-center border-r border-gray-200 min-w-[30px] font-bold text-gray-400 lowercase text-[10px]">n</th>
+                  {KEY_QUESTIONS.map((kq) => (
+                    <th key={kq.mgmt_no} className={`px-2 py-2 text-center border-b border-gray-200 min-w-[70px] font-bold text-[10px] leading-tight ${
+                      kq.concept === 'F1' ? 'text-blue-700 bg-blue-50/50' :
+                      kq.concept === 'F2' ? 'text-emerald-700 bg-emerald-50/50' :
+                      'text-purple-700 bg-purple-50/50'
+                    }`}>
+                      {kq.category}
                     </th>
                   ))}
                 </tr>
@@ -462,51 +466,65 @@ export default function ClientSummary() {
                 {current.segmentScores?.map(row => {
                   const n = row.n;
                   const isSmallN = n < 5;
-                  
+
                   return (
                     <tr key={row.segmentKey} className="hover:bg-gray-50/50 transition-colors group">
-                      <td className="px-4 py-3 font-bold sticky left-0 bg-white group-hover:bg-gray-50/50 border-r border-gray-200 text-gray-700 truncate max-w-[150px]" title={row.segmentName}>{normalizeLabel(row.segmentName)}</td>
-                      <td className={`px-2 py-3 text-center border-r border-gray-200 font-mono ${isSmallN ? 'text-red-400 bg-red-50/30' : 'text-gray-400'}`}>{n}</td>
-                      {current.summary.factorScores.map((f) => {
-                        const fs = (row.factorScores as any)[f.factor_id];
-                        const val = fs?.mean ?? null;
-                        
-                        if (isSmallN) return <td key={f.factor_id} className="px-2 py-3 text-center text-gray-300 bg-gray-50/30">—</td>;
-                        
+                      <td className="px-3 py-2 font-bold sticky left-0 bg-white group-hover:bg-gray-50/50 border-r border-gray-200 text-gray-700 truncate max-w-[120px] text-xs" title={row.segmentName}>{normalizeLabel(row.segmentName)}</td>
+                      <td className={`px-2 py-2 text-center border-r border-gray-200 font-mono text-xs ${isSmallN ? 'text-red-400 bg-red-50/30' : 'text-gray-400'}`}>{n}</td>
+                      {KEY_QUESTIONS.map((kq) => {
+                        if (isSmallN) return <td key={kq.mgmt_no} className="px-2 py-2 text-center text-gray-300 bg-gray-50/30 text-xs">—</td>;
+
+                        // element_id = mgmt_no で取得
+                        const es = (row.elementScores as any)?.[String(kq.mgmt_no)];
+                        const val = es?.mean ?? null;
+                        const dist = es?.distribution;
+                        const bottom2 = dist?.bottom2 ?? null;
+
+                        // 比較データ
+                        const oaEs = overallAvg?.segmentScores?.find((s: any) => s.segmentKey === row.segmentKey)?.elementScores?.[String(kq.mgmt_no)];
+                        const p1Es = prev1?.segmentScores?.find((s: any) => s.segmentKey === row.segmentKey)?.elementScores?.[String(kq.mgmt_no)];
+
                         let displayValue = val?.toFixed(2) ?? '-';
                         let cellClass = "";
-                        
+
                         if (params.mode === 'diff' && heatmapTarget) {
-                            const targetFs = heatmapTarget.segmentScores?.find((s: any) => s.segmentKey === row.segmentKey)?.factorScores?.[f.factor_id];
-                            const targetVal = targetFs?.mean ?? null;
-                            if (val != null && targetVal != null) {
-                                const diff = val - targetVal;
-                                displayValue = (diff > 0 ? '+' : '') + diff.toFixed(2);
-                                cellClass = diff > 0.1 ? 'bg-green-100 text-green-900' : diff < -0.1 ? 'bg-red-100 text-red-900' : 'bg-gray-100 text-gray-600';
-                            } else {
-                                displayValue = 'no data';
-                                cellClass = 'bg-gray-50 text-gray-300';
-                            }
+                          const targetEs = heatmapTarget.segmentScores?.find((s: any) => s.segmentKey === row.segmentKey)?.elementScores?.[String(kq.mgmt_no)];
+                          const targetVal = targetEs?.mean ?? null;
+                          if (val != null && targetVal != null) {
+                            const diff = val - targetVal;
+                            displayValue = (diff > 0 ? '+' : '') + diff.toFixed(2);
+                            cellClass = diff > 0.1 ? 'bg-green-100 text-green-900' : diff < -0.1 ? 'bg-red-100 text-red-900' : 'bg-gray-100 text-gray-600';
+                          } else {
+                            displayValue = '-';
+                            cellClass = 'bg-gray-50 text-gray-300';
+                          }
                         } else {
-                            const signal = getSignal(val);
-                            cellClass = getSignalBgClass(signal);
+                          const signal = getSignal(val, bottom2);
+                          cellClass = getSignalBgClass(signal);
                         }
 
+                        const oaDiff = val != null && oaEs?.mean != null ? val - oaEs.mean : null;
+                        const p1Diff = val != null && p1Es?.mean != null ? val - p1Es.mean : null;
+
                         return (
-                          <td key={f.factor_id} className={`px-2 py-4 text-center font-black border-r border-gray-50 ${cellClass}`}>
-                            <Tooltip content={
-                                <>
-                                    <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{row.segmentName} / {normalizeLabel(f.factor_name)}</div>
-                                    <div className="font-mono text-[11px] bg-gray-600/50 px-2 py-1 rounded mb-2">
-                                      {params.mode === 'diff'
-                                        ? `Δ = 現在値 - ${params.compare === 'overall' ? '全社平均' : params.compare === 'prev1' ? '前回' : '前々回'}`
-                                        : `= ${val != null ? (val * n).toLocaleString('ja-JP', { maximumFractionDigits: 0 }) : '-'} / ${n}`
-                                      }
-                                    </div>
-                                </>
-                            }>
-                                <div className="cursor-help">{displayValue}</div>
-                            </Tooltip>
+                          <td key={kq.mgmt_no} className={`px-1 py-1.5 text-center border-r border-gray-50 ${cellClass}`}>
+                            <div className="flex flex-col items-center gap-0.5">
+                              <span className="font-black text-sm leading-none">{displayValue}</span>
+                              {params.mode === 'abs' && (
+                                <div className="flex gap-1 text-[8px] leading-none opacity-80">
+                                  {oaDiff != null && (
+                                    <span className={oaDiff > 0 ? 'text-green-700' : oaDiff < 0 ? 'text-red-700' : 'text-gray-400'}>
+                                      {oaDiff > 0 ? '+' : ''}{oaDiff.toFixed(1)}
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                              {bottom2 != null && (
+                                <span className={`text-[8px] leading-none ${bottom2 >= 0.1 ? 'text-rose-600 font-bold' : 'text-gray-400'}`}>
+                                  {Math.round(bottom2 * 100)}%
+                                </span>
+                              )}
+                            </div>
                           </td>
                         );
                       })}
@@ -516,8 +534,73 @@ export default function ClientSummary() {
               </tbody>
             </table>
           </div>
-          <div className="p-3 bg-gray-50 text-[10px] text-center text-gray-400 border-t border-gray-200 italic font-medium">
-             ※ 回答者数 5名未満のセグメントは匿名性保護のためマスキング（—）表示されます。
+          <div className="p-2 bg-gray-50 text-[10px] text-center text-gray-400 border-t border-gray-200 italic font-medium flex flex-wrap justify-center gap-4">
+            <span><span className="inline-block w-2 h-2 rounded bg-blue-100 mr-1"></span>F1: 組織活性化の源泉</span>
+            <span><span className="inline-block w-2 h-2 rounded bg-emerald-100 mr-1"></span>F2: 収益性向上エンゲージメント</span>
+            <span><span className="inline-block w-2 h-2 rounded bg-purple-100 mr-1"></span>F3: チーム力と持続性</span>
+            <span className="text-gray-300">| n&lt;5はマスキング表示</span>
+          </div>
+        </div>
+
+        {/* 因子別 強み・弱み */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+            <h3 className="text-sm font-black text-blue-600 mb-3 tracking-wider uppercase flex items-center gap-2">
+              <span className="w-1.5 h-5 bg-blue-600 rounded-full"></span>
+              ▲ Strong Factor
+            </h3>
+            {(() => {
+              const sorted = [...current.summary.factorScores].filter(f => f.mean != null).sort((a, b) => (b.mean ?? 0) - (a.mean ?? 0));
+              const top = sorted[0];
+              if (!top) return <div className="text-gray-400 text-sm">データなし</div>;
+              const oaF = overallAvg?.summary.factorScores.find(f => f.factor_id === top.factor_id);
+              const p1F = prev1?.summary.factorScores.find(f => f.factor_id === top.factor_id);
+              const dist = calcFactorDistribution(top.elements);
+              return (
+                <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-lg font-black text-gray-800">{normalizeLabel(top.factor_name)}</span>
+                    <span className="text-3xl font-black text-blue-700">{top.mean?.toFixed(2)}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-4">
+                      <DeltaDisplay current={top.mean} target={oaF?.mean} label="Δ全体" />
+                      <DeltaDisplay current={top.mean} target={p1F?.mean} label="Δ前回" />
+                    </div>
+                    {dist && <DistributionBar top2={dist.top2} mid={dist.mid} bottom2={dist.bottom2} />}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+            <h3 className="text-sm font-black text-red-600 mb-3 tracking-wider uppercase flex items-center gap-2">
+              <span className="w-1.5 h-5 bg-red-600 rounded-full"></span>
+              ▼ Weak Factor
+            </h3>
+            {(() => {
+              const sorted = [...current.summary.factorScores].filter(f => f.mean != null).sort((a, b) => (a.mean ?? 0) - (b.mean ?? 0));
+              const bottom = sorted[0];
+              if (!bottom) return <div className="text-gray-400 text-sm">データなし</div>;
+              const oaF = overallAvg?.summary.factorScores.find(f => f.factor_id === bottom.factor_id);
+              const p1F = prev1?.summary.factorScores.find(f => f.factor_id === bottom.factor_id);
+              const dist = calcFactorDistribution(bottom.elements);
+              return (
+                <div className="p-4 bg-red-50/50 rounded-xl border border-red-100">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-lg font-black text-gray-800">{normalizeLabel(bottom.factor_name)}</span>
+                    <span className="text-3xl font-black text-red-700">{bottom.mean?.toFixed(2)}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-4">
+                      <DeltaDisplay current={bottom.mean} target={oaF?.mean} label="Δ全体" />
+                      <DeltaDisplay current={bottom.mean} target={p1F?.mean} label="Δ前回" />
+                    </div>
+                    {dist && <DistributionBar top2={dist.top2} mid={dist.mid} bottom2={dist.bottom2} />}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         </div>
       </main>

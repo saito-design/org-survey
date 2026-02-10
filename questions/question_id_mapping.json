@@ -23,7 +23,7 @@
     "question_text": "私は、会社の将来ビジョンに共感し、期待している",
     "note": "",
     "MANAGER": "MANAGER-Q18",
-    "STAFF": null,
+    "STAFF": "STAFF-Q18",
     "PA": null
   },
   {
@@ -41,8 +41,8 @@
     "question_text": "私は、これからも会社に積極的に貢献していきたいと考えている",
     "note": "",
     "MANAGER": "MANAGER-Q27",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q27",
+    "PA": "PA-Q27"
   },
   {
     "mgmt_no": 6,
@@ -51,7 +51,7 @@
     "note": "(※2)",
     "MANAGER": "MANAGER-Q26",
     "STAFF": "STAFF-Q26",
-    "PA": null
+    "PA": "PA-Q26"
   },
   {
     "mgmt_no": 7,
@@ -77,7 +77,7 @@
     "question_text": "私は、会社の理念を私なりに理解して行動できていると思う",
     "note": "",
     "MANAGER": "MANAGER-Q17",
-    "STAFF": null,
+    "STAFF": "STAFF-Q17",
     "PA": null
   },
   {
@@ -95,8 +95,8 @@
     "question_text": "私は今の仕事を通じて、社内で活躍するチャンスが大いにあると思う",
     "note": "",
     "MANAGER": "MANAGER-Q07",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q07",
+    "PA": "PA-Q07"
   },
   {
     "mgmt_no": 12,
@@ -122,8 +122,8 @@
     "question_text": "私は、店舗業務の全体（人・モノ・金の管理）について自身で完結することができている",
     "note": "",
     "MANAGER": "MANAGER-Q04",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q04",
+    "PA": "PA-Q04"
   },
   {
     "mgmt_no": 15,
@@ -131,8 +131,8 @@
     "question_text": "私の仕事は、会社にとって、お客さまにとって、大きな影響があり重要だと思う",
     "note": "",
     "MANAGER": "MANAGER-Q01",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q01",
+    "PA": "PA-Q01"
   },
   {
     "mgmt_no": 16,
@@ -140,8 +140,8 @@
     "question_text": "私は、私の考えで計画、決定し、仕事を進めることが出来ていると思う",
     "note": "",
     "MANAGER": "MANAGER-Q05",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q05",
+    "PA": "PA-Q05"
   },
   {
     "mgmt_no": 17,
@@ -150,7 +150,7 @@
     "note": "(※2)",
     "MANAGER": "MANAGER-Q20",
     "STAFF": "STAFF-Q20",
-    "PA": null
+    "PA": "PA-Q20"
   },
   {
     "mgmt_no": 18,
@@ -159,7 +159,7 @@
     "note": "(※2)",
     "MANAGER": "MANAGER-Q23",
     "STAFF": "STAFF-Q23",
-    "PA": null
+    "PA": "PA-Q23"
   },
   {
     "mgmt_no": 19,
@@ -168,7 +168,7 @@
     "note": "(※2)",
     "MANAGER": "MANAGER-Q24",
     "STAFF": "STAFF-Q24",
-    "PA": null
+    "PA": "PA-Q24"
   },
   {
     "mgmt_no": 20,
@@ -231,7 +231,7 @@
     "note": "(※2)",
     "MANAGER": "MANAGER-Q14",
     "STAFF": "STAFF-Q14",
-    "PA": null
+    "PA": "PA-Q14"
   },
   {
     "mgmt_no": 27,
@@ -248,8 +248,8 @@
     "question_text": "仕事に必要な知識について、会社が十分な教育の機会を与えてくれていると思う",
     "note": "",
     "MANAGER": "MANAGER-Q25",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q25",
+    "PA": "PA-Q25"
   },
   {
     "mgmt_no": 29,
@@ -257,8 +257,8 @@
     "question_text": "私は部下やスタッフ教えるにあたり、十分な知識を得られていると思う",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q36",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q36",
+    "PA": "PA-Q36"
   },
   {
     "mgmt_no": 30,
@@ -266,8 +266,8 @@
     "question_text": "部下やスタッフを教えるにあたり、教育ツールなどの整備が行き届き、教えやすい環境だと思う",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q37",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q37",
+    "PA": "PA-Q37"
   },
   {
     "mgmt_no": 31,
@@ -275,7 +275,7 @@
     "question_text": "私は、スタッフに期待することや、やるべきことを具体的に細かく指示・指導するタイプだと思う ⇔ 【してほしい】",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q30",
-    "STAFF": null,
+    "STAFF": "STAFF-Q30",
     "PA": null
   },
   {
@@ -284,7 +284,7 @@
     "question_text": "私は、スタッフの考えや思いに気を配り、提案も聞くタイプだと思う ⇔ 【考えを伝え一緒に取り組みたい】",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q31",
-    "STAFF": null,
+    "STAFF": "STAFF-Q31",
     "PA": null
   },
   {
@@ -293,7 +293,7 @@
     "question_text": "私は、スタッフに期待し、高い目標を立てて全力を尽くすよう鼓舞するタイプだと思う ⇔ 【鼓舞してほしい】",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q32",
-    "STAFF": null,
+    "STAFF": "STAFF-Q32",
     "PA": null
   },
   {
@@ -302,7 +302,7 @@
     "question_text": "私は、スタッフの仕事を良く観察し、スタッフの仕事について、日頃から又は面談を通じて承認行動をとっている ⇔ 【してくれている】",
     "note": "",
     "MANAGER": "MANAGER-Q33",
-    "STAFF": null,
+    "STAFF": "STAFF-Q33",
     "PA": null
   },
   {
@@ -311,8 +311,8 @@
     "question_text": "私は、スタッフを熱心に育成していると思う ⇔ 【してくれている】",
     "note": "",
     "MANAGER": "MANAGER-Q34",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q34",
+    "PA": "PA-Q34"
   },
   {
     "mgmt_no": 36,
@@ -320,8 +320,8 @@
     "question_text": "私に対してスタッフが自分の意見を言うことができる関係性だと思う ⇔ 【思う】",
     "note": "",
     "MANAGER": "MANAGER-Q35",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q35",
+    "PA": "PA-Q35"
   },
   {
     "mgmt_no": 37,
@@ -330,7 +330,7 @@
     "note": "(※1)",
     "MANAGER": "MANAGER-Q19",
     "STAFF": null,
-    "PA": null
+    "PA": "PA-Q19"
   },
   {
     "mgmt_no": 38,
@@ -356,8 +356,8 @@
     "question_text": "スタッフは、同僚同士、お互いフォローしあいながら仕事をしていると思う",
     "note": "",
     "MANAGER": "MANAGER-Q38",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q38",
+    "PA": "PA-Q38"
   },
   {
     "mgmt_no": 41,
@@ -365,8 +365,8 @@
     "question_text": "スタッフは、同僚同士、お互い指摘し合える関係性だと思う",
     "note": "",
     "MANAGER": "MANAGER-Q39",
-    "STAFF": null,
-    "PA": null
+    "STAFF": "STAFF-Q39",
+    "PA": "PA-Q39"
   },
   {
     "mgmt_no": 42,
@@ -374,7 +374,7 @@
     "question_text": "スタッフは、同僚同士、仕事に限らず仲良くしている",
     "note": "",
     "MANAGER": "MANAGER-Q40",
-    "STAFF": null,
+    "STAFF": "STAFF-Q40",
     "PA": null
   },
   {
@@ -464,7 +464,7 @@
     "question_text": "店長に限らず、ときにはスタッフもリーダーとなり、チームを引っ張っている",
     "note": "",
     "MANAGER": "MANAGER-Q61",
-    "STAFF": null,
+    "STAFF": "STAFF-Q61",
     "PA": null
   },
   {
@@ -473,7 +473,7 @@
     "question_text": "メンバー同士（店長も含めて）で信頼感があると思う",
     "note": "",
     "MANAGER": "MANAGER-Q62",
-    "STAFF": null,
+    "STAFF": "STAFF-Q62",
     "PA": null
   },
   {
@@ -482,7 +482,7 @@
     "question_text": "努力に対する報酬は、個人よりもチーム（店舗）に対して行われている",
     "note": "(※1)",
     "MANAGER": "MANAGER-Q63",
-    "STAFF": null,
+    "STAFF": "STAFF-Q63",
     "PA": null
   },
   {
@@ -491,7 +491,7 @@
     "question_text": "専門的な能力を持つメンバー、問題解決や意思決定力に長けたメンバー、対人コミュニケーションを備えたメンバーなど、バランスよい構成だと思う",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q50",
-    "STAFF": null,
+    "STAFF": "STAFF-Q50",
     "PA": null
   },
   {
@@ -500,7 +500,7 @@
     "question_text": "メンバーは、外向性、人当たりのよさ、誠実さ、安定した感情といったパーソナリティを備えている",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q51",
-    "STAFF": null,
+    "STAFF": "STAFF-Q51",
     "PA": null
   },
   {
@@ -527,7 +527,7 @@
     "question_text": "メンバーの人数はちょうどよく、面倒を見れないということはない",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q54",
-    "STAFF": null,
+    "STAFF": "STAFF-Q54",
     "PA": null
   },
   {
@@ -536,7 +536,7 @@
     "question_text": "メンバーは、多能工化され、誰でも２つ以上のポジションを担当できる",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q55",
-    "STAFF": null,
+    "STAFF": "STAFF-Q55",
     "PA": null
   },
   {
@@ -545,7 +545,7 @@
     "question_text": "メンバーは、チームで働くことを好むタイプで構成されている",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q56",
-    "STAFF": null,
+    "STAFF": "STAFF-Q56",
     "PA": null
   },
   {
@@ -563,7 +563,7 @@
     "question_text": "チーム（店舗）が目指すビジョンは、具体的で現実的な目標に落とし込まれている",
     "note": "",
     "MANAGER": "MANAGER-Q57",
-    "STAFF": null,
+    "STAFF": "STAFF-Q57",
     "PA": null
   },
   {
@@ -572,7 +572,7 @@
     "question_text": "チームは、目標達成に向けて自信を持って取り組んでいる",
     "note": "",
     "MANAGER": "MANAGER-Q59",
-    "STAFF": null,
+    "STAFF": "STAFF-Q59",
     "PA": null
   },
   {
@@ -581,7 +581,7 @@
     "question_text": "チームはいい意味で緊張感を持ち、お互いの考え方の違いについてよく話し合っている",
     "note": "(※2)",
     "MANAGER": "MANAGER-Q60",
-    "STAFF": null,
+    "STAFF": "STAFF-Q60",
     "PA": null
   }
 ]
