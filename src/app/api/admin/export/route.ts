@@ -133,15 +133,32 @@ function generateCustomerCsv(
     respondentResponses.get(r.respondent_id)![r.question_id] = r.value;
   });
 
-  // 1行目: 因子名（メタ列は空白）
+  // 1行目: 因子名（メタ列に回答尺度の説明を追加）
+  const scaleDescription = [
+    '【回答尺度】',
+    '5=強くそう思う',
+    '4=そう思う',
+    '3=どちらとも言えない',
+    '2=そう思わない',
+    '1=全くそう思わない',
+  ];
+  const row1Meta = mapping.metaColumns.map((_, i) => scaleDescription[i] || '');
   const row1 = [
-    ...mapping.metaColumns.map(() => ''),
+    ...row1Meta,
     ...mapping.questions.map(q => q.factor)
   ];
 
-  // 2行目: 設問文（メタ列は空白）
+  // 2行目: 設問文（メタ列に信号判定条件を追加）
+  const signalDescription = [
+    '【信号判定基準】',
+    '良好(青)=スコア≧3.8 かつ ネガティブ<10%',
+    '注意(黄)=どちらか一方のみ満たす',
+    '要改善(赤)=スコア<3.8 かつ ネガティブ≧10%',
+    '※ネガティブ=回答1または2の比率',
+  ];
+  const row2Meta = mapping.metaColumns.map((_, i) => signalDescription[i] || '');
   const row2 = [
-    ...mapping.metaColumns.map(() => ''),
+    ...row2Meta,
     ...mapping.questions.map(q => q.text)
   ];
 
