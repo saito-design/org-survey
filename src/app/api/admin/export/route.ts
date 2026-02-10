@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
-import { findFileByName, ensureFolder } from '@/lib/drive';
+import { findFileByName, ensureFolder, saveFile } from '@/lib/drive';
 import {
   loadQuestionsLocal,
   loadRespondents,
@@ -62,10 +62,11 @@ export async function GET(req: NextRequest) {
     // CSV生成
     const csv = generateCustomerCsv(surveyId, responses, respondents, orgUnits, mapping);
 
-    // ファイル名: 株式会社サンプル様_組織診断回答データ_202602実施分.csv
+    // ファイル名: 株式会社サンプル様_組織診断回答データ_202602実施分_20260210-153045.csv
     const surveyMonth = formatSurveyMonth(surveyId);
     const safeCompanyName = COMPANY_NAME.replace(/[\/\\:*?"<>|]/g, '_');
-    const fileName = `${safeCompanyName}様_組織診断回答データ_${surveyMonth}実施分.csv`;
+    const jstTimestamp = getJstTimestamp();
+    const fileName = `${safeCompanyName}様_組織診断回答データ_${surveyMonth}実施分_${jstTimestamp}.csv`;
 
     // UTF-8 with BOM for Excel
     const bom = Buffer.from([0xEF, 0xBB, 0xBF]);
@@ -305,49 +306,40 @@ async function saveCsvToDrive(csv: string, fileName: string, parentFolderId: str
   // surveyIdフォルダを作成/取得
   const surveyFolderId = await ensureFolder(surveyId, csvOutputFolderId);
 
-  const { google } = await import('googleapis');
-  const auth = await getGoogleAuth();
-  const drive = google.drive({ version: 'v3', auth });
-
+  // 既存ファイルをチェック
   const existing = await findFileByName(fileName, surveyFolderId, 'text/csv');
 
-  const media = {
-    mimeType: 'text/csv',
-    body: require('stream').Readable.from([Buffer.from('\ufeff' + csv, 'utf-8')]),
-  };
+  // UTF-8 with BOM
+  const csvWithBom = '\ufeff' + csv;
 
-  if (existing?.id) {
-    await drive.files.update({
-      fileId: existing.id,
-      media,
-    });
-  } else {
-    await drive.files.create({
-      requestBody: {
-        name: fileName,
-        parents: [surveyFolderId],
-        mimeType: 'text/csv',
-      },
-      media,
-    });
-  }
-}
-
-async function getGoogleAuth() {
-  const { GoogleAuth } = await import('google-auth-library');
-
-  const credentials = {
-    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-  };
-
-  return new GoogleAuth({
-    credentials,
-    scopes: ['https://www.googleapis.com/auth/drive'],
-  });
+  // drive.ts の saveFile を使用（共有ドライブ対応済み）
+  await saveFile(
+    csvWithBom,
+    fileName,
+    'text/csv',
+    surveyFolderId,
+    existing?.id || undefined
+  );
 }
 
 function getCurrentSurveyId(): string {
   const now = new Date();
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+}
+
+/**
+ * 日本時間のタイムスタンプを生成
+ * 例: "20260210-153045"
+ */
+function getJstTimestamp(): string {
+  const now = new Date();
+  // UTC+9 (日本時間)
+  const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  const year = jst.getUTCFullYear();
+  const month = String(jst.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(jst.getUTCDate()).padStart(2, '0');
+  const hour = String(jst.getUTCHours()).padStart(2, '0');
+  const min = String(jst.getUTCMinutes()).padStart(2, '0');
+  const sec = String(jst.getUTCSeconds()).padStart(2, '0');
+  return `${year}${month}${day}-${hour}${min}${sec}`;
 }
