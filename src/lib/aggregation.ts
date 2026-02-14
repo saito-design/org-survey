@@ -15,11 +15,61 @@ import type {
   Distribution,
   ElementScore,
   FactorScore,
+  CategoryScore,
   SurveySummary,
   StrengthWeakness,
   ResponseRate,
   SegmentScore,
 } from './types';
+
+// ============================================================
+// 「No.〇〇に同じ」マッピング
+// STAFF/PAの場合: Q33→Q37, Q34→Q38, Q35→Q39 にコピー（追加）
+// ============================================================
+
+const SAME_AS_MAPPING: Array<[number, number]> = [
+  [34, 37],  // 店長の承認行動 → 上司の承認行動
+  [35, 38],  // 店長の育成マインド → 上司の育成マインド
+  [36, 39],  // 意見具申 → 上司への意見具申
+];
+
+/**
+ * 「No.〇〇に同じ」マッピングを適用
+ * STAFF/PAの回答で Q33,34,35 の値を Q37,38,39 にもコピー（追加）
+ */
+export function applyQuestionMapping(
+  responses: Response[],
+  respondents: Respondent[]
+): Response[] {
+  const roleMap = new Map(respondents.map(r => [r.respondent_id, r.role]));
+  const result: Response[] = [...responses];
+
+  for (const r of responses) {
+    const role = roleMap.get(r.respondent_id);
+    if (role !== 'STAFF' && role !== 'PA') {
+      continue;
+    }
+
+    // question_id から original_no を抽出 (例: "STAFF-Q33" → 33)
+    const match = r.question_id.match(/-Q(\d+)$/);
+    if (!match) continue;
+
+    const originalNo = parseInt(match[1], 10);
+
+    // コピー元の設問かチェック
+    for (const [srcNo, dstNo] of SAME_AS_MAPPING) {
+      if (originalNo === srcNo) {
+        // コピー先の question_id を生成 (例: "STAFF-Q33" → "STAFF-Q37")
+        const newQuestionId = r.question_id.replace(/-Q\d+$/, `-Q${String(dstNo).padStart(2, '0')}`);
+        // 同じ回答を追加
+        result.push({ ...r, question_id: newQuestionId });
+        break;
+      }
+    }
+  }
+
+  return result;
+}
 
 // ============================================================
 // 基本集計関数
@@ -116,25 +166,39 @@ export function computeElementScores(
  * @param factors - 因子マスタ
  * @returns 因子スコアの配列
  */
+/**
+ * 因子別スコアを計算（新ロジック: 因子が持つelement_idsの平均）
+ * @param elementScores - 要素スコアの配列
+ * @param elements - 要素マスタ（今回は参照のみ）
+ * @param factors - 因子マスタ（element_idsを持つ）
+ * @returns 因子スコアの配列
+ */
 export function computeFactorScores(
   elementScores: ElementScore[],
   elements: Element[],
   factors: Factor[]
 ): FactorScore[] {
-  // element_id -> factor_id のマップ
-  const elementToFactor = new Map<string, string>();
-  elements.forEach(e => {
-    elementToFactor.set(e.element_id, e.factor_id);
+  // element_id -> ElementScore のマップ
+  const elementScoreMap = new Map<string, ElementScore>();
+  elementScores.forEach(es => {
+    elementScoreMap.set(es.element_id, es);
   });
 
   // 因子ごとに要素スコアを集約
   return factors.map(f => {
-    const factorElements = elementScores.filter(es => {
-      return elementToFactor.get(es.element_id) === f.factor_id;
-    });
+    // 因子に紐づく要素IDリストを取得（なければ空）
+    const targetElementIds = f.element_ids || [];
+    
+    // 要素スコアを取得
+    const factorElements = targetElementIds
+      .map(eid => elementScoreMap.get(eid))
+      .filter((es): es is ElementScore => es !== undefined);
 
-    // 要素平均の平均 = 因子スコア
+    // 要素平均の平均 = 因子スコア (Mean of Means)
+    // ※ Fが単一設問の場合はその設問meanがそのままF得点となる
     const means = factorElements.map(es => es.mean).filter((m): m is number => m != null);
+    
+    // 単純平均（重みなし）
     const factorMean = means.length > 0
       ? means.reduce((a, b) => a + b, 0) / means.length
       : null;
@@ -307,9 +371,56 @@ export function computeResponseRate(
   };
 }
 
-// ============================================================
-// サマリー生成（一括計算）
-// ============================================================
+/**
+ * カテゴリ（C階層）スコアを計算（F階層の集約）
+ */
+export function computeCategoryScores(factorScores: FactorScore[]): CategoryScore[] {
+  const CATEGORY_DEFS = [
+    { id: 'C1', name: 'STAGE1 組織活性化の源泉', fIds: ['F01', 'F02', 'F03', 'F04', 'F05', 'F06', 'F07', 'F08', 'F09'] },
+    { id: 'C2', name: 'STAGE2 エンゲージメント', fIds: ['F10', 'F11'] },
+    { id: 'C3', name: 'STAGE3 チーム力と持続性', fIds: ['F12', 'F13', 'F14', 'F15', 'F16', 'F17', 'F18'] },
+  ];
+
+  return CATEGORY_DEFS.map(def => {
+    const targetFactors = factorScores.filter(fs => def.fIds.includes(fs.factor_id));
+    const validMeans = targetFactors.map(f => f.mean).filter((m): m is number => m != null);
+    
+    const categoryMean = validMeans.length > 0 
+      ? validMeans.reduce((a, b) => a + b, 0) / validMeans.length 
+      : null;
+
+    // 分布の集約（加重平均）
+    let totalN = 0;
+    let sumTop2 = 0;
+    let sumMid = 0;
+    let sumBottom2 = 0;
+
+    targetFactors.forEach(fs => {
+      fs.elements.forEach(es => {
+        const n = es.distribution.n;
+        totalN += n;
+        sumTop2 += es.distribution.top2 * n;
+        sumMid += es.distribution.mid * n;
+        sumBottom2 += es.distribution.bottom2 * n;
+      });
+    });
+
+    const distribution: Distribution = totalN > 0 ? {
+      top2: sumTop2 / totalN,
+      mid: sumMid / totalN,
+      bottom2: sumBottom2 / totalN,
+      n: totalN
+    } : { top2: 0, mid: 0, bottom2: 0, n: 0 };
+
+    return {
+      category_id: def.id,
+      category_name: def.name,
+      mean: categoryMean,
+      factors: targetFactors,
+      distribution
+    };
+  });
+}
 
 /**
  * サーベイ全体のサマリーを生成
@@ -322,11 +433,17 @@ export function generateSurveySummary(
   elements: Element[],
   factors: Factor[]
 ): SurveySummary {
+  // 「No.〇〇に同じ」マッピングを適用
+  const mappedResponses = applyQuestionMapping(responses, respondents);
+
   // 要素スコア
-  const elementScores = computeElementScores(responses, questions, elements);
+  const elementScores = computeElementScores(mappedResponses, questions, elements);
 
   // 因子スコア
   const factorScores = computeFactorScores(elementScores, elements, factors);
+
+  // カテゴリ（C階層）スコア
+  const categoryScores = computeCategoryScores(factorScores);
 
   // 総合スコア
   const overallScore = computeOverallScore(factorScores);
@@ -359,6 +476,7 @@ export function generateSurveySummary(
     surveyId,
     generatedAt: new Date().toISOString(),
     overallScore,
+    categoryScores, // C階層
     factorScores,
     elementScores,
     strengths,
@@ -383,6 +501,9 @@ export function computeSegmentScores(
   segmentKey: keyof Respondent = 'store_code',
   segmentNameGetter?: (key: string) => string
 ): SegmentScore[] {
+  // 「No.〇〇に同じ」マッピングを適用
+  const mappedResponses = applyQuestionMapping(responses, respondents);
+
   // respondent_id -> セグメントキーのマップ
   const respondentToSegment = new Map<string, string>();
   respondents.forEach(r => {
@@ -392,7 +513,7 @@ export function computeSegmentScores(
 
   // セグメントごとに回答を振り分け
   const segmentResponses = new Map<string, Response[]>();
-  responses.forEach(r => {
+  mappedResponses.forEach(r => {
     const segment = respondentToSegment.get(r.respondent_id) || 'unknown';
     if (!segmentResponses.has(segment)) {
       segmentResponses.set(segment, []);

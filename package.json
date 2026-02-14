@@ -9,7 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@react-pdf/renderer": "^4.3.0",
+    "csv-parse": "^6.1.0",
     "csv-stringify": "^6.5.0",
     "dotenv": "^17.2.3",
     "google-auth-library": "^10.5.0",

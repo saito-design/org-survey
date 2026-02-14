@@ -3,8 +3,8 @@
     {
       "question_id": "MANAGER-Q01",
       "original_no": 1,
-      "factor_id": "",
-      "element_id": "1",
+      "factor_id": "F1",
+      "element_id": "15",
       "text": "私の仕事は、会社にとって、お客さまにとって、**大きな影響があり重要**だと思う",
       "scale": "5point",
       "roles": [
@@ -15,8 +15,8 @@
     {
       "question_id": "MANAGER-Q02",
       "original_no": 2,
-      "factor_id": "F12",
-      "element_id": "2",
+      "factor_id": "F1",
+      "element_id": "12",
       "text": "日々、**変化や刺激を感じられる**仕事だと思う",
       "scale": "5point",
       "roles": [
@@ -27,8 +27,8 @@
     {
       "question_id": "MANAGER-Q03",
       "original_no": 3,
-      "factor_id": "",
-      "element_id": "3",
+      "factor_id": "F2",
+      "element_id": "13",
       "text": "仕事を通じていろいろな**スキルを身につけることができるし、活かせる**と思う",
       "scale": "5point",
       "roles": [
@@ -39,8 +39,8 @@
     {
       "question_id": "MANAGER-Q04",
       "original_no": 4,
-      "factor_id": "",
-      "element_id": "4",
+      "factor_id": "F1",
+      "element_id": "14",
       "text": "私は、**店舗業務の全体（人・モノ・金の管理）について自身で完結することができている**",
       "scale": "5point",
       "roles": [
@@ -51,8 +51,8 @@
     {
       "question_id": "MANAGER-Q05",
       "original_no": 5,
-      "factor_id": "",
-      "element_id": "5",
+      "factor_id": "F3",
+      "element_id": "16",
       "text": "私は、私の考えで計画、決定し、**仕事を進めることが出来ていると思う**",
       "scale": "5point",
       "roles": [
@@ -63,8 +63,8 @@
     {
       "question_id": "MANAGER-Q06",
       "original_no": 6,
-      "factor_id": "F14",
-      "element_id": "6",
+      "factor_id": "F1",
+      "element_id": "10",
       "text": "私の仕事に対する**評価は、明確・公平**にされていると感じる",
       "scale": "5point",
       "roles": [
@@ -75,8 +75,8 @@
     {
       "question_id": "MANAGER-Q07",
       "original_no": 7,
-      "factor_id": "",
-      "element_id": "7",
+      "factor_id": "F1",
+      "element_id": "11",
       "text": "私は今の仕事を通じて、社内で**活躍するチャンスが大いにある**と思う",
       "scale": "5point",
       "roles": [
@@ -87,8 +87,8 @@
     {
       "question_id": "MANAGER-Q08",
       "original_no": 8,
-      "factor_id": "F10",
-      "element_id": "8",
+      "factor_id": "F2",
+      "element_id": "21",
       "text": "私の職場には**不平不満等をこぼす人がいない**",
       "scale": "5point",
       "roles": [
@@ -99,8 +99,8 @@
     {
       "question_id": "MANAGER-Q09",
       "original_no": 9,
-      "factor_id": "F10",
-      "element_id": "9",
+      "factor_id": "F2",
+      "element_id": "22",
       "text": "私の職場には**手抜きをしている人はいなく、みんな積極的**に仕事をしていると思う",
       "scale": "5point",
       "roles": [
@@ -111,8 +111,8 @@
     {
       "question_id": "MANAGER-Q10",
       "original_no": 10,
-      "factor_id": "F01",
-      "element_id": "10",
+      "factor_id": "F1",
+      "element_id": "20",
       "text": "私の職場には**ハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全**だと思う",
       "scale": "5point",
       "roles": [
@@ -123,8 +123,8 @@
     {
       "question_id": "MANAGER-Q11",
       "original_no": 11,
-      "factor_id": "F01",
-      "element_id": "11",
+      "factor_id": "F1",
+      "element_id": "23",
       "text": "私の職場に、危険と思う箇所なはい",
       "scale": "5point",
       "roles": [
@@ -135,8 +135,8 @@
     {
       "question_id": "MANAGER-Q12",
       "original_no": 12,
-      "factor_id": "F01",
-      "element_id": "12",
+      "factor_id": "F1",
+      "element_id": "24",
       "text": "私の職場は、**ウィルス対策や食中毒対策にしっかりと取組めていると思う**",
       "scale": "5point",
       "roles": [
@@ -147,8 +147,8 @@
     {
       "question_id": "MANAGER-Q13",
       "original_no": 13,
-      "factor_id": "F09",
-      "element_id": "13",
+      "factor_id": "F2",
+      "element_id": "25",
       "text": "私の職場は、**整理整頓が行き届き、清潔**だと思う",
       "scale": "5point",
       "roles": [
@@ -159,8 +159,8 @@
     {
       "question_id": "MANAGER-Q14",
       "original_no": 14,
-      "factor_id": "F09",
-      "element_id": "14",
+      "factor_id": "F2",
+      "element_id": "26",
       "text": "私の職場は、**休暇の取得や残業の改善が図られていると思う**",
       "scale": "5point",
       "roles": [
@@ -171,8 +171,8 @@
     {
       "question_id": "MANAGER-Q15",
       "original_no": 15,
-      "factor_id": "F09",
-      "element_id": "15",
+      "factor_id": "F2",
+      "element_id": "27",
       "text": "その他、室温・湿度、照明、雑音など、**特に気になる箇所はない**",
       "scale": "5point",
       "roles": [
@@ -183,8 +183,8 @@
     {
       "question_id": "MANAGER-Q16",
       "original_no": 16,
-      "factor_id": "F09",
-      "element_id": "16",
+      "factor_id": "F2",
+      "element_id": "8",
       "text": "私は、会社の**理念（お客様や地域に対する会社の想い）やビジョンを知っている**",
       "scale": "5point",
       "roles": [
@@ -195,8 +195,8 @@
     {
       "question_id": "MANAGER-Q17",
       "original_no": 17,
-      "factor_id": "F07",
-      "element_id": "17",
+      "factor_id": "F2",
+      "element_id": "9",
       "text": "私は、会社の**理念を私なりに理解して行動**できていると思う",
       "scale": "5point",
       "roles": [
@@ -207,8 +207,8 @@
     {
       "question_id": "MANAGER-Q18",
       "original_no": 18,
-      "factor_id": "F02",
-      "element_id": "18",
+      "factor_id": "F1",
+      "element_id": "3",
       "text": "私は、会社の将来ビジョンに共感し、**期待している**",
       "scale": "5point",
       "roles": [
@@ -219,8 +219,8 @@
     {
       "question_id": "MANAGER-Q19",
       "original_no": 19,
-      "factor_id": "F02",
-      "element_id": "19",
+      "factor_id": "F1",
+      "element_id": "37",
       "text": "上司は、わたしの仕事を良く見てくれ、わたしの**仕事を認めてくれる**",
       "scale": "5point",
       "roles": [
@@ -231,8 +231,8 @@
     {
       "question_id": "MANAGER-Q20",
       "original_no": 20,
-      "factor_id": "F03",
-      "element_id": "20",
+      "factor_id": "F1",
+      "element_id": "17",
       "text": "上司は、日頃から又は面談を通じて、自身の仕事について結果やアドバイス等の**フィードバックをしてくれる**",
       "scale": "5point",
       "roles": [
@@ -243,8 +243,8 @@
     {
       "question_id": "MANAGER-Q21",
       "original_no": 21,
-      "factor_id": "F03",
-      "element_id": "21",
+      "factor_id": "F1",
+      "element_id": "38",
       "text": "上司は、わたしを**熱心に育成**してくれていると思う",
       "scale": "5point",
       "roles": [
@@ -255,8 +255,8 @@
     {
       "question_id": "MANAGER-Q22",
       "original_no": 22,
-      "factor_id": "F03",
-      "element_id": "22",
+      "factor_id": "F1",
+      "element_id": "39",
       "text": "上司に対して自分の**意見を言うことができる**関係性だと思う",
       "scale": "5point",
       "roles": [
@@ -267,8 +267,8 @@
     {
       "question_id": "MANAGER-Q23",
       "original_no": 23,
-      "factor_id": "F04",
-      "element_id": "23",
+      "factor_id": "F1",
+      "element_id": "18",
       "text": "私は、今の賃金**に納得している**",
       "scale": "5point",
       "roles": [
@@ -279,8 +279,8 @@
     {
       "question_id": "MANAGER-Q24",
       "original_no": 24,
-      "factor_id": "F04",
-      "element_id": "24",
+      "factor_id": "F1",
+      "element_id": "19",
       "text": "私は、今の福利厚生**に納得している**",
       "scale": "5point",
       "roles": [
@@ -291,8 +291,8 @@
     {
       "question_id": "MANAGER-Q25",
       "original_no": 25,
-      "factor_id": "F04",
-      "element_id": "25",
+      "factor_id": "F1",
+      "element_id": "28",
       "text": "仕事に必要な知識について、会社が十分な**教育の機会を与えてくれている**と思う",
       "scale": "5point",
       "roles": [
@@ -303,8 +303,8 @@
     {
       "question_id": "MANAGER-Q26",
       "original_no": 26,
-      "factor_id": "F04",
-      "element_id": "26",
+      "factor_id": "F3",
+      "element_id": "6",
       "text": "私は、今後もこの会社に**勤めていたい**と思う",
       "scale": "5point",
       "roles": [
@@ -315,8 +315,8 @@
     {
       "question_id": "MANAGER-Q27",
       "original_no": 27,
-      "factor_id": "F04",
-      "element_id": "27",
+      "factor_id": "F3",
+      "element_id": "5",
       "text": "私は、これからも**会社に積極的に貢献していきたい**と考えている",
       "scale": "5point",
       "roles": [
@@ -327,8 +327,8 @@
     {
       "question_id": "MANAGER-Q28",
       "original_no": 28,
-      "factor_id": "F05",
-      "element_id": "28",
+      "factor_id": "F1",
+      "element_id": "2",
       "text": "私は、総合的に職場・仕事**に満足している**",
       "scale": "5point",
       "roles": [
@@ -339,8 +339,8 @@
     {
       "question_id": "MANAGER-Q29",
       "original_no": 29,
-      "factor_id": "F05",
-      "element_id": "29",
+      "factor_id": "F1",
+      "element_id": "1",
       "text": "私は、総合的に会社**に満足している**",
       "scale": "5point",
       "roles": [
@@ -351,8 +351,8 @@
     {
       "question_id": "MANAGER-Q30",
       "original_no": 30,
-      "factor_id": "F05",
-      "element_id": "30",
+      "factor_id": "F1",
+      "element_id": "31",
       "text": "私は、スタッフに期待することや、**やるべきことを具体的に細かく指示・指導するタイプだと思う**",
       "scale": "5point",
       "roles": [
@@ -363,8 +363,8 @@
     {
       "question_id": "MANAGER-Q31",
       "original_no": 31,
-      "factor_id": "",
-      "element_id": "31",
+      "factor_id": "F1",
+      "element_id": "32",
       "text": "私は、スタッフの考えや思いに気を配り、**提案も聞くタイプだと思う**",
       "scale": "5point",
       "roles": [
@@ -375,8 +375,8 @@
     {
       "question_id": "MANAGER-Q32",
       "original_no": 32,
-      "factor_id": "",
-      "element_id": "32",
+      "factor_id": "F1",
+      "element_id": "33",
       "text": "私は、スタッフに期待し、**高い目標を立てて全力を尽くすよう鼓舞するタイプだと思う**",
       "scale": "5point",
       "roles": [
@@ -387,8 +387,8 @@
     {
       "question_id": "MANAGER-Q33",
       "original_no": 33,
-      "factor_id": "",
-      "element_id": "33",
+      "factor_id": "F1",
+      "element_id": "34",
       "text": "私は、スタッフの仕事を良く観察し、スタッフの仕事について、日頃から又は面談を通じて承認行動をとっている",
       "scale": "5point",
       "roles": [
@@ -399,8 +399,8 @@
     {
       "question_id": "MANAGER-Q34",
       "original_no": 34,
-      "factor_id": "",
-      "element_id": "34",
+      "factor_id": "F1",
+      "element_id": "35",
       "text": "私は、スタッフを**熱心に育成**していると思う",
       "scale": "5point",
       "roles": [
@@ -411,8 +411,8 @@
     {
       "question_id": "MANAGER-Q35",
       "original_no": 35,
-      "factor_id": "",
-      "element_id": "35",
+      "factor_id": "F1",
+      "element_id": "36",
       "text": "私に対してスタッフが自分の**意見を言うことができる**関係性だと思う",
       "scale": "5point",
       "roles": [
@@ -423,8 +423,8 @@
     {
       "question_id": "MANAGER-Q36",
       "original_no": 36,
-      "factor_id": "",
-      "element_id": "36",
+      "factor_id": "F1",
+      "element_id": "29",
       "text": "私は部下やスタッフ教えるにあたり、**十分な知識を得られていると思う**",
       "scale": "5point",
       "roles": [
@@ -435,8 +435,8 @@
     {
       "question_id": "MANAGER-Q37",
       "original_no": 37,
-      "factor_id": "F06",
-      "element_id": "37",
+      "factor_id": "F1",
+      "element_id": "30",
       "text": "部下やスタッフを教えるにあたり、教育ツールなどの整備が行き届き、**教えやすい環境**だと思う",
       "scale": "5point",
       "roles": [
@@ -447,8 +447,8 @@
     {
       "question_id": "MANAGER-Q38",
       "original_no": 38,
-      "factor_id": "F06",
-      "element_id": "38",
+      "factor_id": "F1",
+      "element_id": "40",
       "text": "スタッフは、同僚同士、お互い**フォローしあいながら**仕事をしていると思う",
       "scale": "5point",
       "roles": [
@@ -459,8 +459,8 @@
     {
       "question_id": "MANAGER-Q39",
       "original_no": 39,
-      "factor_id": "F06",
-      "element_id": "39",
+      "factor_id": "F1",
+      "element_id": "41",
       "text": "スタッフは、同僚同士、お互い**指摘し合える**関係性だと思う",
       "scale": "5point",
       "roles": [
@@ -471,8 +471,8 @@
     {
       "question_id": "MANAGER-Q40",
       "original_no": 40,
-      "factor_id": "F08",
-      "element_id": "40",
+      "factor_id": "F2",
+      "element_id": "42",
       "text": "スタッフは、同僚同士、仕事に限らず**仲良くしている**",
       "scale": "5point",
       "roles": [
@@ -483,8 +483,8 @@
     {
       "question_id": "MANAGER-Q41",
       "original_no": 41,
-      "factor_id": "F08",
-      "element_id": "41",
+      "factor_id": "F2",
+      "element_id": "43",
       "text": "同僚（他店店長）とは、お互い**フォローしあいながら**仕事をしていると思う",
       "scale": "5point",
       "roles": [
@@ -495,8 +495,8 @@
     {
       "question_id": "MANAGER-Q42",
       "original_no": 42,
-      "factor_id": "F08",
-      "element_id": "42",
+      "factor_id": "F2",
+      "element_id": "44",
       "text": "同僚（他店店長）とは、お互い**指摘し合える**関係性だと思う",
       "scale": "5point",
       "roles": [
@@ -507,8 +507,8 @@
     {
       "question_id": "MANAGER-Q43",
       "original_no": 43,
-      "factor_id": "F08",
-      "element_id": "43",
+      "factor_id": "F2",
+      "element_id": "45",
       "text": "同僚（他店店長）とは、仕事に限らず**仲良くしている**",
       "scale": "5point",
       "roles": [
@@ -519,8 +519,8 @@
     {
       "question_id": "MANAGER-Q44",
       "original_no": 44,
-      "factor_id": "F08",
-      "element_id": "44",
+      "factor_id": "F2",
+      "element_id": "46",
       "text": "私は、**社交的で人と仲良くなるのが得意なタイプだと思う**",
       "scale": "5point",
       "roles": [
@@ -531,8 +531,8 @@
     {
       "question_id": "MANAGER-Q45",
       "original_no": 45,
-      "factor_id": "F08",
-      "element_id": "45",
+      "factor_id": "F2",
+      "element_id": "49",
       "text": "私は、人と話すときは聴き手として相手の話を理解しようと努めている",
       "scale": "5point",
       "roles": [
@@ -543,8 +543,8 @@
     {
       "question_id": "MANAGER-Q46",
       "original_no": 46,
-      "factor_id": "F11",
-      "element_id": "46",
+      "factor_id": "F1",
+      "element_id": "50",
       "text": "私の仕事が、お客さまにどのような**サービスを提供する役割か、はっきりとわかっている**",
       "scale": "5point",
       "roles": [
@@ -555,7 +555,7 @@
     {
       "question_id": "MANAGER-Q47",
       "original_no": 47,
-      "factor_id": "F11",
+      "factor_id": "F1",
       "element_id": "47",
       "text": "お客さまが喜ぶと思うサービスを自身の判断で行うことが出来ている",
       "scale": "5point",
@@ -567,7 +567,7 @@
     {
       "question_id": "MANAGER-Q48",
       "original_no": 48,
-      "factor_id": "F11",
+      "factor_id": "F1",
       "element_id": "48",
       "text": "そのような判断をすることが、はっきり職務として明確になっている",
       "scale": "5point",
@@ -579,8 +579,8 @@
     {
       "question_id": "MANAGER-Q49",
       "original_no": 49,
-      "factor_id": "F11",
-      "element_id": "49",
+      "factor_id": "F1",
+      "element_id": "4",
       "text": "私は、**お客さまに喜んでもらえることが何よりも嬉しい**",
       "scale": "5point",
       "roles": [
@@ -591,8 +591,8 @@
     {
       "question_id": "MANAGER-Q50",
       "original_no": 50,
-      "factor_id": "F11",
-      "element_id": "50",
+      "factor_id": "F3",
+      "element_id": "55",
       "text": "専門的な能力を持つメンバー、問題解決や意思決定力に長けたメンバー、対人コミュニケーションを備えたメンバーなど、バランスよい構成だと思う",
       "scale": "5point",
       "roles": [
@@ -603,8 +603,8 @@
     {
       "question_id": "MANAGER-Q51",
       "original_no": 51,
-      "factor_id": "F16",
-      "element_id": "51",
+      "factor_id": "F3",
+      "element_id": "56",
       "text": "メンバーは、外向性、人当たりのよさ、誠実さ、安定した感情といったパーソナリティを備えている",
       "scale": "5point",
       "roles": [
@@ -615,8 +615,8 @@
     {
       "question_id": "MANAGER-Q52",
       "original_no": 52,
-      "factor_id": "F16",
-      "element_id": "52",
+      "factor_id": "F3",
+      "element_id": "57",
       "text": "メンバーの能力や好みを考慮して、それぞれが貢献できるように役割分担されている",
       "scale": "5point",
       "roles": [
@@ -627,8 +627,8 @@
     {
       "question_id": "MANAGER-Q53",
       "original_no": 53,
-      "factor_id": "F16",
-      "element_id": "53",
+      "factor_id": "F3",
+      "element_id": "58",
       "text": "メンバーは、それぞれの経験や考え方を出し合い協力して仕事を進めている",
       "scale": "5point",
       "roles": [
@@ -639,8 +639,8 @@
     {
       "question_id": "MANAGER-Q54",
       "original_no": 54,
-      "factor_id": "F16",
-      "element_id": "54",
+      "factor_id": "F3",
+      "element_id": "59",
       "text": "メンバーの人数はちょうどよく、面倒を見れないということはない",
       "scale": "5point",
       "roles": [
@@ -651,8 +651,8 @@
     {
       "question_id": "MANAGER-Q55",
       "original_no": 55,
-      "factor_id": "F17",
-      "element_id": "55",
+      "factor_id": "F3",
+      "element_id": "60",
       "text": "メンバーは、多能工化され、誰でも２つ以上のポジションを担当できる",
       "scale": "5point",
       "roles": [
@@ -663,8 +663,8 @@
     {
       "question_id": "MANAGER-Q56",
       "original_no": 56,
-      "factor_id": "F17",
-      "element_id": "56",
+      "factor_id": "F3",
+      "element_id": "61",
       "text": "メンバーは、チームで働くことを好むタイプで構成されている",
       "scale": "5point",
       "roles": [
@@ -675,8 +675,8 @@
     {
       "question_id": "MANAGER-Q57",
       "original_no": 57,
-      "factor_id": "F17",
-      "element_id": "57",
+      "factor_id": "F3",
+      "element_id": "63",
       "text": "チーム（店舗）が目指すビジョンが明確になっておりメンバーと共有・合意が出来ている",
       "scale": "5point",
       "roles": [
@@ -687,8 +687,8 @@
     {
       "question_id": "MANAGER-Q58",
       "original_no": 58,
-      "factor_id": "F17",
-      "element_id": "58",
+      "factor_id": "F3",
+      "element_id": "62",
       "text": "チーム（店舗）が目指すビジョンは、具体的で現実的な目標に落とし込まれている",
       "scale": "5point",
       "roles": [
@@ -699,8 +699,8 @@
     {
       "question_id": "MANAGER-Q59",
       "original_no": 59,
-      "factor_id": "F17",
-      "element_id": "59",
+      "factor_id": "F3",
+      "element_id": "64",
       "text": "チームは、目標達成に向けて自信を持って取り組んでいる",
       "scale": "5point",
       "roles": [
@@ -711,8 +711,8 @@
     {
       "question_id": "MANAGER-Q60",
       "original_no": 60,
-      "factor_id": "F17",
-      "element_id": "60",
+      "factor_id": "F3",
+      "element_id": "65",
       "text": "チームはいい意味で緊張感を持ち、お互いの考え方の違いについてよく話し合っている",
       "scale": "5point",
       "roles": [
@@ -723,8 +723,8 @@
     {
       "question_id": "MANAGER-Q61",
       "original_no": 61,
-      "factor_id": "F17",
-      "element_id": "61",
+      "factor_id": "F3",
+      "element_id": "52",
       "text": "店長に限らず、ときにはスタッフもリーダーとなり、チームを引っ張っている",
       "scale": "5point",
       "roles": [
@@ -735,8 +735,8 @@
     {
       "question_id": "MANAGER-Q62",
       "original_no": 62,
-      "factor_id": "F18",
-      "element_id": "62",
+      "factor_id": "F3",
+      "element_id": "53",
       "text": "メンバー同士（店長も含めて）で信頼感があると思う",
       "scale": "5point",
       "roles": [
@@ -747,8 +747,8 @@
     {
       "question_id": "MANAGER-Q63",
       "original_no": 63,
-      "factor_id": "F07",
-      "element_id": "63",
+      "factor_id": "F3",
+      "element_id": "54",
       "text": "努力に対する報酬は、個人よりもチーム（店舗）に対して行われている",
       "scale": "5point",
       "roles": [
@@ -759,8 +759,8 @@
     {
       "question_id": "MANAGER-Q64",
       "original_no": 64,
-      "factor_id": "F18",
-      "element_id": "64",
+      "factor_id": "F3",
+      "element_id": "51",
       "text": "会社は店舗に対して、適切な設備・人員、奨励、事務支援など、十分な資源を提供してくれていると思う",
       "scale": "5point",
       "roles": [
@@ -771,8 +771,8 @@
     {
       "question_id": "MANAGER-Q65",
       "original_no": 65,
-      "factor_id": "F18",
-      "element_id": "65",
+      "factor_id": "F3",
+      "element_id": "7",
       "text": "チームは、メンバーのスキル、会社の支援が整い、生産性が高いと感じている",
       "scale": "5point",
       "roles": [
@@ -783,8 +783,8 @@
     {
       "question_id": "STAFF-Q01",
       "original_no": 1,
-      "factor_id": "",
-      "element_id": "1",
+      "factor_id": "F1",
+      "element_id": "15",
       "text": "私の仕事は、職場にとって、お客さまにとって、**大きな影響があり重要**だと思う",
       "scale": "5point",
       "roles": [
@@ -795,8 +795,8 @@
     {
       "question_id": "STAFF-Q02",
       "original_no": 2,
-      "factor_id": "F12",
-      "element_id": "2",
+      "factor_id": "F1",
+      "element_id": "12",
       "text": "日々、**変化や刺激を感じられる**仕事だと思う",
       "scale": "5point",
       "roles": [
@@ -807,8 +807,8 @@
     {
       "question_id": "STAFF-Q03",
       "original_no": 3,
-      "factor_id": "",
-      "element_id": "3",
+      "factor_id": "F2",
+      "element_id": "13",
       "text": "仕事を通じていろいろな**スキルを身につけることができるし、活かせる**と思う",
       "scale": "5point",
       "roles": [
@@ -819,8 +819,8 @@
     {
       "question_id": "STAFF-Q04",
       "original_no": 4,
-      "factor_id": "",
-      "element_id": "4",
+      "factor_id": "F1",
+      "element_id": "14",
       "text": "私は、接客や調理などの業務において、一つの仕事を完了するところまで受け持っている（接客であれば入店からお見送りまで、調理であればひとつの料理を完成させるまで）",
       "scale": "5point",
       "roles": [
@@ -831,8 +831,8 @@
     {
       "question_id": "STAFF-Q05",
       "original_no": 5,
-      "factor_id": "",
-      "element_id": "5",
+      "factor_id": "F3",
+      "element_id": "16",
       "text": "私は、**私の考えで仕事を進めることが出来ていると思う**",
       "scale": "5point",
       "roles": [
@@ -843,8 +843,8 @@
     {
       "question_id": "STAFF-Q06",
       "original_no": 6,
-      "factor_id": "F14",
-      "element_id": "6",
+      "factor_id": "F1",
+      "element_id": "10",
       "text": "私の仕事に対する**評価は、明確・公平**にされていると感じる",
       "scale": "5point",
       "roles": [
@@ -855,8 +855,8 @@
     {
       "question_id": "STAFF-Q07",
       "original_no": 7,
-      "factor_id": "",
-      "element_id": "7",
+      "factor_id": "F1",
+      "element_id": "11",
       "text": "今の仕事は私が**活躍するチャンスがある**と思う",
       "scale": "5point",
       "roles": [
@@ -867,8 +867,8 @@
     {
       "question_id": "STAFF-Q08",
       "original_no": 8,
-      "factor_id": "F10",
-      "element_id": "8",
+      "factor_id": "F2",
+      "element_id": "21",
       "text": "私の職場には**不平不満等をこぼす人がいない**",
       "scale": "5point",
       "roles": [
@@ -879,8 +879,8 @@
     {
       "question_id": "STAFF-Q09",
       "original_no": 9,
-      "factor_id": "F10",
-      "element_id": "9",
+      "factor_id": "F2",
+      "element_id": "22",
       "text": "私の職場には**手抜きをしている人はいなく、みんな積極的**に仕事をしていると思う",
       "scale": "5point",
       "roles": [
@@ -891,8 +891,8 @@
     {
       "question_id": "STAFF-Q10",
       "original_no": 10,
-      "factor_id": "F01",
-      "element_id": "10",
+      "factor_id": "F1",
+      "element_id": "20",
       "text": "私の職場には**ハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全**だと思う",
       "scale": "5point",
       "roles": [
@@ -903,8 +903,8 @@
     {
       "question_id": "STAFF-Q11",
       "original_no": 11,
-      "factor_id": "F01",
-      "element_id": "11",
+      "factor_id": "F1",
+      "element_id": "23",
       "text": "私の職場に、危険と思う箇所なはい",
       "scale": "5point",
       "roles": [
@@ -915,8 +915,8 @@
     {
       "question_id": "STAFF-Q12",
       "original_no": 12,
-      "factor_id": "F01",
-      "element_id": "12",
+      "factor_id": "F1",
+      "element_id": "24",
       "text": "私の職場は、**ウィルス対策や食中毒対策にしっかりと取組めていると思う**",
       "scale": "5point",
       "roles": [
@@ -927,8 +927,8 @@
     {
       "question_id": "STAFF-Q13",
       "original_no": 13,
-      "factor_id": "F09",
-      "element_id": "13",
+      "factor_id": "F2",
+      "element_id": "25",
       "text": "私の職場は、**整理整頓が行き届き、清潔**だと思う",
       "scale": "5point",
       "roles": [
@@ -939,8 +939,8 @@
     {
       "question_id": "STAFF-Q14",
       "original_no": 14,
-      "factor_id": "F09",
-      "element_id": "14",
+      "factor_id": "F2",
+      "element_id": "26",
       "text": "私の職場は、**休暇の取得や残業の改善が図られていると思う**",
       "scale": "5point",
       "roles": [
@@ -951,8 +951,8 @@
     {
       "question_id": "STAFF-Q15",
       "original_no": 15,
-      "factor_id": "F09",
-      "element_id": "15",
+      "factor_id": "F2",
+      "element_id": "27",
       "text": "その他、室温・湿度、照明、雑音など、**特に気になる箇所はない**",
       "scale": "5point",
       "roles": [
@@ -963,8 +963,8 @@
     {
       "question_id": "STAFF-Q16",
       "original_no": 16,
-      "factor_id": "F09",
-      "element_id": "16",
+      "factor_id": "F2",
+      "element_id": "8",
       "text": "私は、会社の**理念（お客様や地域に対する会社の想い）を知っている**",
       "scale": "5point",
       "roles": [
@@ -975,8 +975,8 @@
     {
       "question_id": "STAFF-Q17",
       "original_no": 17,
-      "factor_id": "F07",
-      "element_id": "17",
+      "factor_id": "F2",
+      "element_id": "9",
       "text": "私は、会社の**理念を自分なりに理解して行動**できていると思う",
       "scale": "5point",
       "roles": [
@@ -987,8 +987,8 @@
     {
       "question_id": "STAFF-Q18",
       "original_no": 18,
-      "factor_id": "F02",
-      "element_id": "18",
+      "factor_id": "F1",
+      "element_id": "3",
       "text": "私は、会社の掲げる将来の姿に期待し、**それを一緒に目指したいと思う**",
       "scale": "5point",
       "roles": [
@@ -999,8 +999,8 @@
     {
       "question_id": "STAFF-Q20",
       "original_no": 20,
-      "factor_id": "F03",
-      "element_id": "20",
+      "factor_id": "F1",
+      "element_id": "17",
       "text": "上司は、日頃から又は面談を通じて結果を伝えてくれ、アドバイスもしてくれる",
       "scale": "5point",
       "roles": [
@@ -1011,8 +1011,8 @@
     {
       "question_id": "STAFF-Q23",
       "original_no": 23,
-      "factor_id": "F04",
-      "element_id": "23",
+      "factor_id": "F1",
+      "element_id": "18",
       "text": "私は、今の賃金**に納得している**",
       "scale": "5point",
       "roles": [
@@ -1023,8 +1023,8 @@
     {
       "question_id": "STAFF-Q24",
       "original_no": 24,
-      "factor_id": "F04",
-      "element_id": "24",
+      "factor_id": "F1",
+      "element_id": "19",
       "text": "私は、今の福利厚生**に納得している**",
       "scale": "5point",
       "roles": [
@@ -1035,8 +1035,8 @@
     {
       "question_id": "STAFF-Q25",
       "original_no": 25,
-      "factor_id": "F04",
-      "element_id": "25",
+      "factor_id": "F1",
+      "element_id": "28",
       "text": "仕事に必要な知識について、十分な**教育の機会を与えてくれている**と思う",
       "scale": "5point",
       "roles": [
@@ -1047,8 +1047,8 @@
     {
       "question_id": "STAFF-Q26",
       "original_no": 26,
-      "factor_id": "F04",
-      "element_id": "26",
+      "factor_id": "F3",
+      "element_id": "6",
       "text": "私は、今後もこの会社に**勤めていたい**と思う",
       "scale": "5point",
       "roles": [
@@ -1059,8 +1059,8 @@
     {
       "question_id": "STAFF-Q27",
       "original_no": 27,
-      "factor_id": "F04",
-      "element_id": "27",
+      "factor_id": "F3",
+      "element_id": "5",
       "text": "私は、これからも会社やお店に積極的に**貢献していきたい**と考えている",
       "scale": "5point",
       "roles": [
@@ -1071,8 +1071,8 @@
     {
       "question_id": "STAFF-Q28",
       "original_no": 28,
-      "factor_id": "F05",
-      "element_id": "28",
+      "factor_id": "F1",
+      "element_id": "2",
       "text": "私は、総合的に職場・仕事**に満足している**",
       "scale": "5point",
       "roles": [
@@ -1083,8 +1083,8 @@
     {
       "question_id": "STAFF-Q29",
       "original_no": 29,
-      "factor_id": "F05",
-      "element_id": "29",
+      "factor_id": "F1",
+      "element_id": "1",
       "text": "私は、総合的に会社**に満足している**",
       "scale": "5point",
       "roles": [
@@ -1095,8 +1095,8 @@
     {
       "question_id": "STAFF-Q30",
       "original_no": 30,
-      "factor_id": "F05",
-      "element_id": "30",
+      "factor_id": "F1",
+      "element_id": "31",
       "text": "上司には、私に期待することややるべきことを具体的に細かく指示・指導してほしい",
       "scale": "5point",
       "roles": [
@@ -1107,8 +1107,8 @@
     {
       "question_id": "STAFF-Q31",
       "original_no": 31,
-      "factor_id": "",
-      "element_id": "31",
+      "factor_id": "F1",
+      "element_id": "32",
       "text": "上司に私の考えや思いを伝え、一緒に考えながら仕事を進めたい",
       "scale": "5point",
       "roles": [
@@ -1119,8 +1119,8 @@
     {
       "question_id": "STAFF-Q32",
       "original_no": 32,
-      "factor_id": "",
-      "element_id": "32",
+      "factor_id": "F1",
+      "element_id": "33",
       "text": "上司は、私に期待し、高い目標を立てて全力を尽くすよう鼓舞してほしい",
       "scale": "5point",
       "roles": [
@@ -1131,8 +1131,8 @@
     {
       "question_id": "STAFF-Q33",
       "original_no": 33,
-      "factor_id": "",
-      "element_id": "33",
+      "factor_id": "F1",
+      "element_id": "34",
       "text": "上司は、私の仕事を良く見てくれて、私の仕事を褒めてくれる",
       "scale": "5point",
       "roles": [
@@ -1143,8 +1143,8 @@
     {
       "question_id": "STAFF-Q34",
       "original_no": 34,
-      "factor_id": "",
-      "element_id": "34",
+      "factor_id": "F1",
+      "element_id": "35",
       "text": "上司は、私を**熱心に育成**してくれていると思う",
       "scale": "5point",
       "roles": [
@@ -1155,8 +1155,8 @@
     {
       "question_id": "STAFF-Q35",
       "original_no": 35,
-      "factor_id": "",
-      "element_id": "35",
+      "factor_id": "F1",
+      "element_id": "36",
       "text": "上司や社員に対して自分の**意見を言うことができる**関係性だと思う",
       "scale": "5point",
       "roles": [
@@ -1167,8 +1167,8 @@
     {
       "question_id": "STAFF-Q36",
       "original_no": 36,
-      "factor_id": "",
-      "element_id": "36",
+      "factor_id": "F1",
+      "element_id": "29",
       "text": "後輩を教えるにあたり、**自分に十分な知識があると思う**",
       "scale": "5point",
       "roles": [
@@ -1179,8 +1179,8 @@
     {
       "question_id": "STAFF-Q37",
       "original_no": 37,
-      "factor_id": "F06",
-      "element_id": "37",
+      "factor_id": "F1",
+      "element_id": "30",
       "text": "後輩を教えるにあたり、教育ツールなどの整備が行き届き、**教えやすい環境**だと思う",
       "scale": "5point",
       "roles": [
@@ -1191,8 +1191,8 @@
     {
       "question_id": "STAFF-Q38",
       "original_no": 38,
-      "factor_id": "F06",
-      "element_id": "38",
+      "factor_id": "F1",
+      "element_id": "40",
       "text": "同僚とは、お互い**フォローしあいながら**仕事をしていると思う",
       "scale": "5point",
       "roles": [
@@ -1203,8 +1203,8 @@
     {
       "question_id": "STAFF-Q39",
       "original_no": 39,
-      "factor_id": "F06",
-      "element_id": "39",
+      "factor_id": "F1",
+      "element_id": "41",
       "text": "同僚とは、お互い**指摘し合える**関係性だと思う",
       "scale": "5point",
       "roles": [
@@ -1215,8 +1215,8 @@
     {
       "question_id": "STAFF-Q40",
       "original_no": 40,
-      "factor_id": "F08",
-      "element_id": "40",
+      "factor_id": "F2",
+      "element_id": "42",
       "text": "同僚とは、仕事に限らず**仲良くしている**",
       "scale": "5point",
       "roles": [
@@ -1227,8 +1227,8 @@
     {
       "question_id": "STAFF-Q41",
       "original_no": 41,
-      "factor_id": "F08",
-      "element_id": "41",
+      "factor_id": "F2",
+      "element_id": "46",
       "text": "私は、**社交的で人と仲良くなるのが得意なタイプだと思う**",
       "scale": "5point",
       "roles": [
@@ -1239,8 +1239,8 @@
     {
       "question_id": "STAFF-Q42",
       "original_no": 42,
-      "factor_id": "F08",
-      "element_id": "42",
+      "factor_id": "F2",
+      "element_id": "49",
       "text": "私は、人と話すときは聴き手として相手の話を理解しようと努めている",
       "scale": "5point",
       "roles": [
@@ -1251,8 +1251,8 @@
     {
       "question_id": "STAFF-Q43",
       "original_no": 43,
-      "factor_id": "F08",
-      "element_id": "43",
+      "factor_id": "F2",
+      "element_id": "50",
       "text": "私の仕事が、お客さまにどのような**サービスを提供する役割か、はっきりとわかっている**",
       "scale": "5point",
       "roles": [
@@ -1263,8 +1263,8 @@
     {
       "question_id": "STAFF-Q44",
       "original_no": 44,
-      "factor_id": "F08",
-      "element_id": "44",
+      "factor_id": "F2",
+      "element_id": "47",
       "text": "お客さまが喜ぶと思うサービスを自身の判断で行うことが出来ている",
       "scale": "5point",
       "roles": [
@@ -1275,8 +1275,8 @@
     {
       "question_id": "STAFF-Q45",
       "original_no": 45,
-      "factor_id": "F08",
-      "element_id": "45",
+      "factor_id": "F2",
+      "element_id": "48",
       "text": "そのような判断をすることが、はっきり仕事として任されている",
       "scale": "5point",
       "roles": [
@@ -1287,8 +1287,8 @@
     {
       "question_id": "STAFF-Q46",
       "original_no": 46,
-      "factor_id": "F11",
-      "element_id": "46",
+      "factor_id": "F1",
+      "element_id": "4",
       "text": "私は、**お客さまに喜んでもらえることが何よりも嬉しい**",
       "scale": "5point",
       "roles": [
@@ -1299,8 +1299,8 @@
     {
       "question_id": "STAFF-Q50",
       "original_no": 50,
-      "factor_id": "F11",
-      "element_id": "50",
+      "factor_id": "F1",
+      "element_id": "55",
       "text": "技術レベルの高い人、決定力の高い人、コミュニケーション力が高い人など、**能力が高いメンバーがバランスよくいると思う**",
       "scale": "5point",
       "roles": [
@@ -1311,8 +1311,8 @@
     {
       "question_id": "STAFF-Q51",
       "original_no": 51,
-      "factor_id": "F16",
-      "element_id": "51",
+      "factor_id": "F3",
+      "element_id": "56",
       "text": "メンバーは、人当たりが良く、誠実で、**落ち着いた人が多いと思う**",
       "scale": "5point",
       "roles": [
@@ -1323,8 +1323,8 @@
     {
       "question_id": "STAFF-Q52",
       "original_no": 52,
-      "factor_id": "F16",
-      "element_id": "52",
+      "factor_id": "F3",
+      "element_id": "57",
       "text": "メンバーの能力や好みを考慮して、**それぞれが貢献できるように役割分担されていると思う**",
       "scale": "5point",
       "roles": [
@@ -1335,8 +1335,8 @@
     {
       "question_id": "STAFF-Q53",
       "original_no": 53,
-      "factor_id": "F16",
-      "element_id": "53",
+      "factor_id": "F3",
+      "element_id": "58",
       "text": "メンバーは、**それぞれの経験や考え方を出し合い協力して仕事を進めていると思う**",
       "scale": "5point",
       "roles": [
@@ -1347,8 +1347,8 @@
     {
       "question_id": "STAFF-Q54",
       "original_no": 54,
-      "factor_id": "F16",
-      "element_id": "54",
+      "factor_id": "F3",
+      "element_id": "59",
       "text": "メンバーの人数は**ちょうどよい**と思う",
       "scale": "5point",
       "roles": [
@@ -1359,8 +1359,8 @@
     {
       "question_id": "STAFF-Q55",
       "original_no": 55,
-      "factor_id": "F17",
-      "element_id": "55",
+      "factor_id": "F3",
+      "element_id": "60",
       "text": "メンバーは、誰でも２つ以上のポジションを担当できる",
       "scale": "5point",
       "roles": [
@@ -1371,8 +1371,8 @@
     {
       "question_id": "STAFF-Q56",
       "original_no": 56,
-      "factor_id": "F17",
-      "element_id": "56",
+      "factor_id": "F3",
+      "element_id": "61",
       "text": "メンバーは、**みなチームで働くことを楽しんでいると思う**",
       "scale": "5point",
       "roles": [
@@ -1383,8 +1383,8 @@
     {
       "question_id": "STAFF-Q57",
       "original_no": 57,
-      "factor_id": "F17",
-      "element_id": "57",
+      "factor_id": "F3",
+      "element_id": "63",
       "text": "私たちのお店が目指す方向性は明確で、**みんなしっかり認識できていると思う**",
       "scale": "5point",
       "roles": [
@@ -1395,8 +1395,8 @@
     {
       "question_id": "STAFF-Q58",
       "original_no": 58,
-      "factor_id": "F17",
-      "element_id": "58",
+      "factor_id": "F3",
+      "element_id": "62",
       "text": "目指す方向へ向かって、具体的で現実的な目標が立てられている",
       "scale": "5point",
       "roles": [
@@ -1407,8 +1407,8 @@
     {
       "question_id": "STAFF-Q59",
       "original_no": 59,
-      "factor_id": "F17",
-      "element_id": "59",
+      "factor_id": "F3",
+      "element_id": "64",
       "text": "メンバーは、目標達成に向けて自信を持って取り組んでいる",
       "scale": "5point",
       "roles": [
@@ -1419,8 +1419,8 @@
     {
       "question_id": "STAFF-Q60",
       "original_no": 60,
-      "factor_id": "F17",
-      "element_id": "60",
+      "factor_id": "F3",
+      "element_id": "65",
       "text": "メンバーはいい意味で緊張感を持ち、お互いの考え方の違いについてよく話し合っている",
       "scale": "5point",
       "roles": [
@@ -1431,8 +1431,8 @@
     {
       "question_id": "STAFF-Q61",
       "original_no": 61,
-      "factor_id": "F17",
-      "element_id": "61",
+      "factor_id": "F3",
+      "element_id": "52",
       "text": "上司に限らず、ときには私達もリーダーとなり、チームを引っ張っている",
       "scale": "5point",
       "roles": [
@@ -1443,8 +1443,8 @@
     {
       "question_id": "STAFF-Q62",
       "original_no": 62,
-      "factor_id": "F18",
-      "element_id": "62",
+      "factor_id": "F3",
+      "element_id": "53",
       "text": "メンバー同士（上司も含めて）で信頼感があると思う",
       "scale": "5point",
       "roles": [
@@ -1455,8 +1455,8 @@
     {
       "question_id": "STAFF-Q63",
       "original_no": 63,
-      "factor_id": "F07",
-      "element_id": "63",
+      "factor_id": "F3",
+      "element_id": "54",
       "text": "私のいるチームは、メンバーのスキル、会社の支援が整い、生産性が高いと感じている",
       "scale": "5point",
       "roles": [
@@ -1467,8 +1467,8 @@
     {
       "question_id": "PA-Q01",
       "original_no": 1,
-      "factor_id": "",
-      "element_id": "1",
+      "factor_id": "F1",
+      "element_id": "15",
       "text": "私の仕事は、職場にとって、お客さまにとって、**大きな影響があり重要**だと思う",
       "scale": "5point",
       "roles": [
@@ -1479,8 +1479,8 @@
     {
       "question_id": "PA-Q02",
       "original_no": 2,
-      "factor_id": "F12",
-      "element_id": "2",
+      "factor_id": "F1",
+      "element_id": "12",
       "text": "日々、**変化や刺激を感じられる**仕事だと思う",
       "scale": "5point",
       "roles": [
@@ -1491,8 +1491,8 @@
     {
       "question_id": "PA-Q03",
       "original_no": 3,
-      "factor_id": "",
-      "element_id": "3",
+      "factor_id": "F2",
+      "element_id": "13",
       "text": "仕事を通じていろいろな**スキルを身につけることができるし、活かせる**と思う",
       "scale": "5point",
       "roles": [
@@ -1503,8 +1503,8 @@
     {
       "question_id": "PA-Q04",
       "original_no": 4,
-      "factor_id": "",
-      "element_id": "4",
+      "factor_id": "F1",
+      "element_id": "14",
       "text": "私は、接客や調理などの業務において、一つの仕事を完了するところまで受け持っている（接客であれば入店からお見送りまで、調理であればひとつの料理を完成させるまで）",
       "scale": "5point",
       "roles": [
@@ -1515,8 +1515,8 @@
     {
       "question_id": "PA-Q05",
       "original_no": 5,
-      "factor_id": "",
-      "element_id": "5",
+      "factor_id": "F3",
+      "element_id": "16",
       "text": "私は、**私の考えで仕事を進めることが出来ていると思う**",
       "scale": "5point",
       "roles": [
@@ -1527,8 +1527,8 @@
     {
       "question_id": "PA-Q06",
       "original_no": 6,
-      "factor_id": "F14",
-      "element_id": "6",
+      "factor_id": "F1",
+      "element_id": "10",
       "text": "私の仕事に対する**評価は、明確・公平**にされていると感じる",
       "scale": "5point",
       "roles": [
@@ -1539,8 +1539,8 @@
     {
       "question_id": "PA-Q07",
       "original_no": 7,
-      "factor_id": "",
-      "element_id": "7",
+      "factor_id": "F1",
+      "element_id": "11",
       "text": "今の仕事は私が**活躍するチャンスがある**と思う",
       "scale": "5point",
       "roles": [
@@ -1551,8 +1551,8 @@
     {
       "question_id": "PA-Q08",
       "original_no": 8,
-      "factor_id": "F10",
-      "element_id": "8",
+      "factor_id": "F2",
+      "element_id": "21",
       "text": "私の職場には**不平不満等をこぼす人がいない**",
       "scale": "5point",
       "roles": [
@@ -1563,8 +1563,8 @@
     {
       "question_id": "PA-Q09",
       "original_no": 9,
-      "factor_id": "F10",
-      "element_id": "9",
+      "factor_id": "F2",
+      "element_id": "20",
       "text": "私の職場には**ハラスメント行為（パワハラ、モラハラ、セクハラ等）がなく健全**だと思う",
       "scale": "5point",
       "roles": [
@@ -1575,8 +1575,8 @@
     {
       "question_id": "PA-Q10",
       "original_no": 10,
-      "factor_id": "F01",
-      "element_id": "10",
+      "factor_id": "F1",
+      "element_id": "23",
       "text": "私の職場に、危険と思う箇所なはい",
       "scale": "5point",
       "roles": [
@@ -1587,8 +1587,8 @@
     {
       "question_id": "PA-Q11",
       "original_no": 11,
-      "factor_id": "F01",
-      "element_id": "11",
+      "factor_id": "F1",
+      "element_id": "25",
       "text": "私の職場は、**整理整頓が行き届き、清潔**だと思う",
       "scale": "5point",
       "roles": [
@@ -1599,8 +1599,8 @@
     {
       "question_id": "PA-Q12",
       "original_no": 12,
-      "factor_id": "F01",
-      "element_id": "12",
+      "factor_id": "F1",
+      "element_id": "27",
       "text": "その他、室温・湿度、照明、雑音など、**特に気になる箇所はない**",
       "scale": "5point",
       "roles": [
@@ -1611,8 +1611,8 @@
     {
       "question_id": "PA-Q13",
       "original_no": 13,
-      "factor_id": "F09",
-      "element_id": "13",
+      "factor_id": "F2",
+      "element_id": "8",
       "text": "私は、会社の**理念（お客様や地域に対する会社の想い）を知っている**",
       "scale": "5point",
       "roles": [
@@ -1623,8 +1623,8 @@
     {
       "question_id": "PA-Q14",
       "original_no": 14,
-      "factor_id": "F09",
-      "element_id": "14",
+      "factor_id": "F2",
+      "element_id": "26",
       "text": "私は、会社の**理念を自分なりに理解して行動**できていると思う",
       "scale": "5point",
       "roles": [
@@ -1635,8 +1635,8 @@
     {
       "question_id": "PA-Q15",
       "original_no": 15,
-      "factor_id": "F09",
-      "element_id": "15",
+      "factor_id": "F2",
+      "element_id": "27",
       "text": "私は、会社の掲げる将来の姿に期待し、**勤めている以上はそれを一緒に目指したいと思う**",
       "scale": "5point",
       "roles": [
@@ -1647,8 +1647,8 @@
     {
       "question_id": "PA-Q19",
       "original_no": 19,
-      "factor_id": "F02",
-      "element_id": "19",
+      "factor_id": "F1",
+      "element_id": "37",
       "text": "仕事に必要な知識について、十分な**教育の機会を与えてくれている**と思う",
       "scale": "5point",
       "roles": [
@@ -1659,8 +1659,8 @@
     {
       "question_id": "PA-Q20",
       "original_no": 20,
-      "factor_id": "F03",
-      "element_id": "20",
+      "factor_id": "F3",
+      "element_id": "17",
       "text": "私は、これからも会社やお店に積極的に**貢献していきたい**と考えている",
       "scale": "5point",
       "roles": [
@@ -1671,8 +1671,8 @@
     {
       "question_id": "PA-Q21",
       "original_no": 21,
-      "factor_id": "F03",
-      "element_id": "21",
+      "factor_id": "F1",
+      "element_id": "2",
       "text": "私は、総合的に職場・仕事**に満足している**",
       "scale": "5point",
       "roles": [
@@ -1683,8 +1683,8 @@
     {
       "question_id": "PA-Q22",
       "original_no": 22,
-      "factor_id": "F03",
-      "element_id": "22",
+      "factor_id": "F1",
+      "element_id": "1",
       "text": "私は、総合的に会社**に満足している**",
       "scale": "5point",
       "roles": [
@@ -1695,8 +1695,8 @@
     {
       "question_id": "PA-Q23",
       "original_no": 23,
-      "factor_id": "F04",
-      "element_id": "23",
+      "factor_id": "F1",
+      "element_id": "18",
       "text": "店長や社員は、私の仕事を良く見てくれて、私の仕事を褒めてくれる",
       "scale": "5point",
       "roles": [
@@ -1707,8 +1707,8 @@
     {
       "question_id": "PA-Q24",
       "original_no": 24,
-      "factor_id": "F04",
-      "element_id": "24",
+      "factor_id": "F1",
+      "element_id": "19",
       "text": "店長や社員は、私を**熱心に育成**してくれていると思う",
       "scale": "5point",
       "roles": [
@@ -1719,8 +1719,8 @@
     {
       "question_id": "PA-Q25",
       "original_no": 25,
-      "factor_id": "F04",
-      "element_id": "25",
+      "factor_id": "F1",
+      "element_id": "28",
       "text": "店長や社員に対して自分の**意見を言うことができる**関係性だと思う",
       "scale": "5point",
       "roles": [
@@ -1731,8 +1731,8 @@
     {
       "question_id": "PA-Q26",
       "original_no": 26,
-      "factor_id": "F04",
-      "element_id": "26",
+      "factor_id": "F1",
+      "element_id": "6",
       "text": "同僚とは、お互い**フォローしあいながら**仕事をしていると思う",
       "scale": "5point",
       "roles": [
@@ -1743,8 +1743,8 @@
     {
       "question_id": "PA-Q27",
       "original_no": 27,
-      "factor_id": "F04",
-      "element_id": "27",
+      "factor_id": "F1",
+      "element_id": "5",
       "text": "同僚とは、お互い**指摘し合える**関係性だと思う",
       "scale": "5point",
       "roles": [
@@ -1755,8 +1755,8 @@
     {
       "question_id": "PA-Q28",
       "original_no": 28,
-      "factor_id": "F05",
-      "element_id": "28",
+      "factor_id": "F1",
+      "element_id": "2",
       "text": "同僚とは、仕事に限らず**仲良くしている**",
       "scale": "5point",
       "roles": [
@@ -1767,8 +1767,8 @@
     {
       "question_id": "PA-Q29",
       "original_no": 29,
-      "factor_id": "F05",
-      "element_id": "29",
+      "factor_id": "F1",
+      "element_id": "46",
       "text": "私は、**社交的で人と仲良くなるのが得意なタイプだと思う**",
       "scale": "5point",
       "roles": [
@@ -1779,8 +1779,8 @@
     {
       "question_id": "PA-Q30",
       "original_no": 30,
-      "factor_id": "F05",
-      "element_id": "30",
+      "factor_id": "F1",
+      "element_id": "50",
       "text": "私の仕事が、お客さまにどのような**サービスを提供する役割か、はっきりとわかっている**",
       "scale": "5point",
       "roles": [
@@ -1791,8 +1791,8 @@
     {
       "question_id": "PA-Q31",
       "original_no": 31,
-      "factor_id": "",
-      "element_id": "31",
+      "factor_id": "F1",
+      "element_id": "47",
       "text": "お客さまが喜ぶと思うサービスを自身の判断で行うことが出来ている",
       "scale": "5point",
       "roles": [
@@ -1803,8 +1803,8 @@
     {
       "question_id": "PA-Q32",
       "original_no": 32,
-      "factor_id": "",
-      "element_id": "32",
+      "factor_id": "F1",
+      "element_id": "48",
       "text": "そのような判断をすることが、はっきり仕事として任されている",
       "scale": "5point",
       "roles": [
@@ -1815,8 +1815,8 @@
     {
       "question_id": "PA-Q33",
       "original_no": 33,
-      "factor_id": "",
-      "element_id": "33",
+      "factor_id": "F1",
+      "element_id": "4",
       "text": "私は、**お客さまに喜んでもらえることが何よりも嬉しい**",
       "scale": "5point",
       "roles": [
@@ -1827,8 +1827,8 @@
     {
       "question_id": "PA-Q34",
       "original_no": 34,
-      "factor_id": "",
-      "element_id": "34",
+      "factor_id": "F1",
+      "element_id": "35",
       "text": "私たちのお店が目指す方向性は明確で、**みんなしっかり認識できていると思う**",
       "scale": "5point",
       "roles": [
@@ -1839,8 +1839,8 @@
     {
       "question_id": "PA-Q35",
       "original_no": 35,
-      "factor_id": "",
-      "element_id": "35",
+      "factor_id": "F1",
+      "element_id": "36",
       "text": "目指す方向へ向かって、具体的で現実的な目標が立てられている",
       "scale": "5point",
       "roles": [
@@ -1851,8 +1851,8 @@
     {
       "question_id": "PA-Q36",
       "original_no": 36,
-      "factor_id": "",
-      "element_id": "36",
+      "factor_id": "F1",
+      "element_id": "29",
       "text": "私たちは、目標達成に向けて自信を持って取り組んでいる",
       "scale": "5point",
       "roles": [
@@ -1863,8 +1863,8 @@
     {
       "question_id": "PA-Q37",
       "original_no": 37,
-      "factor_id": "F06",
-      "element_id": "37",
+      "factor_id": "F1",
+      "element_id": "30",
       "text": "店長や社員に限らず、ときには私達もリーダーとなり、チームを引っ張っている",
       "scale": "5point",
       "roles": [
@@ -1875,8 +1875,8 @@
     {
       "question_id": "PA-Q38",
       "original_no": 38,
-      "factor_id": "F06",
-      "element_id": "38",
+      "factor_id": "F1",
+      "element_id": "40",
       "text": "メンバー同士（上司も含めて）で**信頼感がある**と思う",
       "scale": "5point",
       "roles": [
@@ -1887,8 +1887,8 @@
     {
       "question_id": "PA-Q39",
       "original_no": 39,
-      "factor_id": "F06",
-      "element_id": "39",
+      "factor_id": "F1",
+      "element_id": "41",
       "text": "私のいるチーム（店舗）は、メンバーが切磋琢磨し、**仕事を高め合っていると思う**",
       "scale": "5point",
       "roles": [
@@ -1899,521 +1899,415 @@
   ],
   "factors": [
     {
-      "factor_id": "F01",
-      "factor_name": "やりがい",
-      "element_ids": [
-        "10",
-        "11",
-        "12"
-      ],
+      "factor_id": "F1",
+      "factor_name": "組織活性化の源泉",
+      "description": "会社満足度、職務満足度",
       "order": 1
     },
     {
-      "factor_id": "F02",
-      "factor_name": "賃金・福利厚生",
-      "element_ids": [
-        "18",
-        "19"
-      ],
+      "factor_id": "F2",
+      "factor_name": "収益性向上に繋がるエンゲージメント",
+      "description": "理念・ビジョンへの共感、顧客視点意識",
       "order": 2
     },
     {
-      "factor_id": "F03",
-      "factor_name": "職場風土",
-      "element_ids": [
-        "20",
-        "21",
-        "22"
-      ],
+      "factor_id": "F3",
+      "factor_name": "業績拡大に繋がるチーム力と持続性",
+      "description": "効果的なチーム、貢献意欲、勤続意思",
       "order": 3
-    },
-    {
-      "factor_id": "F04",
-      "factor_name": "労働環境",
-      "element_ids": [
-        "23",
-        "24",
-        "25",
-        "26",
-        "27"
-      ],
-      "order": 4
-    },
-    {
-      "factor_id": "F05",
-      "factor_name": "教育環境",
-      "element_ids": [
-        "28",
-        "29",
-        "30"
-      ],
-      "order": 5
-    },
-    {
-      "factor_id": "F06",
-      "factor_name": "上司の関わり方（/店長-部下）",
-      "element_ids": [
-        "37",
-        "38",
-        "39"
-      ],
-      "order": 6
-    },
-    {
-      "factor_id": "F07",
-      "factor_name": "コミュニケーション（仕事）",
-      "element_ids": [
-        "17",
-        "63"
-      ],
-      "order": 7
-    },
-    {
-      "factor_id": "F08",
-      "factor_name": "コミュニケーション（同僚）",
-      "element_ids": [
-        "40",
-        "41",
-        "42",
-        "43",
-        "44",
-        "45"
-      ],
-      "order": 8
-    },
-    {
-      "factor_id": "F09",
-      "factor_name": "職務特性（満足度側）",
-      "element_ids": [
-        "13",
-        "14",
-        "15",
-        "16",
-        "17"
-      ],
-      "order": 9
-    },
-    {
-      "factor_id": "F10",
-      "factor_name": "理念・ビジョンの認知と理解",
-      "element_ids": [
-        "8",
-        "9"
-      ],
-      "order": 10
-    },
-    {
-      "factor_id": "F11",
-      "factor_name": "顧客対応型文化の要素",
-      "element_ids": [
-        "46",
-        "47",
-        "48",
-        "49",
-        "50"
-      ],
-      "order": 11
-    },
-    {
-      "factor_id": "F12",
-      "factor_name": "職場満足度（K2同義）",
-      "element_ids": [
-        "2"
-      ],
-      "order": 12
-    },
-    {
-      "factor_id": "F13",
-      "factor_name": "公平さ",
-      "element_ids": [
-        "10"
-      ],
-      "order": 13
-    },
-    {
-      "factor_id": "F14",
-      "factor_name": "勤続意思（K6同義）",
-      "element_ids": [
-        "6"
-      ],
-      "order": 14
-    },
-    {
-      "factor_id": "F15",
-      "factor_name": "職務特性（チーム側）",
-      "element_ids": [
-        "13",
-        "14",
-        "15",
-        "16",
-        "17"
-      ],
-      "order": 15
-    },
-    {
-      "factor_id": "F16",
-      "factor_name": "チームの基盤",
-      "element_ids": [
-        "51",
-        "52",
-        "53",
-        "54"
-      ],
-      "order": 16
-    },
-    {
-      "factor_id": "F17",
-      "factor_name": "チームの構成（固定: No22,62-65）",
-      "element_ids": [
-        "55",
-        "56",
-        "57",
-        "58",
-        "59",
-        "60",
-        "61"
-      ],
-      "order": 17
-    },
-    {
-      "factor_id": "F18",
-      "factor_name": "プロセス",
-      "element_ids": [
-        "22",
-        "62",
-        "63",
-        "64",
-        "65"
-      ],
-      "order": 18
     }
   ],
   "elements": [
     {
       "element_id": "1",
       "element_name": "会社の満足度",
+      "factor_id": "F1",
       "order": 1
     },
     {
       "element_id": "2",
       "element_name": "職務満足度",
+      "factor_id": "F1",
       "order": 2
     },
     {
       "element_id": "3",
       "element_name": "会社の将来像への期待",
+      "factor_id": "F2",
       "order": 3
     },
     {
       "element_id": "4",
       "element_name": "顧客視点意識",
+      "factor_id": "F2",
       "order": 4
     },
     {
       "element_id": "5",
       "element_name": "貢献意欲",
+      "factor_id": "F3",
       "order": 5
     },
     {
       "element_id": "6",
       "element_name": "勤続意思",
+      "factor_id": "F3",
       "order": 6
     },
     {
       "element_id": "7",
       "element_name": "効果的チーム",
+      "factor_id": "F3",
       "order": 7
     },
     {
       "element_id": "8",
       "element_name": "理念・ビジョンの認知",
+      "factor_id": "F2",
       "order": 8
     },
     {
       "element_id": "9",
       "element_name": "理念・ビジョンの理解",
+      "factor_id": "F2",
       "order": 9
     },
     {
       "element_id": "10",
       "element_name": "公平な評価",
+      "factor_id": "F1",
       "order": 10
     },
     {
       "element_id": "11",
       "element_name": "活躍のチャンス",
+      "factor_id": "F1",
       "order": 11
     },
     {
       "element_id": "12",
       "element_name": "内容が変化に富んでいるか",
+      "factor_id": "F1",
       "order": 12
     },
     {
       "element_id": "13",
       "element_name": "技能多様性",
+      "factor_id": "F1",
       "order": 13
     },
     {
       "element_id": "14",
       "element_name": "タスク完結性",
+      "factor_id": "F1",
       "order": 14
     },
     {
       "element_id": "15",
       "element_name": "タスク重要性",
+      "factor_id": "F1",
       "order": 15
     },
     {
       "element_id": "16",
       "element_name": "自由・決定権があるか（自律性）",
+      "factor_id": "F1",
       "order": 16
     },
     {
       "element_id": "17",
       "element_name": "フィードバックはあるか",
+      "factor_id": "F1",
       "order": 17
     },
     {
       "element_id": "18",
       "element_name": "賃金の納得性",
+      "factor_id": "F1",
       "order": 18
     },
     {
       "element_id": "19",
       "element_name": "福利厚生の充実",
+      "factor_id": "F1",
       "order": 19
     },
     {
       "element_id": "20",
       "element_name": "ハラスメント",
+      "factor_id": "F1",
       "order": 20
     },
     {
       "element_id": "21",
       "element_name": "不平不満",
+      "factor_id": "F1",
       "order": 21
     },
     {
       "element_id": "22",
       "element_name": "社会的手抜き",
+      "factor_id": "F1",
       "order": 22
     },
     {
       "element_id": "23",
       "element_name": "安全管理",
+      "factor_id": "F1",
       "order": 23
     },
     {
       "element_id": "24",
       "element_name": "衛生管理",
+      "factor_id": "F1",
       "order": 24
     },
     {
       "element_id": "25",
       "element_name": "５Ｓ",
+      "factor_id": "F1",
       "order": 25
     },
     {
       "element_id": "26",
       "element_name": "労務管理",
+      "factor_id": "F1",
       "order": 26
     },
     {
       "element_id": "27",
-      "element_name": "その他",
+      "element_name": "その他気になる箇所",
+      "factor_id": "F1",
       "order": 27
     },
     {
       "element_id": "28",
       "element_name": "知識付与（自身が受ける側）",
+      "factor_id": "F1",
       "order": 28
     },
     {
       "element_id": "29",
       "element_name": "部下育成知識（自身が教える側）",
+      "factor_id": "F1",
       "order": 29
     },
     {
       "element_id": "30",
       "element_name": "部下育成ツール（自身が教える側）",
+      "factor_id": "F1",
       "order": 30
     },
     {
       "element_id": "31",
       "element_name": "店長のリーダーシップ（指示型）",
+      "factor_id": "F1",
       "order": 31
     },
     {
       "element_id": "32",
       "element_name": "店長のリーダーシップ（支援・参加型）",
+      "factor_id": "F1",
       "order": 32
     },
     {
       "element_id": "33",
       "element_name": "店長のリーダーシップ（課題達成志向型）",
+      "factor_id": "F1",
       "order": 33
     },
     {
       "element_id": "34",
       "element_name": "店長の承認行動",
+      "factor_id": "F1",
       "order": 34
     },
     {
       "element_id": "35",
       "element_name": "店長の育成マインド",
+      "factor_id": "F1",
       "order": 35
     },
     {
       "element_id": "36",
       "element_name": "意見具申",
+      "factor_id": "F1",
       "order": 36
     },
     {
       "element_id": "37",
       "element_name": "上司の承認行動",
+      "factor_id": "F1",
       "order": 37
     },
     {
       "element_id": "38",
       "element_name": "上司の育成マインド",
+      "factor_id": "F1",
       "order": 38
     },
     {
       "element_id": "39",
       "element_name": "上司への意見具申",
+      "factor_id": "F1",
       "order": 39
     },
     {
       "element_id": "40",
       "element_name": "同僚との関係（フォロー）",
+      "factor_id": "F1",
       "order": 40
     },
     {
       "element_id": "41",
       "element_name": "同僚との関係（指摘）",
+      "factor_id": "F1",
       "order": 41
     },
     {
       "element_id": "42",
       "element_name": "同僚との関係（仕事以外）",
+      "factor_id": "F1",
       "order": 42
     },
     {
       "element_id": "43",
       "element_name": "同僚（他店店長）との関係",
+      "factor_id": "F1",
       "order": 43
     },
     {
       "element_id": "44",
       "element_name": "同僚（他店店長）との関係（指摘）",
+      "factor_id": "F1",
       "order": 44
     },
     {
       "element_id": "45",
       "element_name": "同僚（他店店長）との関係（仕事以外）",
+      "factor_id": "F1",
       "order": 45
     },
     {
       "element_id": "46",
       "element_name": "従業員のタイプ",
+      "factor_id": "F2",
       "order": 46
     },
     {
       "element_id": "47",
-      "element_name": "公式化の度合い",
+      "element_name": "権限委譲",
+      "factor_id": "F2",
       "order": 47
     },
     {
       "element_id": "48",
-      "element_name": "権限委譲",
+      "element_name": "公式化の度合い",
+      "factor_id": "F2",
       "order": 48
     },
     {
       "element_id": "49",
       "element_name": "傾聴スキル",
+      "factor_id": "F2",
       "order": 49
     },
     {
       "element_id": "50",
       "element_name": "役割の明確化",
+      "factor_id": "F2",
       "order": 50
     },
     {
       "element_id": "51",
       "element_name": "十分な資源",
+      "factor_id": "F3",
       "order": 51
     },
     {
       "element_id": "52",
       "element_name": "効果的なリーダーシップ",
+      "factor_id": "F3",
       "order": 52
     },
     {
       "element_id": "53",
       "element_name": "信頼関係のある環境",
+      "factor_id": "F3",
       "order": 53
     },
     {
       "element_id": "54",
       "element_name": "業績評価と報酬システム",
+      "factor_id": "F3",
       "order": 54
     },
     {
       "element_id": "55",
       "element_name": "メンバーの能力",
+      "factor_id": "F3",
       "order": 55
     },
     {
       "element_id": "56",
       "element_name": "パーソナリティ",
+      "factor_id": "F3",
       "order": 56
     },
     {
       "element_id": "57",
       "element_name": "役割の割り当て",
+      "factor_id": "F3",
       "order": 57
     },
     {
       "element_id": "58",
       "element_name": "多様性",
+      "factor_id": "F3",
       "order": 58
     },
     {
       "element_id": "59",
       "element_name": "チームの規模",
+      "factor_id": "F3",
       "order": 59
     },
     {
       "element_id": "60",
       "element_name": "メンバーの柔軟性",
+      "factor_id": "F3",
       "order": 60
     },
     {
       "element_id": "61",
       "element_name": "メンバーの嗜好",
+      "factor_id": "F3",
       "order": 61
     },
     {
       "element_id": "62",
       "element_name": "共通の目的",
+      "factor_id": "F3",
       "order": 62
     },
     {
       "element_id": "63",
       "element_name": "具体的な目標",
+      "factor_id": "F3",
       "order": 63
     },
     {
       "element_id": "64",
       "element_name": "チームの自信感",
+      "factor_id": "F3",
       "order": 64
     },
     {
       "element_id": "65",
       "element_name": "コンフリクトの程度",
+      "factor_id": "F3",
       "order": 65
     }
   ],
-  "updated_at": "2026-02-14T02:52:57.954Z"
+  "updated_at": "2026-02-08T10:00:00.000000"
 }

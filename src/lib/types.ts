@@ -54,6 +54,7 @@ export interface Question {
 export interface Factor {
   factor_id: string;
   factor_name: string;
+  element_ids?: string[]; // 構成要素IDのリスト（1対多対応）
   order: number;
 }
 
@@ -182,10 +183,25 @@ export interface SegmentScore {
   elementScores: Record<string, ElementScore>;
 }
 
+export interface CategoryScore {
+  category_id: string;
+  category_name: string;
+  mean: number | null;
+  factors: FactorScore[];
+  distribution: Distribution;
+}
+
+export interface AiAnalysis {
+  strengths: string[];
+  weaknesses: string[];
+  general_comment: string;
+}
+
 export interface SurveySummary {
   surveyId: string;
   generatedAt: string;
   overallScore: number | null;
+  categoryScores?: CategoryScore[]; // 追加: C階層
   factorScores: FactorScore[];
   elementScores: ElementScore[];
   summary?: any; // 一時的な互換性用
@@ -194,4 +210,5 @@ export interface SurveySummary {
   weaknesses: StrengthWeakness[];
   responseRate: ResponseRate;
   n: number;
+  aiAnalysis?: AiAnalysis; // AIによる分析結果
 }

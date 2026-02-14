@@ -176,7 +176,7 @@ function generateCustomerCsv(
     const currentYear = new Date().getFullYear();
     const joinYear = resp?.join_year;
     const tenure = joinYear ? currentYear - joinYear : '';
-    const ageBand = calcAgeBand(resp?.birth_date);
+    const ageBand = resp?.age_band || '';
 
     // メタデータ列
     const meta = [
