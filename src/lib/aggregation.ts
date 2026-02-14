@@ -16,6 +16,7 @@ import type {
   ElementScore,
   FactorScore,
   CategoryScore,
+  IndicatorScore,
   SurveySummary,
   StrengthWeakness,
   ResponseRate,
@@ -372,6 +373,61 @@ export function computeResponseRate(
 }
 
 /**
+ * 指標（K階層）スコアを計算（F階層の集約）
+ */
+export function computeIndicatorScores(factorScores: FactorScore[]): IndicatorScore[] {
+  const INDICATOR_DEFS = [
+    { id: 'K1', name: '会社の満足度', fIds: ['F01', 'F02', 'F03', 'F04', 'F05', 'F06', 'F07', 'F08', 'F09'] },
+    { id: 'K2', name: '職務満足度', fIds: ['F12'] },
+    { id: 'K3', name: '会社の将来像への期待', fIds: ['F10'] },
+    { id: 'K4', name: '顧客視点意識', fIds: ['F11'] },
+    { id: 'K5', name: '貢献意欲', fIds: ['F12', 'F13'] },
+    { id: 'K6', name: '勤続意思', fIds: ['F14'] },
+    { id: 'K7', name: '効果的チーム', fIds: ['F15', 'F16', 'F17', 'F18'] },
+  ];
+
+  return INDICATOR_DEFS.map(def => {
+    const targetFactors = factorScores.filter(fs => def.fIds.includes(fs.factor_id));
+    const validMeans = targetFactors.map(f => f.mean).filter((m): m is number => m != null);
+    
+    const indicatorMean = validMeans.length > 0 
+      ? validMeans.reduce((a, b) => a + b, 0) / validMeans.length 
+      : null;
+
+    // 分布の集約（加重平均）
+    let totalN = 0;
+    let sumTop2 = 0;
+    let sumMid = 0;
+    let sumBottom2 = 0;
+
+    targetFactors.forEach(fs => {
+      fs.elements.forEach(es => {
+        const n = es.distribution.n;
+        totalN += n;
+        sumTop2 += es.distribution.top2 * n;
+        sumMid += es.distribution.mid * n;
+        sumBottom2 += es.distribution.bottom2 * n;
+      });
+    });
+
+    const distribution: Distribution = totalN > 0 ? {
+      top2: sumTop2 / totalN,
+      mid: sumMid / totalN,
+      bottom2: sumBottom2 / totalN,
+      n: totalN
+    } : { top2: 0, mid: 0, bottom2: 0, n: 0 };
+
+    return {
+      indicator_id: def.id,
+      indicator_name: def.name,
+      mean: indicatorMean,
+      factors: targetFactors,
+      distribution
+    };
+  });
+}
+
+/**
  * カテゴリ（C階層）スコアを計算（F階層の集約）
  */
 export function computeCategoryScores(factorScores: FactorScore[]): CategoryScore[] {
@@ -442,6 +498,9 @@ export function generateSurveySummary(
   // 因子スコア
   const factorScores = computeFactorScores(elementScores, elements, factors);
 
+  // 指標（K階層）スコア
+  const indicatorScores = computeIndicatorScores(factorScores);
+
   // カテゴリ（C階層）スコア
   const categoryScores = computeCategoryScores(factorScores);
 
@@ -477,6 +536,7 @@ export function generateSurveySummary(
     generatedAt: new Date().toISOString(),
     overallScore,
     categoryScores, // C階層
+    indicatorScores, // K階層
     factorScores,
     elementScores,
     strengths,

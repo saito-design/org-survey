@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { SurveySummary, AiAnalysis } from "./types";
+import { SurveySummary, AiAnalysis, IndicatorScore } from "./types";
 
 export interface AiAnalysisInput {
   current: SurveySummary;
@@ -24,42 +24,33 @@ export async function analyzeSurveyWithAi(input: AiAnalysisInput): Promise<AiAna
 
   const prompt = `
 あなたは組織診断と経営コンサルティングの専門家です。
-以下のアンケート集計結果（組織診断データ）に基づき、現状の分析、課題の特定、および具体的な改善対策を提案してください。
+以下の集計結果に基づき、組織の現状を分析し、**極めて簡潔に** 報告してください。
 
 ### 集計データ
-1. 今回のスコア (n=${current.n}):
-   - 総合スコア: ${current.overallScore?.toFixed(2) ?? "N/A"}
-   - カテゴリスコア:
-     ${current.categoryScores?.map(c => `- ${c.category_name}: ${c.mean?.toFixed(2)} (ネガティブ回答率: ${(c.distribution.bottom2 * 100).toFixed(1)}%)`).join('\n     ')}
-   - 特に低い設問（課題）:
-     ${current.weaknesses.map(w => `- ${w.element_name}: ${w.mean.toFixed(2)} (順位: ${w.rank})`).join('\n     ')}
-   - 特に高い設問（強み）:
-     ${current.strengths.map(s => `- ${s.element_name}: ${s.mean.toFixed(2)} (順位: ${s.rank})`).join('\n     ')}
+1. 指標スコア (n=${current.n}):
+   ${current.indicatorScores?.map((k: IndicatorScore) => `- ${k.indicator_name}: ${k.mean?.toFixed(2)} (ネガ比: ${(k.distribution.bottom2 * 100).toFixed(1)}%)`).join('\n   ')}
 
-${overallAvg ? `2. 全体平均（ベンチマーク）:
-   - 総合スコア: ${overallAvg.overallScore?.toFixed(2)}
-   - 各カテゴリの乖離:
-     ${overallAvg.categoryScores?.map(oa => {
-       const cur = current.categoryScores?.find(c => c.category_id === oa.category_id);
-       const diff = cur && cur.mean ? cur.mean - (oa.mean ?? 0) : 0;
-       return `- ${oa.category_name}: ${diff > 0 ? '+' : ''}${diff.toFixed(2)}`;
-     }).join('\n     ')}` : ''}
+2. 特出すべき詳細設問:
+   - 低い: ${current.weaknesses.slice(0, 3).map(w => w.element_name).join(', ')}
+   - 高い: ${current.strengths.slice(0, 3).map(s => s.element_name).join(', ')}
 
-${previous ? `3. 過去との比較 (時系列傾向):
-   - 前回総合スコア: ${previous.overallScore?.toFixed(2)} (今回比: ${((current.overallScore ?? 0) - (previous.overallScore ?? 0)).toFixed(2)})
-   ${beforePrevious ? `- 前々回総合スコア: ${beforePrevious.overallScore?.toFixed(2)}` : ''}` : ''}
+${overallAvg ? `3. 全体平均との比較:
+   - 各指標の乖離: ${overallAvg.indicatorScores?.map((oa: IndicatorScore) => {
+     const cur = current.indicatorScores?.find((k: IndicatorScore) => k.indicator_id === oa.indicator_id);
+     const diff = cur && cur.mean ? cur.mean - (oa.mean ?? 0) : 0;
+     return `${oa.indicator_name}(${diff > 0 ? '+' : ''}${diff.toFixed(2)})`;
+   }).join(', ')}` : ''}
 
-### 指示事項
-1. **現状分析**: スコアの絶対値だけでなく、全体平均との乖離や過去からの変化に着目し、組織で今何が起きているかを具体的に推察してください。
-2. **課題の深掘り**: 特にスコアが低い設問内容から、現場のどのような行動や意識が不足しているかを専門的な視点で分析してください。
-3. **具体的な対策案**: 精神論ではなく、明日から取り組めるような実効性のある具体的な対策（店長の関わり方、オペレーション、制度面など）を3つ以上提案してください。
-4. **回答形式**: 以下のJSONフォーマットで回答してください。
+### 指示事項（厳守）
+1. **強み・課題**: それぞれ **厳選した2〜3個のみ** を挙げてください。1項目20文字程度で端的に記述してください。
+2. **総評**: 文章ではなく、**箇条書きで2〜3個のみ**記述してください。現状の核心を突く指摘や改善の方向性を各30文字程度で示してください。
+3. **回答形式**: 以下のJSONフォーマットで回答してください。
 
 \`\`\`json
 {
-  "strengths": ["強みの分析結果1", "2", ...],
-  "weaknesses": ["課題の具体的な分析1", "2", ...],
-  "general_comment": "現状の総評、時系列の変化、および具体的で実効性のある具体的な対策案（3つ以上の箇条書きを含む）"
+  "strengths": ["強み1", "強み2"],
+  "weaknesses": ["課題1", "課題2"],
+  "general_comment": "・箇条書き1\n・箇条書き2\n・箇条書き3"
 }
 \`\`\`
 

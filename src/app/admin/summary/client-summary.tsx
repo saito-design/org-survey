@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { SummaryResponse } from '@/app/api/admin/summary/route';
-import { FactorScore, ElementScore, SurveySummary } from '@/lib/types';
+import { FactorScore, ElementScore, SurveySummary, IndicatorScore, CategoryScore } from '@/lib/types';
 import { normalizeLabel } from '@/lib/utils';
 import { getSignal, getSignalBgClass, getSignalLabel } from '@/lib/signal';
 
@@ -428,8 +428,8 @@ export default function ClientSummary() {
 
           {aiAnalysis && !aiLoading && (
             <div className="space-y-4">
-              <div className="bg-white/60 backdrop-blur-sm p-4 rounded-xl border border-indigo-100/50 italic text-indigo-900 font-medium leading-relaxed">
-                「{aiAnalysis.general_comment}」
+              <div className="bg-white/60 backdrop-blur-sm p-4 rounded-xl border border-indigo-100/50 italic text-indigo-900 font-medium leading-relaxed whitespace-pre-wrap">
+                {aiAnalysis.general_comment}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
@@ -536,40 +536,40 @@ export default function ClientSummary() {
             </div>
 
             <div className="flex-1">
-              <h3 className="text-gray-500 text-xs font-bold mb-3 uppercase tracking-wider">カテゴリ別分析（C階層）</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <h3 className="text-gray-500 text-xs font-bold mb-3 uppercase tracking-wider">主要指標別分析（K階層）</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {(() => {
-                  return current.summary.categoryScores?.map((cs) => {
-                    const signal = getSignal(cs.mean);
-                    const p1 = prev1?.summary.categoryScores?.find((c) => c.category_id === cs.category_id)?.mean;
-                    const oa = overallAvg?.summary.categoryScores?.find((c) => c.category_id === cs.category_id)?.mean;
-                    const dist = cs.distribution;
+                  return current.summary.indicatorScores?.map((ks) => {
+                    const signal = getSignal(ks.mean);
+                    const p1 = prev1?.summary.indicatorScores?.find((k) => k.indicator_id === ks.indicator_id)?.mean;
+                    const oa = overallAvg?.summary.indicatorScores?.find((k) => k.indicator_id === ks.indicator_id)?.mean;
+                    const dist = ks.distribution;
 
                     return (
-                      <div key={cs.category_id} className={`p-5 rounded-xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
+                      <div key={ks.indicator_id} className={`p-4 rounded-xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
                         <div>
-                          <div className="flex items-center justify-between gap-2 mb-1">
-                            <div className="text-xs md:text-sm font-black opacity-70 tracking-wide truncate">{cs.category_name}</div>
+                          <div className="flex items-center justify-between gap-1 mb-1">
+                            <div className="text-[11px] md:text-xs font-black opacity-70 tracking-tight truncate">{ks.indicator_name}</div>
                           </div>
                           <Tooltip content={
                               <>
-                                  <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{cs.category_name}</div>
-                                  <div className="text-[10px] text-gray-300 mb-2">
-                                    構成因子: {cs.factors.map(f => normalizeLabel(f.factor_name)).join(', ')}
+                                  <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{ks.indicator_name}</div>
+                                  <div className="text-[9px] text-gray-300 mb-2">
+                                    構成因子: {ks.factors.map(f => normalizeLabel(f.factor_name)).join(', ')}
                                   </div>
-                                  <div className="text-gray-300">有効回答: {cs.distribution.n}名</div>
+                                  <div className="text-gray-300">有効回答: {ks.distribution.n}名</div>
                               </>
                           }>
-                              <div className="text-5xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{cs.mean?.toFixed(2) ?? '-'}</div>
+                              <div className="text-3xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{ks.mean?.toFixed(2) ?? '-'}</div>
                           </Tooltip>
-                          <div className="mt-2 flex items-center gap-2 flex-wrap">
-                            <SignalBadge score={cs.mean} bottom2Rate={cs.distribution.bottom2} />
+                          <div className="mt-1.5 flex items-center gap-1.5 flex-wrap">
+                            <SignalBadge score={ks.mean} bottom2Rate={ks.distribution.bottom2} />
                             <DistributionBar top2={dist.top2} mid={dist.mid} bottom2={dist.bottom2} />
                           </div>
                         </div>
-                        <div className="mt-4 pt-4 border-t border-black/5 space-y-1">
-                          <DeltaDisplay current={cs.mean} target={oa} label="Δ全体平均" />
-                          <DeltaDisplay current={cs.mean} target={p1} label="Δ前回" />
+                        <div className="mt-3 pt-3 border-t border-black/5 space-y-0.5">
+                          <DeltaDisplay current={ks.mean} target={oa} label="Δ全体" />
+                          <DeltaDisplay current={ks.mean} target={p1} label="Δ前回" />
                         </div>
                       </div>
                     );

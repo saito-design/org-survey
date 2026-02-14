@@ -191,6 +191,14 @@ export interface CategoryScore {
   distribution: Distribution;
 }
 
+export interface IndicatorScore {
+  indicator_id: string;
+  indicator_name: string;
+  mean: number | null;
+  factors: FactorScore[];
+  distribution: Distribution;
+}
+
 export interface AiAnalysis {
   strengths: string[];
   weaknesses: string[];
@@ -201,7 +209,8 @@ export interface SurveySummary {
   surveyId: string;
   generatedAt: string;
   overallScore: number | null;
-  categoryScores?: CategoryScore[]; // 追加: C階層
+  categoryScores?: CategoryScore[]; // C階層
+  indicatorScores?: IndicatorScore[]; // K階層（7指標）
   factorScores: FactorScore[];
   elementScores: ElementScore[];
   summary?: any; // 一時的な互換性用
