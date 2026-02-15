@@ -50,7 +50,7 @@ function Tooltip({ children, content }: { children: React.ReactNode; content: Re
   return (
     <span className="relative group cursor-help inline-block">
       {children}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-4 py-3 bg-gray-700/80 text-gray-100 text-xs rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-normal z-[100] shadow-lg backdrop-blur-md min-w-[220px] border border-gray-500/30">
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-4 py-3 bg-gray-700/80 text-gray-100 text-xs rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-normal z-100 shadow-lg backdrop-blur-md min-w-[220px] border border-gray-500/30">
         <div className="space-y-1">
           {content}
         </div>
@@ -336,12 +336,16 @@ export default function ClientSummary() {
           overallAvg: overallAvg?.summary,
         }),
       });
-      if (!res.ok) throw new Error('AI分析に失敗しました');
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.details || errorData.error || 'AI分析に失敗しました');
+      }
       const analysis = await res.json();
       setAiAnalysis(analysis);
     } catch (err) {
       console.error(err);
-      alert('AI分析の実行中にエラーが発生しました。APIキーの設定を確認してください。');
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      alert(`AI分析の実行中にエラーが発生しました。\n\n理由: ${message}\n\nAPIキーの設定やクォータ制限を確認してください。`);
     } finally {
       setAiLoading(false);
     }
@@ -378,7 +382,7 @@ export default function ClientSummary() {
 
       <main className="px-4 md:px-6 py-4 space-y-4 max-w-7xl mx-auto">
         {/* AI分析セクション */}
-        <div className="bg-gradient-to-br from-indigo-50 to-white rounded-xl shadow-sm border border-indigo-100 p-5 overflow-hidden relative">
+        <div className="bg-linear-to-br from-indigo-50 to-white rounded-xl shadow-sm border border-indigo-100 p-5 overflow-hidden relative">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-200">
@@ -535,49 +539,109 @@ export default function ClientSummary() {
               })()}
             </div>
 
-            <div className="flex-1">
-              <h3 className="text-gray-500 text-xs font-bold mb-3 uppercase tracking-wider">主要指標別分析（K階層）</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                {(() => {
-                  return current.summary.indicatorScores?.map((ks) => {
-                    const signal = getSignal(ks.mean);
-                    const p1 = prev1?.summary.indicatorScores?.find((k) => k.indicator_id === ks.indicator_id)?.mean;
-                    const oa = overallAvg?.summary.indicatorScores?.find((k) => k.indicator_id === ks.indicator_id)?.mean;
-                    const dist = ks.distribution;
+            <div className="flex-1 space-y-6">
+              {/* 3つのコンセプト（C階層） */}
+              <div>
+                <h3 className="text-gray-500 text-xs font-bold mb-3 uppercase tracking-wider">3つのコンセプト（C階層）</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {(() => {
+                    const conceptColors = {
+                      C1: { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-700', accent: 'bg-blue-600' },
+                      C2: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', accent: 'bg-emerald-600' },
+                      C3: { bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-purple-700', accent: 'bg-purple-600' },
+                    };
+                    const conceptLabels = {
+                      C1: 'STAGE1',
+                      C2: 'STAGE2',
+                      C3: 'STAGE3',
+                    };
+                    return current.summary.categoryScores?.map((cs) => {
+                      const colors = conceptColors[cs.category_id as keyof typeof conceptColors] || conceptColors.C1;
+                      const stageLabel = conceptLabels[cs.category_id as keyof typeof conceptLabels] || '';
+                      const signal = getSignal(cs.mean, cs.distribution?.bottom2);
+                      const p1 = prev1?.summary.categoryScores?.find((c) => c.category_id === cs.category_id)?.mean;
+                      const oa = overallAvg?.summary.categoryScores?.find((c) => c.category_id === cs.category_id)?.mean;
+                      const dist = cs.distribution;
+                      // カテゴリ名から "STAGE1 " などを除去
+                      const displayName = cs.category_name.replace(/^STAGE\d+\s*/, '');
 
-                    return (
-                      <div key={ks.indicator_id} className={`p-4 rounded-xl border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
-                        <div>
-                          <div className="flex items-center justify-between gap-1 mb-1">
-                            <div className="text-[11px] md:text-xs font-black opacity-70 tracking-tight truncate">{ks.indicator_name}</div>
-                          </div>
-                          <Tooltip content={
+                      return (
+                        <div key={cs.category_id} className={`p-4 rounded-xl border-2 ${colors.border} ${colors.bg} flex flex-col justify-between shadow-sm hover:shadow-md transition-all`}>
+                          <div>
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-black text-white ${colors.accent}`}>{stageLabel}</span>
+                            </div>
+                            <div className={`text-sm font-black ${colors.text} mb-1 leading-tight`}>{displayName}</div>
+                            <Tooltip content={
                               <>
-                                  <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{ks.indicator_name}</div>
-                                  <div className="text-[9px] text-gray-300 mb-2">
-                                    構成因子: {ks.factors.map(f => normalizeLabel(f.factor_name)).join(', ')}
-                                  </div>
-                                  <div className="text-gray-300">有効回答: {ks.distribution.n}名</div>
+                                <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{cs.category_name}</div>
+                                <div className="text-[9px] text-gray-300 mb-2">
+                                  構成因子: {cs.factors.map(f => normalizeLabel(f.factor_name)).join(', ')}
+                                </div>
+                                <div className="text-gray-300">有効回答: {cs.distribution?.n ?? 0}名</div>
                               </>
-                          }>
-                              <div className="text-3xl font-black leading-tight hover:text-blue-700 transition-colors pointer-events-auto">{ks.mean?.toFixed(2) ?? '-'}</div>
-                          </Tooltip>
-                          <div className="mt-1.5 flex items-center gap-1.5 flex-wrap">
-                            <SignalBadge score={ks.mean} bottom2Rate={ks.distribution.bottom2} />
-                            <DistributionBar top2={dist.top2} mid={dist.mid} bottom2={dist.bottom2} />
+                            }>
+                              <div className={`text-4xl font-black leading-tight hover:opacity-80 transition-colors ${colors.text}`}>{cs.mean?.toFixed(2) ?? '-'}</div>
+                            </Tooltip>
+                            <div className="mt-2 flex items-center gap-1.5 flex-wrap">
+                              <SignalBadge score={cs.mean} bottom2Rate={dist?.bottom2} />
+                              {dist && <DistributionBar top2={dist.top2} mid={dist.mid} bottom2={dist.bottom2} />}
+                            </div>
+                          </div>
+                          <div className="mt-3 pt-3 border-t border-black/5 space-y-0.5">
+                            <DeltaDisplay current={cs.mean} target={oa} label="Δ全体" />
+                            <DeltaDisplay current={cs.mean} target={p1} label="Δ前回" />
                           </div>
                         </div>
-                        <div className="mt-3 pt-3 border-t border-black/5 space-y-0.5">
-                          <DeltaDisplay current={ks.mean} target={oa} label="Δ全体" />
-                          <DeltaDisplay current={ks.mean} target={p1} label="Δ前回" />
-                        </div>
-                      </div>
-                    );
-                  });
-                })()}
+                      );
+                    });
+                  })()}
+                </div>
               </div>
+
+              {/* 7つの主要指標（K階層） */}
+              <div>
+                <h3 className="text-gray-500 text-xs font-bold mb-3 uppercase tracking-wider">7つの主要指標（K階層）</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+                  {(() => {
+                    return current.summary.indicatorScores?.map((ks) => {
+                      const signal = getSignal(ks.mean);
+                      const p1 = prev1?.summary.indicatorScores?.find((k) => k.indicator_id === ks.indicator_id)?.mean;
+                      const oa = overallAvg?.summary.indicatorScores?.find((k) => k.indicator_id === ks.indicator_id)?.mean;
+                      const dist = ks.distribution;
+
+                      return (
+                        <div key={ks.indicator_id} className={`p-3 rounded-lg border transition-all ${getSignalBgClass(signal)} flex flex-col justify-between shadow-sm hover:shadow-md`}>
+                          <div>
+                            <div className="text-[10px] font-black opacity-70 tracking-tight truncate mb-1" title={ks.indicator_name}>{ks.indicator_name}</div>
+                            <Tooltip content={
+                                <>
+                                    <div className="font-bold border-b border-gray-400/30 pb-1 mb-2">{ks.indicator_name}</div>
+                                    <div className="text-[9px] text-gray-300 mb-2">
+                                      構成因子: {ks.factors.map(f => normalizeLabel(f.factor_name)).join(', ')}
+                                    </div>
+                                    <div className="text-gray-300">有効回答: {ks.distribution.n}名</div>
+                                </>
+                            }>
+                                <div className="text-2xl font-black leading-tight hover:text-blue-700 transition-colors">{ks.mean?.toFixed(2) ?? '-'}</div>
+                            </Tooltip>
+                            <div className="mt-1 flex flex-col gap-1">
+                              <SignalBadge score={ks.mean} bottom2Rate={ks.distribution.bottom2} />
+                            </div>
+                          </div>
+                          <div className="mt-2 pt-2 border-t border-black/5 space-y-0.5 text-[10px]">
+                            <DeltaDisplay current={ks.mean} target={oa} label="Δ全体" />
+                            <DeltaDisplay current={ks.mean} target={p1} label="Δ前回" />
+                          </div>
+                        </div>
+                      );
+                    });
+                  })()}
+                </div>
+              </div>
+
               {/* 信号判定の凡例 */}
-              <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-gray-400">
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-gray-400">
                 <span className="font-bold text-gray-500">信号判定:</span>
                 <span><span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1"></span>良好: スコア≧3.8 & ネガティブ&lt;10%</span>
                 <span><span className="inline-block w-2 h-2 rounded-full bg-yellow-500 mr-1"></span>注意: どちらか一方のみ</span>

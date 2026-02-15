@@ -12,13 +12,13 @@ export interface AiAnalysisInput {
  * 集計結果からAIによる要約分析を生成する
  */
 export async function analyzeSurveyWithAi(input: AiAnalysisInput): Promise<AiAnalysis> {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    throw new Error("APIキー（GEMINI_API_KEY または GOOGLE_API_KEY）が環境変数に設定されていません。");
+    throw new Error("APIキー（GOOGLE_API_KEY または GEMINI_API_KEY）が環境変数に設定されていません。");
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const { current, previous, beforePrevious, overallAvg } = input;
 

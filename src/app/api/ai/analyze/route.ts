@@ -13,12 +13,16 @@ export async function POST(req: NextRequest) {
     }
 
     const analysis = await analyzeSurveyWithAi(input);
-
     return NextResponse.json(analysis);
   } catch (error: any) {
-    console.error("AI Analysis API Error:", error);
+    console.error("AI Analysis API Error details:", error);
+    // エラーメッセージのスタックトレースや詳細をログに出力し、レスポンスにも含める
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: error.message || "Failed to analyze survey" },
+      { 
+        error: "AI分析に失敗しました。詳細はサーバーログを確認してください。",
+        details: errorMessage
+      },
       { status: 500 }
     );
   }
