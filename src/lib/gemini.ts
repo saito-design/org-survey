@@ -13,16 +13,25 @@ export interface AiAnalysisInput {
  */
 export async function analyzeSurveyWithAi(input: AiAnalysisInput): Promise<AiAnalysis> {
   // AI専用のキー（GEMINI_API_KEY）を優先的に探し、なければ汎用の GOOGLE_API_KEY を探す
-  let apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  const geminiKey = process.env.GEMINI_API_KEY;
+  const googleKey = process.env.GOOGLE_API_KEY;
+  
+  // 優先順位: GEMINI_API_KEY > GOOGLE_API_KEY
+  let apiKey = geminiKey || googleKey;
+  const keySource = geminiKey ? "GEMINI_API_KEY" : "GOOGLE_API_KEY";
+
   if (!apiKey) {
-    throw new Error("APIキー（GEMINI_API_KEY または GOOGLE_API_KEY）が環境変数に設定されていません。");
+    throw new Error("APIキーが環境変数に設定されていません。");
   }
 
   apiKey = apiKey.trim();
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  // 課金プラン適用後は、標準の 1.5-flash が最もコストパフォーマンスと安定性に優れます
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  // 課金プラン適用後は v1 安定版の使用を強く推奨します
+  const model = genAI.getGenerativeModel(
+    { model: "gemini-1.5-flash" },
+    { apiVersion: "v1" }
+  );
 
   const { current, overallAvg } = input;
 

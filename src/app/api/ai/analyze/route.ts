@@ -18,13 +18,16 @@ export async function POST(req: NextRequest) {
     console.error("AI Analysis API Error details:", error);
     const errorMessage = error instanceof Error ? error.message : String(error);
     
-    // エラー詳細にプラン変更に関するアドバイスを追加
-    const apiKey = (process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "").trim();
-    const keyInfo = apiKey ? `(Key: ...${apiKey.slice(-4)})` : "(Key not found)";
+    // 環境変数の詳細を特定
+    const geminiKey = process.env.GEMINI_API_KEY;
+    const googleKey = process.env.GOOGLE_API_KEY;
+    const usedKey = geminiKey || googleKey || "";
+    const keyName = geminiKey ? "GEMINI_API_KEY" : (googleKey ? "GOOGLE_API_KEY" : "None");
+    const keyInfo = usedKey ? `(Used: ${keyName}, End: ...${usedKey.trim().slice(-4)})` : "(No key found)";
 
     return NextResponse.json(
       { 
-        error: "AI分析に失敗しました。プラン変更直後の反映待ちか、APIキーの設定を再確認してください。",
+        error: "AI分析に失敗しました。プラン反映待ちか、Vercelの環境変数設定を確認してください。",
         details: `${errorMessage} ${keyInfo}`
       },
       { status: 500 }
