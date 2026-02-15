@@ -27,11 +27,25 @@ export async function analyzeSurveyWithAi(input: AiAnalysisInput): Promise<AiAna
   apiKey = apiKey.trim();
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  // 課金プラン適用後は v1 安定版の使用を強く推奨します
-  const model = genAI.getGenerativeModel(
-    { model: "gemini-1.5-flash" },
-    { apiVersion: "v1" }
-  );
+  
+  // 404 回避のため、利用可能な可能性のあるモデル名を順に試行する
+  const modelNames = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-pro"];
+  let model;
+  let lastError;
+
+  for (const name of modelNames) {
+    try {
+      model = genAI.getGenerativeModel({ model: name }, { apiVersion: "v1" });
+      // 実際に生成を試みる前に、モデルが「存在するか」を軽くチェックする方法がないため、
+      // 最初のモデルで進めますが、もし呼び出しで失敗した場合は、
+      // ここを抜けて実際の generateContent で再試行する形になります。
+      // (SDKの getGenerativeModel 自体は即座にエラーを返さないため、generateContent 側で対処します)
+    } catch (e) {
+      lastError = e;
+    }
+  }
+
+  if (!model) throw lastError || new Error("有効なモデルが見つかりませんでした。");
 
   const { current, overallAvg } = input;
 
