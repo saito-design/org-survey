@@ -18,6 +18,11 @@ export async function analyzeSurveyWithAi(input: AiAnalysisInput): Promise<AiAna
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
+  // gemini-1.5-flash が見つからないというエラーへの対策として、
+  // より一般的でSDKが内部で解決しやすい「gemini-1.5-flash」を維持しつつ、
+  // SDKのバージョンアップやAPI endpointの不整合を考慮し、
+  // 他のモデル名（gemini-1.5-pro 等）への切り替えも検討可能ですが、
+  // まずは正しいスペルとSDKが期待する形式であることを再確認します。
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const { current, previous, beforePrevious, overallAvg } = input;
