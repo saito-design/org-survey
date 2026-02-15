@@ -20,13 +20,9 @@ export async function analyzeSurveyWithAi(input: AiAnalysisInput): Promise<AiAna
 
   apiKey = apiKey.trim();
 
-  try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    
-    // デバッグ用：利用可能なモデルをリストアップ（エラー時にこれを使いたいが、まずは 1.5-flash を試す）
-    // const models = await genAI.listModels(); // これをキャッチ内で使う
-    
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const genAI = new GoogleGenerativeAI(apiKey);
+  // 課金プラン適用後は、標準の 1.5-flash が最もコストパフォーマンスと安定性に優れます
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const { current, overallAvg } = input;
 

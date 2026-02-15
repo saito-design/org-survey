@@ -18,26 +18,14 @@ export async function POST(req: NextRequest) {
     console.error("AI Analysis API Error details:", error);
     const errorMessage = error instanceof Error ? error.message : String(error);
     
-    // APIキーの有無と末尾を確認するための情報を追加
+    // エラー詳細にプラン変更に関するアドバイスを追加
     const apiKey = (process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "").trim();
-    let keyInfo = apiKey ? `(Key: ...${apiKey.slice(-4)})` : "(Key not found)";
-
-    // デバッグ：利用可能なモデルを無理やり取得してみる試み
-    let availableModels = "";
-    try {
-      if (apiKey) {
-        const genAI = new GoogleGenerativeAI(apiKey);
-        // listModels は認証エラーやAPI無効時に適切なエラーを返すため、それ自体を情報源にする
-        const modelList = await genAI.getGenerativeModel({model:"gemini-1.5-flash"}).listModels?.() || [];
-        // @ts-ignore
-        availableModels = " Available models: " + (modelList.models?.map(m => m.name).join(", ") || "none");
-      }
-    } catch (e) {}
+    const keyInfo = apiKey ? `(Key: ...${apiKey.slice(-4)})` : "(Key not found)";
 
     return NextResponse.json(
       { 
-        error: "AI分析に失敗しました。APIの設定を確認してください。",
-        details: `${errorMessage} ${keyInfo}${availableModels}`
+        error: "AI分析に失敗しました。プラン変更直後の反映待ちか、APIキーの設定を再確認してください。",
+        details: `${errorMessage} ${keyInfo}`
       },
       { status: 500 }
     );
