@@ -20,9 +20,13 @@ export async function analyzeSurveyWithAi(input: AiAnalysisInput): Promise<AiAna
 
   apiKey = apiKey.trim();
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  // 404が出る場合、キーにGemini APIの権限がない可能性が高いです
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  try {
+    const genAI = new GoogleGenerativeAI(apiKey);
+    
+    // デバッグ用：利用可能なモデルをリストアップ（エラー時にこれを使いたいが、まずは 1.5-flash を試す）
+    // const models = await genAI.listModels(); // これをキャッチ内で使う
+    
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const { current, overallAvg } = input;
 
