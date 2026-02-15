@@ -18,14 +18,12 @@ export async function analyzeSurveyWithAi(input: AiAnalysisInput): Promise<AiAna
   }
 
   apiKey = apiKey.trim();
-  const keySnippet = `...${apiKey.slice(-4)}`; // デバッグ用に末尾4桁を取得
 
-  try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    // 1.5系が404になるため、最も安定している 1.0 Pro (gemini-pro) を試行します
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const genAI = new GoogleGenerativeAI(apiKey);
+  // 最も安定している 1.0 Pro (gemini-pro) を指定します
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-  const { current, previous, beforePrevious, overallAvg } = input;
+  const { current, overallAvg } = input;
 
   const prompt = `
 あなたは組織診断と経営コンサルティングの専門家です。
