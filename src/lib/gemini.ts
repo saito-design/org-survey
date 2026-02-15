@@ -64,13 +64,14 @@ ${overallAvg ? `3. 全体平均との比較:
 日本語で回答してください。
 `;
 
-  // 試行するモデルの候補リスト
-  const modelNames = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro", "gemini-pro"];
+  // 診断結果に基づき、確実に存在するモデル名のリスト（優先順位順）
+  const modelNames = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-flash-latest", "gemini-pro-latest"];
   let lastError: any = null;
 
   for (const modelName of modelNames) {
     try {
       console.log(`Trying AI model: ${modelName}...`);
+      // 診断結果より 2.0-flash などが v1/v1beta 両方で存在することを確認済み
       const model = genAI.getGenerativeModel({ model: modelName });
       const result = await model.generateContent(prompt);
       const response = await result.response;
@@ -86,7 +87,7 @@ ${overallAvg ? `3. 全体平均との比較:
     } catch (error: any) {
       console.warn(`AI model ${modelName} failed:`, error.message);
       lastError = error;
-      // 404や429などの場合、次のモデルを試す
+      // 次のモデルを試行
       continue;
     }
   }
