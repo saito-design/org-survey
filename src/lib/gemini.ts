@@ -17,12 +17,13 @@ export async function analyzeSurveyWithAi(input: AiAnalysisInput): Promise<AiAna
     throw new Error("APIキー（GOOGLE_API_KEY または GEMINI_API_KEY）が環境変数に設定されていません。");
   }
 
-  // 前後の空白や改行を削除
   apiKey = apiKey.trim();
+  const keySnippet = `...${apiKey.slice(-4)}`; // デバッグ用に末尾4桁を取得
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  // 特定のバージョン指定で 404 が出るため、最新版を指すエイリアスを使用してみます
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+  try {
+    const genAI = new GoogleGenerativeAI(apiKey);
+    // 1.5系が404になるため、最も安定している 1.0 Pro (gemini-pro) を試行します
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
   const { current, previous, beforePrevious, overallAvg } = input;
 

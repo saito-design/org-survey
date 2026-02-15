@@ -16,12 +16,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(analysis);
   } catch (error: any) {
     console.error("AI Analysis API Error details:", error);
-    // エラーメッセージのスタックトレースや詳細をログに出力し、レスポンスにも含める
     const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    // APIキーの有無と末尾を確認するための情報を追加
+    const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY || "";
+    const keyInfo = apiKey ? `(Key ends with: ${apiKey.trim().slice(-4)})` : "(Key not found)";
+
     return NextResponse.json(
       { 
-        error: "AI分析に失敗しました。詳細はサーバーログを確認してください。",
-        details: errorMessage
+        error: "AI分析に失敗しました。APIの設定を確認してください。",
+        details: `${errorMessage} ${keyInfo}`
       },
       { status: 500 }
     );
