@@ -87,6 +87,18 @@ export async function GET(req: NextRequest) {
         await saveCsvToDrive(csv, fileName, recordingFolderId, surveyId);
         console.log(`CSV archived to recording folder: ${fileName}`);
       }
+
+      // 店舗ランキングも生成・保存
+      if (recordingFolderId && recordingFolderId !== rootId) {
+        await generateAndSaveStoreRankings(
+          surveyId,
+          responses,
+          respondents,
+          orgUnits,
+          recordingFolderId
+        );
+        console.log(`Store rankings saved for survey: ${surveyId}`);
+      }
     } catch (driveError) {
       console.error('Failed to save CSV to Drive:', driveError);
     }
@@ -370,4 +382,120 @@ function calcAgeBand(birthDate: string | undefined): string {
 
   const decade = Math.floor(age / 10) * 10;
   return `${decade}代`;
+}
+
+/**
+ * 店舗ランキングを生成してDriveに保存
+ */
+async function generateAndSaveStoreRankings(
+  surveyId: string,
+  responses: any[],
+  respondents: any[],
+  orgUnits: any[],
+  recordingFolderId: string
+) {
+  const respMap = new Map(respondents.map(r => [r.respondent_id, r]));
+  const orgMap = new Map(orgUnits.map(o => [o.store_code, o]));
+
+  // 店舗別スコア集計
+  const totalScores: Map<string, { scores: number[]; info: any }> = new Map();
+  const paScores: Map<string, { scores: number[]; info: any }> = new Map();
+
+  // 回答者ごとの平均スコアを計算
+  const respondentScores = new Map<string, number>();
+  const respondentAnswers = new Map<string, number[]>();
+
+  responses.forEach(r => {
+    if (!respondentAnswers.has(r.respondent_id)) {
+      respondentAnswers.set(r.respondent_id, []);
+    }
+    if (typeof r.value === 'number') {
+      respondentAnswers.get(r.respondent_id)!.push(r.value);
+    }
+  });
+
+  respondentAnswers.forEach((scores, rid) => {
+    if (scores.length > 0) {
+      respondentScores.set(rid, scores.reduce((a, b) => a + b, 0) / scores.length);
+    }
+  });
+
+  // 店舗別に集計
+  respondentScores.forEach((avgScore, rid) => {
+    const resp = respMap.get(rid);
+    if (!resp?.store_code) return;
+
+    const org = orgMap.get(resp.store_code);
+    const storeInfo = {
+      store_code: resp.store_code,
+      store_name: org?.store_name || resp.store_code,
+      business_type: org?.business_type || '',
+    };
+
+    // 全体集計
+    if (!totalScores.has(resp.store_code)) {
+      totalScores.set(resp.store_code, { scores: [], info: storeInfo });
+    }
+    totalScores.get(resp.store_code)!.scores.push(avgScore);
+
+    // PA集計 (PART_TIME)
+    if (resp.role === 'PART_TIME') {
+      if (!paScores.has(resp.store_code)) {
+        paScores.set(resp.store_code, { scores: [], info: storeInfo });
+      }
+      paScores.get(resp.store_code)!.scores.push(avgScore);
+    }
+  });
+
+  // ランキング生成（同点は同順位）
+  const createRanking = (scoresMap: Map<string, { scores: number[]; info: any }>) => {
+    const items = Array.from(scoresMap.entries()).map(([code, data]) => ({
+      store_code: code,
+      store_name: data.info.store_name,
+      business_type: data.info.business_type,
+      score: Math.round((data.scores.reduce((a, b) => a + b, 0) / data.scores.length) * 100) / 100,
+      response_count: data.scores.length,
+      rank: 0,
+    }));
+
+    // スコア降順でソート
+    items.sort((a, b) => b.score - a.score);
+
+    // 同順位処理（同点は同じ順位、次は飛ばす）
+    let prevScore: number | null = null;
+    items.forEach((item, i) => {
+      if (prevScore !== null && item.score === prevScore) {
+        item.rank = items[i - 1].rank;
+      } else {
+        item.rank = i + 1;
+      }
+      prevScore = item.score;
+    });
+
+    return items;
+  };
+
+  const totalRanking = createRanking(totalScores);
+  const paRanking = createRanking(paScores);
+
+  const rankingData = {
+    survey_id: `junestory_${surveyId.replace('-', '')}`,
+    updated_at: new Date().toISOString(),
+    total_ranking: totalRanking,
+    pa_ranking: paRanking,
+  };
+
+  // Drive保存: recording/responses/surveyId/store_rankings.json
+  const responsesFolder = await ensureFolder('responses', recordingFolderId);
+  const surveyFolder = await ensureFolder(surveyId, responsesFolder);
+
+  const existing = await findFileByName('store_rankings.json', surveyFolder);
+
+  await saveFile(
+    JSON.stringify(rankingData, null, 2),
+    'store_rankings.json',
+    'application/json',
+    surveyFolder,
+    existing?.id || undefined
+  );
 }

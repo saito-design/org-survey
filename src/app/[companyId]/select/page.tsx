@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 export default function SelectPage() {
   const router = useRouter();
+  const params = useParams();
+  const companyId = params.companyId as string;
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState<string | null>(null);
   const [isOwner, setIsOwner] = useState(false);
@@ -17,24 +19,24 @@ export default function SelectPage() {
       try {
         const res = await fetch('/api/auth/me');
         if (!res.ok) {
-          router.push('/');
+          router.push(`/${companyId}`);
           return;
         }
         const data = await res.json();
         if (!data.isLoggedIn) {
-          router.push('/');
+          router.push(`/${companyId}`);
           return;
         }
         if (!data.is_admin) {
           // 管理者でなければ回答ページへ
-          router.push('/survey');
+          router.push(`/${companyId}/survey`);
           return;
         }
         setUserName(data.name || data.emp_no);
         setIsOwner(data.is_owner ?? false);
         setLoading(false);
       } catch {
-        router.push('/');
+        router.push(`/${companyId}`);
       }
     }
     checkSession();
@@ -62,7 +64,7 @@ export default function SelectPage() {
           {/* オーナーはアンケート回答不要 */}
           {!isOwner && (
             <button
-              onClick={() => router.push('/survey')}
+              onClick={() => router.push(`/${companyId}/survey`)}
               className="w-full bg-blue-600 text-white py-4 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-3"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,7 +75,7 @@ export default function SelectPage() {
           )}
 
           <button
-            onClick={() => router.push('/admin/summary')}
+            onClick={() => router.push(`/${companyId}/admin/summary`)}
             className="w-full bg-purple-600 text-white py-4 rounded-lg font-medium hover:bg-purple-700 transition-colors flex items-center justify-center gap-3"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +122,7 @@ export default function SelectPage() {
         <button
           onClick={async () => {
             await fetch('/api/auth/logout', { method: 'POST' });
-            router.push('/');
+            router.push(`/${companyId}`);
           }}
           className="w-full mt-4 text-gray-500 hover:text-gray-700 text-sm"
         >

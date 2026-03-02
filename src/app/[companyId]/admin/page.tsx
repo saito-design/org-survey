@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 // ============================================================
 // 型定義
@@ -103,6 +103,8 @@ function getSignalTextColor(level: SignalLevel): string {
 
 export default function AdminDashboard() {
   const router = useRouter();
+  const params = useParams();
+  const companyId = params.companyId as string;
   const [summary, setSummary] = useState<SurveySummary | null>(null);
   const [segmentScores, setSegmentScores] = useState<SegmentScore[]>([]);
   const [loading, setLoading] = useState(true);
@@ -126,11 +128,11 @@ export default function AdminDashboard() {
       const res = await fetch('/api/admin/summary?segment=store_code');
 
       if (res.status === 401) {
-        router.push('/');
+        router.push(`/${companyId}`);
         return;
       }
       if (res.status === 403) {
-        router.push('/survey');
+        router.push(`/${companyId}/survey`);
         return;
       }
 

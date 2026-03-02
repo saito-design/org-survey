@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>組織診断アプリ LP構造サンプル</title>
+  <style>
+    /* このファイルは構造参考用です。実際のデザインは別途作成してください */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; line-height: 1.6; }
+    section { padding: 80px 20px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-label { color: #00946b; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+    .section-title { font-size: 32px; font-weight: bold; margin-bottom: 40px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .flex-row { display: flex; align-items: center; gap: 60px; }
+    .flex-row.reverse { flex-direction: row-reverse; }
+    .btn { display: inline-block; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; }
+    .btn-primary { background: #00946b; color: white; }
+    .btn-secondary { border: 2px solid #00946b; color: #00946b; background: white; }
+    .bg-light { background: #f5f5f5; }
+    .bg-dark { background: #0D423C; color: white; }
+    .text-center { text-align: center; }
+    @media (max-width: 768px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .flex-row, .flex-row.reverse { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================
+       1. ヒーローセクション（ファーストビュー）
+       ======================================== -->
+  <section id="hero" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+      <div class="flex-row">
+        <div style="flex: 1;">
+          <h1 style="font-size: 48px; margin-bottom: 24px;">
+            組織の"見えない課題"を<br>可視化する
+          </h1>
+          <p style="font-size: 18px; color: #666; margin-bottom: 32px;">
+            10分の診断で組織の健康状態を把握。<br>
+            データに基づいた改善提案で、組織改革を支援します。
+          </p>
+          <div style="display: flex; gap: 16px;">
+            <a href="#" class="btn btn-primary">資料ダウンロード</a>
+            <a href="#" class="btn btn-secondary">無料で診断を試す</a>
+          </div>
+        </div>
+        <div style="flex: 1;">
+          <!-- モックアップ画像 -->
+          <img src="images/01_cover_slide1.png" alt="組織診断レポート" style="width: 100%; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       2. ABOUT（サービス概要）
+       ======================================== -->
+  <section id="about">
+    <div class="container">
+      <div class="flex-row">
+        <div style="flex: 1;">
+          <p class="section-label">ABOUT</p>
+          <h2 class="section-title">○○○とは</h2>
+          <p style="font-size: 16px; color: #666;">
+            ○○○は、従業員へのアンケートを通じて組織の課題を可視化し、
+            データに基づいた改善提案を行う組織診断サービスです。
+            経営者・人事担当者・チームリーダーが、
+            組織の健康状態を把握し、的確な施策を打つことを支援します。
+          </p>
+        </div>
+        <div style="flex: 1;">
+          <!-- 動画やイメージ -->
+          <img src="images/00_report_hybrid -もと_slide1.png" alt="レポートイメージ" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       3. PROBLEM（課題提示）
+       ======================================== -->
+  <section id="problem" class="bg-light">
+    <div class="container text-center">
+      <p class="section-label">PROBLEM</p>
+      <h2 class="section-title">こんな課題はありませんか？</h2>
+      <div class="grid-3">
+        <div>
+          <div style="font-size: 48px; margin-bottom: 16px;">😰</div>
+          <h3 style="margin-bottom: 12px;">離職率が高い</h3>
+          <p style="color: #666;">優秀な人材が次々と辞めてしまい、原因がわからない</p>
+        </div>
+        <div>
+          <div style="font-size: 48px; margin-bottom: 16px;">🤔</div>
+          <h3 style="margin-bottom: 12px;">組織の状態が見えない</h3>
+          <p style="color: #666;">現場で何が起きているか、経営層に情報が届かない</p>
+        </div>
+        <div>
+          <div style="font-size: 48px; margin-bottom: 16px;">📊</div>
+          <h3 style="margin-bottom: 12px;">施策の効果が測れない</h3>
+          <p style="color: #666;">研修や制度変更をしても、効果があったのか不明</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       4. SOLUTION（解決策）
+       ======================================== -->
+  <section id="solution">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: 60px;">
+        <p class="section-label">SOLUTION</p>
+        <h2 class="section-title">○○○が解決します</h2>
+      </div>
+
+      <!-- 解決策1 -->
+      <div class="flex-row" style="margin-bottom: 60px;">
+        <div style="flex: 1;">
+          <img src="images/03_overview_slide1.png" alt="データ可視化" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        </div>
+        <div style="flex: 1;">
+          <h3 style="font-size: 24px; margin-bottom: 16px; color: #00946b;">01. データで課題を可視化</h3>
+          <p style="color: #666;">
+            従業員の本音を匿名アンケートで収集。
+            AIが分析し、組織の課題を明確に可視化します。
+          </p>
+        </div>
+      </div>
+
+      <!-- 解決策2（左右反転） -->
+      <div class="flex-row reverse" style="margin-bottom: 60px;">
+        <div style="flex: 1;">
+          <img src="images/06_strengths_weaknesses_slide1.png" alt="改善提案" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        </div>
+        <div style="flex: 1;">
+          <h3 style="font-size: 24px; margin-bottom: 16px; color: #00946b;">02. 具体的な改善提案</h3>
+          <p style="color: #666;">
+            診断結果に基づき、優先度の高い改善施策を提案。
+            何から手をつければいいか迷いません。
+          </p>
+        </div>
+      </div>
+
+      <!-- 解決策3 -->
+      <div class="flex-row">
+        <div style="flex: 1;">
+          <img src="images/10_gap_analysis_slide1.png" alt="定点観測" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        </div>
+        <div style="flex: 1;">
+          <h3 style="font-size: 24px; margin-bottom: 16px; color: #00946b;">03. 定点観測で効果を実感</h3>
+          <p style="color: #666;">
+            定期的な診断で変化を追跡。
+            施策の効果を数値で確認できます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       5. FEATURES（主な機能）
+       ======================================== -->
+  <section id="features" class="bg-light">
+    <div class="container text-center">
+      <p class="section-label">FEATURES</p>
+      <h2 class="section-title">主な機能</h2>
+      <div class="grid-3">
+        <div style="background: white; padding: 32px; border-radius: 8px;">
+          <img src="images/05_summary_slide1.png" alt="かんたん診断" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 24px; border-radius: 4px;">
+          <h3 style="margin-bottom: 12px;">かんたん診断</h3>
+          <p style="color: #666; font-size: 14px;">10分で回答完了。スマホ対応で回答率アップ</p>
+        </div>
+        <div style="background: white; padding: 32px; border-radius: 8px;">
+          <img src="images/07_stage1_slide1.png" alt="可視化レポート" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 24px; border-radius: 4px;">
+          <h3 style="margin-bottom: 12px;">可視化レポート</h3>
+          <p style="color: #666; font-size: 14px;">グラフやチャートでわかりやすく結果を表示</p>
+        </div>
+        <div style="background: white; padding: 32px; border-radius: 8px;">
+          <img src="images/08_stage2_slide1.png" alt="改善提案" style="width: 100%; height: 150px; object-fit: cover; margin-bottom: 24px; border-radius: 4px;">
+          <h3 style="margin-bottom: 12px;">改善提案</h3>
+          <p style="color: #666; font-size: 14px;">AIが優先度順に具体的な施策を提案</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       6. 資料ダウンロード訴求（中間CTA）
+       ======================================== -->
+  <section id="cta-middle" class="bg-dark text-center">
+    <div class="container">
+      <h2 style="font-size: 28px; margin-bottom: 16px;">
+        組織診断の詳細がわかる資料を<br>無料でダウンロード
+      </h2>
+      <p style="opacity: 0.8; margin-bottom: 32px;">
+        導入事例や料金プランなど、詳しい情報をご覧いただけます
+      </p>
+      <a href="#" class="btn" style="background: white; color: #0D423C;">
+        資料をダウンロードする
+      </a>
+    </div>
+  </section>
+
+  <!-- ========================================
+       7. こんな方におすすめ
+       ======================================== -->
+  <section id="target">
+    <div class="container text-center">
+      <p class="section-label">TARGET</p>
+      <h2 class="section-title">こんな方におすすめ</h2>
+      <div class="grid-3">
+        <div style="padding: 24px;">
+          <div style="font-size: 48px; margin-bottom: 16px;">👔</div>
+          <h3>経営者・役員</h3>
+          <p style="color: #666; font-size: 14px;">組織全体の状態を把握したい</p>
+        </div>
+        <div style="padding: 24px;">
+          <div style="font-size: 48px; margin-bottom: 16px;">👩‍💼</div>
+          <h3>人事担当者</h3>
+          <p style="color: #666; font-size: 14px;">エンゲージメント向上施策を立案したい</p>
+        </div>
+        <div style="padding: 24px;">
+          <div style="font-size: 48px; margin-bottom: 16px;">👨‍💻</div>
+          <h3>チームリーダー</h3>
+          <p style="color: #666; font-size: 14px;">チームの課題を特定したい</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       8. PRICE（料金）
+       ======================================== -->
+  <section id="price" class="bg-light">
+    <div class="container text-center">
+      <p class="section-label">PRICE</p>
+      <h2 class="section-title">料金</h2>
+      <div style="background: white; padding: 48px; border-radius: 16px; max-width: 600px; margin: 0 auto;">
+        <p style="font-size: 14px; color: #666; margin-bottom: 8px;">月額</p>
+        <p style="font-size: 48px; font-weight: bold; color: #00946b;">
+          ¥XX,XXX<span style="font-size: 18px; color: #666;">〜（税抜）</span>
+        </p>
+        <p style="color: #666; margin-top: 16px;">
+          ※従業員数や機能により変動します<br>
+          詳しくはお問い合わせください
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       9. FLOW（導入フロー）
+       ======================================== -->
+  <section id="flow">
+    <div class="container text-center">
+      <p class="section-label">FLOW</p>
+      <h2 class="section-title">導入の流れ</h2>
+      <div style="display: flex; justify-content: space-between; max-width: 900px; margin: 0 auto;">
+        <div style="flex: 1; text-align: center;">
+          <div style="width: 60px; height: 60px; background: #00946b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; font-weight: bold;">1</div>
+          <h3 style="margin-bottom: 8px;">お問い合わせ</h3>
+          <p style="color: #666; font-size: 14px;">フォームからお気軽に</p>
+        </div>
+        <div style="flex: 1; text-align: center;">
+          <div style="width: 60px; height: 60px; background: #00946b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; font-weight: bold;">2</div>
+          <h3 style="margin-bottom: 8px;">ヒアリング</h3>
+          <p style="color: #666; font-size: 14px;">課題や目的をお伺い</p>
+        </div>
+        <div style="flex: 1; text-align: center;">
+          <div style="width: 60px; height: 60px; background: #00946b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; font-weight: bold;">3</div>
+          <h3 style="margin-bottom: 8px;">ご契約</h3>
+          <p style="color: #666; font-size: 14px;">プランを決定</p>
+        </div>
+        <div style="flex: 1; text-align: center;">
+          <div style="width: 60px; height: 60px; background: #00946b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; font-weight: bold;">4</div>
+          <h3 style="margin-bottom: 8px;">利用開始</h3>
+          <p style="color: #666; font-size: 14px;">すぐに診断スタート</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       10. FAQ（よくある質問）
+       ======================================== -->
+  <section id="faq" class="bg-light">
+    <div class="container">
+      <div class="text-center">
+        <p class="section-label">FAQ</p>
+        <h2 class="section-title">よくある質問</h2>
+      </div>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <details style="background: white; padding: 24px; margin-bottom: 16px; border-radius: 8px;">
+          <summary style="cursor: pointer; font-weight: bold;">Q. 導入までどのくらいかかりますか？</summary>
+          <p style="margin-top: 16px; color: #666;">A. お申し込みから最短○日で利用開始できます。</p>
+        </details>
+        <details style="background: white; padding: 24px; margin-bottom: 16px; border-radius: 8px;">
+          <summary style="cursor: pointer; font-weight: bold;">Q. 従業員の回答は匿名ですか？</summary>
+          <p style="margin-top: 16px; color: #666;">A. はい、完全匿名で回答できます。個人が特定されることはありません。</p>
+        </details>
+        <details style="background: white; padding: 24px; margin-bottom: 16px; border-radius: 8px;">
+          <summary style="cursor: pointer; font-weight: bold;">Q. 最低契約期間はありますか？</summary>
+          <p style="margin-top: 16px; color: #666;">A. 最低○ヶ月からご契約いただけます。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       11. 最終CTA
+       ======================================== -->
+  <section id="cta-final" style="background: #00946b; color: white; text-align: center;">
+    <div class="container">
+      <h2 style="font-size: 32px; margin-bottom: 16px;">
+        組織の課題を可視化しませんか？
+      </h2>
+      <p style="opacity: 0.9; margin-bottom: 32px;">
+        まずは資料をご覧いただくか、お気軽にご相談ください
+      </p>
+      <div style="display: flex; gap: 16px; justify-content: center;">
+        <a href="#" class="btn" style="background: white; color: #00946b;">資料ダウンロード</a>
+        <a href="#" class="btn" style="background: transparent; border: 2px solid white; color: white;">お問い合わせ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       フッター
+       ======================================== -->
+  <footer style="background: #333; color: white; padding: 40px 20px; text-align: center;">
+    <p>&copy; 2024 ○○○ All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

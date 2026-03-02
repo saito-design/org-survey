@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 interface Question {
   question_id: string;
@@ -27,6 +27,8 @@ interface SessionInfo {
 
 export default function SurveyPage() {
   const router = useRouter();
+  const params = useParams();
+  const companyId = params.companyId as string;
   const [session, setSession] = useState<SessionInfo | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [factors, setFactors] = useState<Factor[]>([]);
@@ -44,7 +46,7 @@ export default function SurveyPage() {
       // セッション確認
       const meRes = await fetch('/api/auth/me');
       if (!meRes.ok) {
-        router.push('/');
+        router.push(`/${companyId}`);
         return;
       }
       const meData = await meRes.json();
@@ -93,7 +95,7 @@ export default function SurveyPage() {
       if (!res.ok) throw new Error('保存に失敗しました');
 
       if (submit) {
-        router.push('/survey/complete');
+        router.push(`/${companyId}/survey/complete`);
       } else {
         alert('一時保存しました');
       }
@@ -106,7 +108,7 @@ export default function SurveyPage() {
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/');
+    router.push(`/${companyId}`);
   };
 
   if (loading) {

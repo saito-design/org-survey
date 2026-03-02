@@ -1,13 +1,15 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 export default function CompletePage() {
   const router = useRouter();
+  const params = useParams();
+  const companyId = params.companyId as string;
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/');
+    router.push(`/${companyId}`);
   };
 
   return (
