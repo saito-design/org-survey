@@ -30,7 +30,7 @@ export default function LoginPage() {
     if (urlToken) {
       const decoded = decodeToken(urlToken);
       if (decoded && decoded.exp > Date.now() && decoded.company === companyId) {
-        sessionStorage.setItem(`auth_${companyId}`, urlToken);
+        sessionStorage.setItem('portal_auth', urlToken);
         window.history.replaceState({}, '', window.location.pathname);
         // ポータル認証OK - 管理画面へ
         router.replace(`/${companyId}/admin`);
@@ -39,14 +39,14 @@ export default function LoginPage() {
     }
 
     // 既存のポータル認証をチェック
-    const sessionToken = sessionStorage.getItem(`auth_${companyId}`);
+    const sessionToken = sessionStorage.getItem('portal_auth');
     if (sessionToken) {
       const decoded = decodeToken(sessionToken);
       if (decoded && decoded.exp > Date.now() && decoded.company === companyId) {
         router.replace(`/${companyId}/admin`);
         return;
       } else {
-        sessionStorage.removeItem(`auth_${companyId}`);
+        sessionStorage.removeItem('portal_auth');
       }
     }
 
