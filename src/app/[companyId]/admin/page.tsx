@@ -133,7 +133,9 @@ export default function AdminDashboard() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, companyId }),
-      }).finally(() => setAuthReady(true));
+      }).then(() => {
+        router.replace(`/${companyId}/admin/summary`);
+      }).catch(() => setAuthReady(true));
     } else {
       setAuthReady(true);
     }
