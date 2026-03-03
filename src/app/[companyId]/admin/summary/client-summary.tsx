@@ -289,7 +289,37 @@ export default function ClientSummary() {
 
   if (loading && !data) return <LoadingSpinner />;
   if (error) return <div className="p-6 text-red-600 bg-red-50 rounded m-6 border border-red-200">エラーが発生しました: {error}</div>;
-  if (!data?.current) return <div className="p-6 text-gray-500 text-center">表示可能なデータがありません</div>;
+
+  // データなし状態の処理
+  if (!data?.current || data.current.summary.n === 0) {
+    const available = data?.availableSurveyIds || [];
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="bg-white border border-gray-200 rounded-2xl p-10 max-w-md w-full text-center shadow-sm">
+          <div className="text-4xl mb-4">📋</div>
+          <h2 className="text-lg font-bold text-gray-800 mb-2">現在実施中のデータはありません</h2>
+          {available.length > 0 ? (
+            <>
+              <p className="text-sm text-gray-500 mb-6">実施済みのデータを表示しますか？</p>
+              <div className="space-y-2">
+                {available.map(id => (
+                  <button
+                    key={id}
+                    onClick={() => updateParams({ as_of: id })}
+                    className="w-full py-2.5 px-4 bg-teal-500 hover:bg-teal-600 text-white rounded-lg text-sm font-medium transition-colors"
+                  >
+                    {id} のデータを見る
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : (
+            <p className="text-sm text-gray-500">実施済みのデータも見つかりませんでした。</p>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   const { current, prev1, prev2, overallAvg, orgUnits } = data;
   const heatmapTarget = params.compare === 'prev1' ? prev1 : params.compare === 'prev2' ? prev2 : overallAvg;
@@ -359,7 +389,25 @@ export default function ClientSummary() {
       <header className="sticky top-0 z-20 bg-white shadow-sm border-b border-gray-200 px-4 md:px-6 py-2 md:py-3">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mb-2">
           <div>
-            <h1 className="text-xl md:text-2xl font-black text-gray-900 tracking-tight">{normalizeLabel(current.summary.surveyId)} 組織診断サマリー</h1>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-xl md:text-2xl font-black text-gray-900 tracking-tight">{normalizeLabel(current.summary.surveyId)} 組織診断サマリー</h1>
+              {data.isCurrentSurvey ? (
+                <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full">実施中</span>
+              ) : (
+                <span className="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs font-bold rounded-full">実施済み</span>
+              )}
+              {data.availableSurveyIds && data.availableSurveyIds.length > 1 && (
+                <select
+                  value={params.as_of || current.summary.surveyId}
+                  onChange={e => updateParams({ as_of: e.target.value })}
+                  className="text-xs border border-gray-200 rounded px-2 py-1 bg-white text-gray-600 font-medium"
+                >
+                  {data.availableSurveyIds.map(id => (
+                    <option key={id} value={id}>{id}</option>
+                  ))}
+                </select>
+              )}
+            </div>
             <p className="hidden md:block text-sm text-gray-500 mt-0.5 font-medium italic">組織のコンディションを定量的に把握し、対話を促進します</p>
           </div>
           {data.is_owner && (

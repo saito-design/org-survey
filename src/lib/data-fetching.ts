@@ -56,6 +56,52 @@ export async function loadOrgUnits(rootId: string): Promise<OrgUnit[]> {
 }
 
 /**
+ * RESPONSES_FOLDER_ID/{surveyId}/responses.json を直接読む
+ */
+export async function loadResponsesDirect(responsesFolderId: string, surveyId: string): Promise<Response[]> {
+  const surveyFolder = await findFileByName(surveyId, responsesFolderId, 'application/vnd.google-apps.folder');
+  if (!surveyFolder) {
+    console.warn(`[loadResponsesDirect] ${surveyId}/ not found in folder`);
+    return [];
+  }
+  const respFile = await findFileByName('responses.json', surveyFolder.id!, 'application/json');
+  if (!respFile) {
+    console.warn(`[loadResponsesDirect] responses.json not found for survey ${surveyId}`);
+    return [];
+  }
+  const data = await readJsonFile<ResponsesData>(respFile.id!);
+  const responses = data?.responses || [];
+  console.log(`[loadResponsesDirect] ${surveyId}: ${responses.length} responses`);
+  return responses;
+}
+
+/**
+ * 回答データから合成 Respondent を生成する
+ * respondents.json の ID が実回答と一致しない場合のフォールバック
+ * role は question_id のプレフィックス（MANAGER/STAFF/PARTTIME）から推定
+ */
+export function buildSyntheticRespondents(responses: Response[]): Respondent[] {
+  const map = new Map<string, 'MANAGER' | 'STAFF' | 'PA'>();
+  for (const r of responses) {
+    if (map.has(r.respondent_id)) continue;
+    const role: 'MANAGER' | 'STAFF' | 'PA' = r.question_id.startsWith('MANAGER')
+      ? 'MANAGER'
+      : r.question_id.startsWith('PARTTIME') || r.question_id.startsWith('PA')
+      ? 'PA'
+      : 'STAFF';
+    map.set(r.respondent_id, role);
+  }
+  return Array.from(map.entries()).map(([id, role]) => ({
+    respondent_id: id,
+    emp_no: id,
+    password_hash: '',
+    role,
+    store_code: 'unknown',
+    active: true,
+  }));
+}
+
+/**
  * 旧形式の responses.json を読み込む（フォールバック用）
  */
 async function loadOldResponses(rootId: string, surveyId: string): Promise<Response[]> {
