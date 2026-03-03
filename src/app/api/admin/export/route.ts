@@ -479,7 +479,7 @@ async function generateAndSaveStoreRankings(
   const paRanking = createRanking(paScores);
 
   const rankingData = {
-    survey_id: `junestory_${surveyId.replace('-', '')}`,
+    survey_id: `junestry_${surveyId.replace('-', '')}`,
     updated_at: new Date().toISOString(),
     total_ranking: totalRanking,
     pa_ranking: paRanking,

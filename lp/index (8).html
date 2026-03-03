@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>店舗・組織診断プログラム | フードサービス業向け 満足度だけでなく業績向上のための組織診断</title>
+  <meta name="description" content="満足度だけでなく、業績向上に直結する行動要因を3ステージ×7指標で特定。管理者はリアルタイムダッシュボードで状況を把握、経営層・人事部には因果分析レポートを提供。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --teal:#0D7377;--teal-light:#11999E;--teal-dark:#095c5f;
+      --navy:#14213D;--blue:#3B82F6;--green:#10B981;--purple:#8B5CF6;--amber:#F59E0B;
+      --s1:#3B82F6;--s2:#10B981;--s3:#8B5CF6;
+      --bg:#FAFBFC;--text:#1a1a2e;--text-secondary:#5a5f7a;--text-muted:#8b90a5;--white:#fff;
+      --shadow-sm:0 2px 8px rgba(13,115,119,.06);--shadow-md:0 8px 30px rgba(13,115,119,.1);
+      --shadow-lg:0 20px 60px rgba(13,115,119,.12);--shadow-xl:0 30px 80px rgba(20,33,61,.15);
+      --radius-md:16px;--radius-lg:24px;
+      --font-display:'Outfit',sans-serif;--font-body:'Noto Sans JP',sans-serif
+    }
+    *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);line-height:1.8;color:var(--text);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    .container{max-width:1180px;margin:0 auto;padding:0 24px}
+    section{padding:120px 0;position:relative}
+    .section-label{font-family:var(--font-display);color:var(--teal);font-size:12px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;display:inline-flex;align-items:center;gap:10px}
+    .section-label::before{content:'';width:24px;height:2px;background:var(--teal);display:inline-block}
+    .section-title{font-size:36px;font-weight:800;line-height:1.35;margin-bottom:18px;letter-spacing:-.02em}
+    .section-desc{color:var(--text-secondary);font-size:15px;line-height:1.9;max-width:660px}
+    .text-center{text-align:center}.text-center .section-desc{margin:0 auto}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.8}}
+    .reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+
+    /* Header */
+    .header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(250,251,252,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(13,115,119,.08);transition:all .4s}
+    .header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.06)}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy)}
+    .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--teal),var(--navy));border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .logo-text{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:-.02em}
+    .header-nav{display:flex;align-items:center;gap:28px}
+    .header-nav a{text-decoration:none;color:var(--text-secondary);font-size:13px;font-weight:500;transition:color .3s}
+    .header-nav a:hover{color:var(--teal)}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 28px;border-radius:100px;text-decoration:none;font-weight:600;font-size:14px;cursor:pointer;border:none;transition:all .4s cubic-bezier(.16,1,.3,1)}
+    .btn-primary{background:var(--teal);color:var(--white);box-shadow:0 4px 16px rgba(13,115,119,.3)}
+    .btn-primary:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,115,119,.35)}
+    .btn-secondary{background:var(--white);color:var(--teal);border:1.5px solid rgba(13,115,119,.2)}
+    .btn-secondary:hover{border-color:var(--teal);background:rgba(13,115,119,.04);transform:translateY(-2px)}
+    .btn-ghost{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.35)}
+    .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.6);transform:translateY(-2px)}
+    .btn-white{background:var(--white);color:var(--teal);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+    .btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+    .btn-sm{padding:9px 20px;font-size:13px}
+    .btn-cta{background:linear-gradient(135deg,var(--teal),var(--blue));color:var(--white);box-shadow:0 4px 20px rgba(13,115,119,.3);font-size:15px;padding:15px 36px}
+    .btn-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(13,115,119,.4)}
+
+    /* Hero */
+    .hero{padding:180px 0 100px;position:relative;overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,#eef4ff 100%)}
+    .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,246,.05) 0%,transparent 70%);border-radius:50%}
+    .hero-inner{position:relative;z-index:1}
+    .hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:28px;animation:fadeIn .8s ease both}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 8px;background:rgba(13,115,119,.06);border:1px solid rgba(13,115,119,.14);border-radius:100px;font-size:12px;color:var(--teal);font-weight:600}
+    .hero-badge-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+    .hero h1{font-size:50px;font-weight:800;line-height:1.2;letter-spacing:-.03em;margin-bottom:10px;animation:fadeUp .8s ease both .1s;opacity:0;max-width:800px}
+    .hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--teal) 0%,var(--blue) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:18px;font-weight:600;color:var(--text-secondary);margin-bottom:24px;animation:fadeUp .8s ease both .15s;opacity:0}
+    .hero-desc{font-size:15.5px;color:var(--text-secondary);line-height:2;margin-bottom:40px;animation:fadeUp .8s ease both .2s;opacity:0;max-width:600px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .8s ease both .3s;opacity:0;margin-bottom:14px}
+    .hero-note{font-size:12px;color:var(--text-muted);animation:fadeUp .8s ease both .35s;opacity:0}
+
+    .hero-screens{margin-top:64px;animation:fadeUp 1s ease both .4s;opacity:0;max-width:560px}
+    .hero-screen-item{border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-xl);border:1px solid rgba(0,0,0,.06)}
+    .hero-screen-item img{display:block;width:100%}
+    .hero-screen-label{text-align:center;padding:10px 16px;font-size:12px;font-weight:600;color:var(--text-muted);background:var(--white);border-top:1px solid rgba(0,0,0,.04)}
+
+    /* Stats */
+    .stats-bar{padding:0;position:relative;z-index:10}
+    .stats-inner{background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);display:grid;grid-template-columns:repeat(4,1fr);border:1px solid rgba(0,0,0,.04);overflow:hidden}
+    .stat-item{padding:32px 20px;text-align:center;position:relative}
+    .stat-item:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:rgba(0,0,0,.06)}
+    .stat-number{font-family:var(--font-display);font-size:40px;font-weight:800;color:var(--teal);line-height:1;margin-bottom:6px}
+    .stat-number span{font-size:18px;font-weight:600}
+    .stat-label{font-size:12.5px;color:var(--text-muted);font-weight:500;line-height:1.5}
+
+    /* 3 Stage Concept */
+    .stage-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:48px;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg)}
+    .stage-card{padding:40px 32px;position:relative;overflow:hidden}
+    .stage-card.s1{background:linear-gradient(160deg,#eff6ff,#dbeafe)}
+    .stage-card.s2{background:linear-gradient(160deg,#ecfdf5,#d1fae5)}
+    .stage-card.s3{background:linear-gradient(160deg,#f5f3ff,#ede9fe)}
+    .stage-card:not(:last-child){border-right:1px solid rgba(255,255,255,.8)}
+    .stage-tag{display:inline-block;padding:5px 14px;border-radius:100px;font-family:var(--font-display);font-size:11px;font-weight:800;letter-spacing:2px;color:var(--white);margin-bottom:16px}
+    .s1 .stage-tag{background:var(--s1)}.s2 .stage-tag{background:var(--s2)}.s3 .stage-tag{background:var(--s3)}
+    .stage-card h3{font-size:17px;font-weight:800;margin-bottom:10px;line-height:1.4}
+    .s1 h3{color:#1d4ed8}.s2 h3{color:#065f46}.s3 h3{color:#5b21b6}
+    .stage-card .stage-desc{font-size:13px;line-height:1.8;margin-bottom:16px}
+    .s1 .stage-desc{color:#3b82f6}.s2 .stage-desc{color:#10b981}.s3 .stage-desc{color:#7c3aed}
+    .stage-keys{display:flex;flex-wrap:wrap;gap:5px}
+    .stage-key{font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px}
+    .s1 .stage-key{background:rgba(59,130,246,.12);color:#3b82f6}
+    .s2 .stage-key{background:rgba(16,185,129,.12);color:#059669}
+    .s3 .stage-key{background:rgba(139,92,246,.12);color:#7c3aed}
+
+    /* Problem */
+    .problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+    .problem-card{background:var(--white);border-radius:var(--radius-md);padding:32px 28px;border:1px solid rgba(0,0,0,.05);transition:all .4s;position:relative;overflow:hidden}
+    .problem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ef4444,#f97316);opacity:0;transition:opacity .4s}
+    .problem-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}.problem-card:hover::before{opacity:1}
+    .problem-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;background:rgba(239,68,68,.06)}
+    .problem-icon svg{width:22px;height:22px;color:#ef4444}
+    .problem-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+    .problem-card p{font-size:13.5px;color:var(--text-secondary);line-height:1.8}
+    .problem-quote{margin-top:14px;padding:10px 14px;background:rgba(239,68,68,.04);border-radius:8px;border-left:3px solid rgba(239,68,68,.25);font-size:12.5px;color:var(--text-secondary);line-height:1.7;font-style:italic}
+
+    /* Two value props */
+    .value-dual{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px}
+    .value-card{border-radius:var(--radius-lg);padding:44px 40px;position:relative;overflow:hidden}
+    .value-card.dashboard{background:linear-gradient(135deg,#0f172a,#1e3a5f)}
+    .value-card.report{background:linear-gradient(135deg,#0f1f14,#0d3d24)}
+    .value-card-tag{font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:18px}
+    .value-card h3{font-size:24px;font-weight:800;color:var(--white);margin-bottom:12px;line-height:1.3}
+    .value-card p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.9;margin-bottom:22px}
+    .value-features{display:flex;flex-direction:column;gap:9px}
+    .value-feature{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,.78);line-height:1.5}
+    .value-feature-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+    .dashboard .value-feature-dot{background:#60a5fa}
+    .report .value-feature-dot{background:#34d399}
+
+    /* Solution blocks */
+    .solution-block{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:96px}
+    .solution-block:last-child{margin-bottom:0}
+    .solution-block.reverse>:first-child{order:2}.solution-block.reverse>:last-child{order:1}
+    .solution-num{font-family:var(--font-display);font-size:72px;font-weight:800;color:rgba(13,115,119,.06);line-height:1;margin-bottom:10px}
+    .solution-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;margin-bottom:14px}
+    .tag-dashboard{background:rgba(59,130,246,.1);color:#2563eb}
+    .tag-report{background:rgba(16,185,129,.1);color:#059669}
+    .solution-block h3{font-size:23px;font-weight:700;margin-bottom:14px;line-height:1.4}
+    .solution-block p{font-size:14.5px;color:var(--text-secondary);line-height:2;margin-bottom:12px}
+    .solution-block p:last-of-type{margin-bottom:0}
+    .solution-img{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xl);border:1px solid rgba(0,0,0,.06);transition:all .5s}
+    .solution-img:hover{transform:scale(1.015);box-shadow:0 40px 80px rgba(20,33,61,.18)}
+    .solution-img img{display:block;width:100%}
+    .info-box{padding:14px 18px;background:rgba(13,115,119,.04);border-radius:10px;border-left:3px solid var(--teal);margin-top:18px}
+    .info-box p{font-size:13px;color:var(--text-secondary);line-height:1.7;margin:0}
+    .info-box strong{color:var(--teal)}
+
+    /* Signal */
+    .signal-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+    .signal{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:8px;font-size:12.5px;font-weight:600}
+    .signal-green{background:rgba(16,185,129,.08);color:#059669}.signal-green::before{content:'●';color:#10b981;font-size:10px}
+    .signal-yellow{background:rgba(245,158,11,.08);color:#b45309}.signal-yellow::before{content:'●';color:#f59e0b;font-size:10px}
+    .signal-red{background:rgba(239,68,68,.08);color:#b91c1c}.signal-red::before{content:'●';color:#ef4444;font-size:10px}
+
+    /* Diff table */
+    .diff-wrap{margin-top:52px;background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);border:1px solid rgba(0,0,0,.04)}
+    .diff-header{display:grid;grid-template-columns:1fr 1.2fr 1.4fr;background:var(--navy)}
+    .diff-header div{padding:14px 22px;font-size:12px;font-weight:700;color:rgba(255,255,255,.45);font-family:var(--font-display);letter-spacing:1px}
+    .diff-header div:nth-child(2){color:rgba(255,255,255,.8)}.diff-header div:nth-child(3){color:rgba(255,255,255,.9)}
+    .diff-row{display:grid;grid-template-columns:1fr 1.2fr 1.4fr;border-top:1px solid rgba(0,0,0,.05)}
+    .diff-row:nth-child(even){background:rgba(0,0,0,.015)}
+    .diff-cell{padding:14px 22px;font-size:13.5px;line-height:1.7;color:var(--text-secondary)}
+    .diff-cell:first-child{font-weight:600;color:var(--text);font-size:13px}
+    .diff-cell.bad{color:#dc2626}.diff-cell.good{color:var(--teal);font-weight:600}
+
+    /* Target */
+    .target-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+    .target-card{background:var(--bg);border-radius:var(--radius-md);padding:36px 28px;text-align:center;transition:all .4s;border:1px solid transparent}
+    .target-card:hover{background:var(--white);border-color:rgba(13,115,119,.1);box-shadow:var(--shadow-md);transform:translateY(-4px)}
+    .target-icon{width:60px;height:60px;margin:0 auto 16px;background:rgba(13,115,119,.06);border-radius:18px;display:flex;align-items:center;justify-content:center}
+    .target-icon svg{width:26px;height:26px;color:var(--teal)}
+    .target-card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+    .target-card p{font-size:13.5px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px}
+    .target-list{text-align:left;display:flex;flex-direction:column;gap:5px}
+    .target-list-item{font-size:12px;color:var(--text-muted);padding-left:14px;position:relative;line-height:1.5}
+    .target-list-item::before{content:'→';position:absolute;left:0;color:var(--teal)}
+
+    /* Theory */
+    .theory-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:56px}
+    .theory-chain{display:flex;flex-direction:column;align-items:center}
+    .theory-node{width:100%;max-width:300px;padding:16px 24px;border-radius:12px;text-align:center}
+    .theory-node.attitude{background:rgba(139,92,246,.08);border:2px solid rgba(139,92,246,.2)}
+    .theory-node.behavior{background:rgba(13,115,119,.08);border:2px solid rgba(13,115,119,.2)}
+    .theory-node.performance{background:rgba(59,130,246,.08);border:2px solid rgba(59,130,246,.2)}
+    .theory-node h4{font-size:14px;font-weight:700;margin-bottom:4px}
+    .attitude h4{color:var(--purple)}.behavior h4{color:var(--teal)}.performance h4{color:var(--blue)}
+    .theory-node p{font-size:12px;color:var(--text-muted);line-height:1.5}
+    .theory-connector{display:flex;align-items:center;justify-content:center;padding:8px 0;color:var(--text-muted);font-size:11px;gap:5px;opacity:.45}
+    .theory-text h3{font-size:22px;font-weight:700;margin-bottom:14px;line-height:1.4}
+    .theory-text p{font-size:14.5px;color:var(--text-secondary);line-height:2;margin-bottom:12px}
+    .theory-cite{font-size:12px;color:var(--text-muted);padding:12px 16px;background:rgba(0,0,0,.03);border-radius:8px;line-height:1.7}
+
+    /* Flow */
+    .flow-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:56px;position:relative}
+    .flow-steps::before{content:'';position:absolute;top:26px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,var(--teal),var(--blue));opacity:.12}
+    .flow-step{text-align:center;z-index:1;position:relative}
+    .flow-num{width:50px;height:50px;background:linear-gradient(135deg,var(--teal),var(--teal-light));color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:20px;font-weight:700;margin:0 auto 14px;box-shadow:0 4px 14px rgba(13,115,119,.25)}
+    .flow-step h3{font-size:14.5px;font-weight:700;margin-bottom:6px}
+    .flow-step p{font-size:12.5px;color:var(--text-muted);line-height:1.7}
+
+    /* FAQ */
+    .faq-list{max-width:760px;margin:56px auto 0}
+    .faq-item{border-bottom:1px solid rgba(0,0,0,.06)}
+    .faq-item summary{padding:22px 0;font-weight:600;font-size:14.5px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;transition:color .3s}
+    .faq-item summary::-webkit-details-marker{display:none}
+    .faq-item summary::after{content:'+';font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--teal);transition:transform .3s;flex-shrink:0;margin-left:16px}
+    .faq-item details[open] summary::after{transform:rotate(45deg)}
+    .faq-item summary:hover{color:var(--teal)}
+    .faq-answer{padding:0 0 20px;color:var(--text-secondary);font-size:14px;line-height:2}
+
+    /* CTA */
+    .cta{background:linear-gradient(135deg,var(--navy) 0%,#0a1628 50%,var(--teal-dark) 100%);color:var(--white);text-align:center;position:relative;overflow:hidden}
+    .cta::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(13,115,119,.2) 0%,transparent 50%),radial-gradient(circle at 70% 50%,rgba(59,130,246,.12) 0%,transparent 50%)}
+    .cta .container{position:relative;z-index:1}
+    .cta .section-label{color:rgba(255,255,255,.5)}.cta .section-label::before{background:rgba(255,255,255,.3)}
+    .cta .section-title{color:var(--white);font-size:32px;max-width:600px;margin:0 auto 16px}
+    .cta .section-desc{color:rgba(255,255,255,.65);margin:0 auto 8px}
+    .cta-note{font-size:12.5px;color:rgba(255,255,255,.4);margin-bottom:40px}
+    .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .footer{background:#0a0f1e;color:rgba(255,255,255,.35);padding:36px 0;text-align:center;font-size:12px}
+
+    @media(max-width:1024px){.value-dual{grid-template-columns:1fr}}
+    @media(max-width:768px){
+      section{padding:80px 0}.header-nav a:not(.btn){display:none}
+      .hero{padding:140px 0 60px}.hero h1{font-size:32px}.hero-screens{grid-template-columns:1fr}
+      .stats-inner{grid-template-columns:repeat(2,1fr)}.stat-item:nth-child(2)::after{display:none}
+      .section-title{font-size:26px}
+      .stage-cards,.problem-grid,.target-grid,.theory-grid{grid-template-columns:1fr}
+      .solution-block{grid-template-columns:1fr;gap:32px}
+      .solution-block.reverse>:first-child{order:1}.solution-block.reverse>:last-child{order:2}
+      .flow-steps{grid-template-columns:repeat(2,1fr)}.flow-steps::before{display:none}
+      .diff-header,.diff-row{grid-template-columns:1fr}
+      .cta .section-title{font-size:24px}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header"><div class="container"><div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 5-9"/></svg></div>
+      <span class="logo-text">店舗・組織診断</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#concept">診断の仕組み</a>
+      <a href="#dashboard">ダッシュボード</a>
+      <a href="#report">レポート</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact" class="btn btn-primary btn-sm">資料を見る</a>
+    </nav>
+  </div></div></header>
+
+  <!-- Hero -->
+  <section class="hero"><div class="container hero-inner">
+    <div class="hero-eyebrow">
+      <div class="hero-badge"><span class="hero-badge-dot"></span>フードサービス業 特化型</div>
+    </div>
+    <h1>満足度だけでなく、<br><em>業績向上</em>のための<br>組織診断</h1>
+    <p class="hero-sub">「何を感じているか」に加え、「何をすれば業績が上がるか」まで。</p>
+    <p class="hero-desc">満足度の把握にとどまらず、スタッフの態度・行動と業績の因果関係を3つのSTAGEで構造化。「何をすれば業績が上がるか」の優先順位を数値で示します。管理者はリアルタイムダッシュボードで全店を把握、経営層・人事部には因果分析レポートを提供します。</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-cta">資料ダウンロード・お問い合わせ</a>
+      <a href="#concept" class="btn btn-secondary">診断の仕組みを見る</a>
+    </div>
+    <p class="hero-note">※ 個人へのフィードバックなし。店舗別・地域別・全社単位でのレポート</p>
+    <div class="hero-screens">
+      <div class="hero-screen-item">
+        <img src="images/ダッシュボード/app-total-engagement.png" alt="TOTAL ENGAGEMENT ダッシュボード">
+        <div class="hero-screen-label">📊 管理者ダッシュボード — TOTAL ENGAGEMENT & 3 STAGEs</div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- Stats -->
+  <div class="stats-bar"><div class="container"><div class="stats-inner reveal">
+    <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">STAGEの診断モデル<br>（学術理論に基づく）</div></div>
+    <div class="stat-item"><div class="stat-number">7</div><div class="stat-label">業績直結の<br>キー指標</div></div>
+    <div class="stat-item"><div class="stat-number">65</div><div class="stat-label">設問で<br>18の要因を把握</div></div>
+    <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">対象者区分<br>（店長・社員・PA）</div></div>
+  </div></div></div>
+
+  <!-- 3 STAGE Concept -->
+  <section id="concept" style="background:var(--bg)"><div class="container text-center">
+    <div class="reveal">
+      <p class="section-label">Concept</p>
+      <h2 class="section-title">業績向上を3つのSTAGEで構造化する</h2>
+      <p class="section-desc">満足度の把握にとどまらず、スタッフの満足感・積極性・チームの一体感が、どのように業績へ連鎖するかをモデル化。それぞれの要因に改善施策と優先順位をつけて提示します。</p>
+    </div>
+    <div class="stage-cards reveal">
+      <div class="stage-card s1">
+        <div class="stage-tag">STAGE 1</div>
+        <h3>組織活性化の源泉</h3>
+        <p class="stage-desc">スタッフ一人ひとりの仕事・職場・会社に対する満足感を測定</p>
+        <div class="stage-keys">
+          <span class="stage-key">会社満足度</span><span class="stage-key">職務満足度</span>
+          <span class="stage-key">職務特性</span><span class="stage-key">職場環境</span><span class="stage-key">上司の関わり</span>
+        </div>
+      </div>
+      <div class="stage-card s2">
+        <div class="stage-tag">STAGE 2</div>
+        <h3>収益性向上エンゲージメント</h3>
+        <p class="stage-desc">理念・ビジョンへの共感と顧客視点意識を通じた収益貢献行動</p>
+        <div class="stage-keys">
+          <span class="stage-key">理念・ビジョンへの共感</span><span class="stage-key">顧客視点意識</span><span class="stage-key">将来への期待</span>
+        </div>
+      </div>
+      <div class="stage-card s3">
+        <div class="stage-tag">STAGE 3</div>
+        <h3>チーム力と持続性</h3>
+        <p class="stage-desc">効果的なチームとしての協働と長期継続を生む組織基盤</p>
+        <div class="stage-keys">
+          <span class="stage-key">効果的なチーム</span><span class="stage-key">貢献意欲</span><span class="stage-key">勤続意思</span><span class="stage-key">チームの基盤</span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:28px;padding:20px 32px;background:var(--white);border-radius:var(--radius-md);border:1px solid rgba(13,115,119,.1);max-width:580px;margin-left:auto;margin-right:auto;display:inline-block;text-align:center">
+      <p style="font-size:13px;color:var(--text-secondary)">3つのSTAGEが整うことで生まれるもの</p>
+      <p style="font-size:15px;font-weight:700;color:var(--teal);margin-top:6px">顧客対応型文化の醸成 → 生産性向上 → 業績拡大</p>
+    </div>
+  </div></section>
+
+  <!-- Problem -->
+  <section style="background:var(--white)"><div class="container text-center">
+    <div class="reveal">
+      <p class="section-label">Problem</p>
+      <h2 class="section-title">こんな課題はありませんか？</h2>
+      <p class="section-desc">従来の満足度調査だけでは解決できない、フードサービス業ならではの悩みです</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <h3>スコアは出るが、打ち手が分からない</h3>
+        <p>満足度のスコアが出ても「どの要因が業績に効いているか」が見えず、全項目に施策を打とうとして疲弊する</p>
+        <div class="problem-quote">「スコアが低い項目を全部改善しようとしても、リソースが追いつかない」（外食チェーン 人事部）</div>
+      </div>
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div>
+        <h3>問題が「店舗内」に矮小化される</h3>
+        <p>会社全体としての支援不足や制度的な課題が見えにくく、すべてが「あの店長の問題」として処理され根本解決に至らない</p>
+        <div class="problem-quote">「店長への過度な負荷が改善されないまま、また離職が出た」（飲食チェーン エリアMG）</div>
+      </div>
+      <div class="problem-card reveal reveal-delay-3">
+        <div class="problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg></div>
+        <h3>店舗間の差が感覚でしか語れない</h3>
+        <p>好調店・不調店の違いを数値で説明できず、経営会議が感覚論になる。エリアMGによって対応にバラツキがある</p>
+        <div class="problem-quote">「数値で説明できないと、店長も納得してくれない」（ファストフード 教育担当）</div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- Two value props -->
+  <section id="dashboard" style="background:var(--bg)"><div class="container">
+    <div class="text-center reveal">
+      <p class="section-label">Two Values</p>
+      <h2 class="section-title">2つの価値を、異なる立場に</h2>
+      <p class="section-desc">「今の状態をリアルタイムに把握する」管理者向けの機能と、「なぜそうなっているかを掘り下げる」経営・人事向けの機能を両輪で提供します。</p>
+    </div>
+    <div class="value-dual">
+      <div class="value-card dashboard reveal reveal-delay-1">
+        <div class="value-card-tag">For Managers / エリアMG・店長</div>
+        <h3>ダッシュボード<br>リアルタイムで全店を把握</h3>
+        <p>回答率・平均点・店舗ランキングをリアルタイムで確認。「今どの店が気になるか」を即座に判断できます。</p>
+        <div class="value-features">
+          <div class="value-feature"><span class="value-feature-dot"></span>有効回答数・回答率のリアルタイム表示</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>TOTAL ENGAGEMENTスコアと3 STAGE表示</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>7指標×全店舗のヒートマップ一覧</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>強み・弱みファクター TOP3 / WORST3</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>前回比・全体平均比の差分表示</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>信号（青・黄・赤）による自動判定</div>
+        </div>
+      </div>
+      <div class="value-card report reveal reveal-delay-2">
+        <div class="value-card-tag">For Executives &amp; HR / 経営層・人事部</div>
+        <h3>レポート<br>因果構造を経営判断に</h3>
+        <p>人数×得点で全体スコアへの影響度を可視化。特に低いポイントを全体・店舗単位でアウトプット。施策の根拠になります。</p>
+        <div class="value-features">
+          <div class="value-feature"><span class="value-feature-dot"></span>全社・地域・店舗単位での出力</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>STAGEごとの因果分析（β係数）</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>店長自己評価×スタッフ認識のギャップ分析</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>特に低スコアな要因の詳細抽出</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>経年推移グラフ（施策効果の検証）</div>
+          <div class="value-feature"><span class="value-feature-dot"></span>AIコメントによる自動解説（NotebookLM連携）</div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- Dashboard Details -->
+  <section style="background:var(--white)"><div class="container">
+    <div class="text-center reveal"><p class="section-label">Dashboard</p><h2 class="section-title">管理者ダッシュボード</h2></div>
+
+    <!-- 01: Total Engagement -->
+    <div class="solution-block" style="margin-top:64px">
+      <div class="solution-img reveal reveal-delay-1"><img src="images/ダッシュボード/app-total-engagement.png" alt="TOTAL ENGAGEMENTダッシュボード"></div>
+      <div class="reveal reveal-delay-2">
+        <div class="solution-num">01</div>
+        <div class="solution-tag tag-dashboard">📊 ダッシュボード</div>
+        <h3>TOTAL ENGAGEMENTと<br>3 STAGEをひと目で</h3>
+        <p>有効回答数・回答率をリアルタイム表示。総合スコア（TOTAL ENGAGEMENT）と3つのSTAGEスコアを一画面で把握できます。</p>
+        <p>Δ全体平均・Δ前回の差分も同時表示。改善・悪化を即座に確認できます。</p>
+        <div class="info-box"><p>アンケート実施中から閲覧可能。<strong>回収状況を見ながら督促のタイミングも判断できます</strong></p></div>
+      </div>
+    </div>
+
+    <!-- 02: 7 Indicators -->
+    <div class="solution-block reverse" style="margin-top:80px">
+      <div class="reveal reveal-delay-1">
+        <div class="solution-num">02</div>
+        <div class="solution-tag tag-dashboard">🔵 ダッシュボード</div>
+        <h3>7つの指標を信号で<br>即座に判定</h3>
+        <p>7つのキー指標（会社満足度・職務満足度・将来への期待・顧客視点意識・貢献意欲・勤続意思・効果的チーム）を3段階の信号で自動判定します。</p>
+        <div class="signal-row">
+          <div class="signal signal-green">良好：スコア≧3.8 かつ ネガティブ&lt;10%</div>
+          <div class="signal signal-yellow">注意：どちらか一方のみ</div>
+          <div class="signal signal-red">要改善：スコア&lt;3.8 かつ ネガティブ≧10%</div>
+        </div>
+        <div class="info-box"><p>前回との差分・全体平均との差分も同時表示。<strong>改善・悪化を一目で把握できます</strong></p></div>
+      </div>
+      <div class="solution-img reveal reveal-delay-2"><img src="images/ダッシュボード/app-7indicators.png" alt="7つの主要指標"></div>
+    </div>
+
+    <!-- 03: Heatmap -->
+    <div class="solution-block" style="margin-top:80px">
+      <div class="solution-img reveal reveal-delay-1"><img src="images/ダッシュボード/app-heatmap.png" alt="ヒートマップ"></div>
+      <div class="reveal reveal-delay-2">
+        <div class="solution-num">03</div>
+        <div class="solution-tag tag-dashboard">🗺 ダッシュボード</div>
+        <h3>全店舗×7指標を<br>ヒートマップで一覧</h3>
+        <p>全店舗のスコアを色で視覚化。どの店舗のどの指標に問題があるか、スクロール一つで把握できます。</p>
+        <p>事業所・役職・年代のフィルタリングに対応。「この年代層だけ低い」という細かい課題発見も可能です。</p>
+        <div class="info-box"><p><strong>n&lt;5はマスキング自動表示</strong>。個人が特定されない設計で、スタッフが安心して本音を回答できます</p></div>
+      </div>
+    </div>
+
+    <!-- 04: Strong/Weak -->
+    <div class="solution-block reverse" style="margin-top:80px">
+      <div class="reveal reveal-delay-1">
+        <div class="solution-num">04</div>
+        <div class="solution-tag tag-dashboard">🎯 ダッシュボード</div>
+        <h3>強み・弱みファクターを<br>自動ランキング</h3>
+        <p>18の要因から「最も得意なこと（STRONG FACTOR TOP3）」と「最も改善が必要なこと（WEAK FACTOR WORST3）」を自動で抽出します。</p>
+        <p>全体平均比・前回比も同時表示。施策の効果測定にも活用できます。</p>
+        <div class="info-box"><p>スコアと<strong>ネガティブ回答率（回答「1」または「2」の比率）</strong>を組み合わせて判定。スコアが高くても不満層が多ければ「注意」として検出します</p></div>
+      </div>
+      <div class="solution-img reveal reveal-delay-2"><img src="images/ダッシュボード/app-strong-weak.png" alt="強み・弱みファクター"></div>
+    </div>
+
+    <!-- 05: AI Advisor -->
+    <div class="solution-block" style="margin-top:80px">
+      <div class="solution-img reveal reveal-delay-1"><img src="images/ダッシュボード/app-ai-advisor.png" alt="AIアドバイザー"></div>
+      <div class="reveal reveal-delay-2">
+        <div class="solution-num">05</div>
+        <div class="solution-tag tag-dashboard">🤖 ダッシュボード</div>
+        <h3>AIが診断結果を<br>分析・解説</h3>
+        <p>AIアドバイザーが診断結果を総合的に分析し、組織の強みと課題をわかりやすい言葉で解説。因果関係に基づく改善の方向性まで示唆します。</p>
+        <p>データリテラシーに自信がない方でも、すぐにアクションに移せます。</p>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- Report Details -->
+  <section id="report" style="background:var(--bg)"><div class="container">
+    <div class="text-center reveal"><p class="section-label">Report</p><h2 class="section-title">経営層・人事部向けレポート</h2><p class="section-desc">「何が業績に効いているか」を因果関係で示す。意思決定の根拠になるアウトプット</p></div>
+
+    <!-- 04: サマリー -->
+    <div class="solution-block" style="margin-top:64px">
+      <div class="reveal reveal-delay-1">
+        <div class="solution-num">04</div>
+        <div class="solution-tag tag-report">📈 レポート</div>
+        <h3>全社サマリーと<br>経年推移グラフ</h3>
+        <p>総合平均の推移と3 STAGEスコアの推移を時系列グラフで表示。施策の前後で何が変化したかを定量的に把握できます。</p>
+        <p>各レポートにはAI（NotebookLM）が生成した解説コメントが付属。数値を読み解く時間を省き、意思決定に集中できます。</p>
+        <div class="info-box"><p><strong>経年比較</strong>により、改善施策の効果検証が可能。「前回より〇〇がXポイント改善した理由は？」という議論が数字で行えます</p></div>
+      </div>
+      <div class="solution-img reveal reveal-delay-2"><img src="images/レポート/05_summary_slide1.png" alt="全体サマリーレポート"></div>
+    </div>
+
+    <!-- 05: 強み弱み -->
+    <div class="solution-block reverse" style="margin-top:80px">
+      <div class="solution-img reveal reveal-delay-1"><img src="images/レポート/06_strengths_weaknesses_slide1.png" alt="強み・弱み分析レポート"></div>
+      <div class="reveal reveal-delay-2">
+        <div class="solution-num">05</div>
+        <div class="solution-tag tag-report">🎯 レポート</div>
+        <h3>強み・弱みを<br>全体・店舗単位で出力</h3>
+        <p>18の要因から組織の強み（TOP）と改善が必要な要因（WORST）を自動抽出。人数×得点で全体スコアへの影響度も算出するため、「スコアは中程度でも人数が多く全体を下げている要因」を見逃しません。</p>
+        <div class="info-box"><p>全社・地域・店舗の各単位で出力可能。<strong>同フォーマットで比較</strong>できるため、店舗間の違いも把握できます</p></div>
+      </div>
+    </div>
+
+    <!-- 06: STAGE分析 -->
+    <div class="solution-block" style="margin-top:80px">
+      <div class="reveal reveal-delay-1">
+        <div class="solution-num">06</div>
+        <div class="solution-tag tag-report">📋 レポート</div>
+        <h3>STAGE分析で<br>因果構造を把握</h3>
+        <p>各STAGEのキー指標に、どの要因がどの程度影響しているかをβ係数で表示。「どこに手を打てば最も効果があるか」が数値で明確になります。</p>
+        <p>人数×得点の積で全体スコアへの寄与度も算出。「スコアは高くないが人数が多いため全体を下げている要因」も特定できます。</p>
+      </div>
+      <div class="solution-img reveal reveal-delay-2"><img src="images/レポート/07_stage1_slide1.png" alt="STAGE1分析レポート"></div>
+    </div>
+
+    <!-- 07: ギャップ分析 -->
+    <div class="solution-block reverse" style="margin-top:80px">
+      <div class="solution-img reveal reveal-delay-1"><img src="images/レポート/10_gap_analysis_slide1.png" alt="ギャップ分析レポート"></div>
+      <div class="reveal reveal-delay-2">
+        <div class="solution-num">07</div>
+        <div class="solution-tag tag-report">🔍 レポート</div>
+        <h3>店長とスタッフの<br>ギャップを可視化</h3>
+        <p>店長の自己評価とスタッフからの評価を比較するギャップ分析レポート。「店長は良くやっていると思っているが、スタッフには伝わっていない」という構造的な問題を検出します。</p>
+        <div class="info-box"><p><strong>青：店長が高い項目</strong>（意図が伝わっていないか、自己評価が高すぎる可能性）<br><strong>赤：スタッフが高い項目</strong>（スタッフが高い期待を寄せている）</p></div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- Diff table -->
+  <section style="background:var(--white)"><div class="container text-center">
+    <div class="reveal"><p class="section-label">Difference</p><h2 class="section-title">従来の満足度調査との違い</h2></div>
+    <div class="diff-wrap reveal" style="margin-top:48px">
+      <div class="diff-header">
+        <div>比較項目</div><div>従来の満足度調査</div><div>本診断プログラム</div>
+      </div>
+      <div class="diff-row"><div class="diff-cell">目的</div><div class="diff-cell bad">不満要素の除去</div><div class="diff-cell good">業績向上に直結する行動要因の特定</div></div>
+      <div class="diff-row"><div class="diff-cell">アウトプット</div><div class="diff-cell bad">スコア（良い・悪いの判定のみ）</div><div class="diff-cell good">優先施策・改善順位（β係数による影響度）</div></div>
+      <div class="diff-row"><div class="diff-cell">対象の範囲</div><div class="diff-cell bad">個人の不満・満足に焦点</div><div class="diff-cell good">個人＋チーム＋会社の支援を統合評価</div></div>
+      <div class="diff-row"><div class="diff-cell">店舗間比較</div><div class="diff-cell bad">スコアの大小比較のみ</div><div class="diff-cell good">因果構造の違いまで比較可能</div></div>
+      <div class="diff-row"><div class="diff-cell">管理者の使い方</div><div class="diff-cell bad">年1回の報告書として閲覧</div><div class="diff-cell good">リアルタイムダッシュボードで常時モニタリング</div></div>
+      <div class="diff-row"><div class="diff-cell">理論的背景</div><div class="diff-cell bad">なし（または独自定義）</div><div class="diff-cell good">組織行動学（ロビンス理論）に基づく設計</div></div>
+    </div>
+  </div></section>
+
+  <!-- Theory -->
+  <section style="background:var(--bg)"><div class="container">
+    <div class="text-center reveal"><p class="section-label">Theory</p><h2 class="section-title">学術理論に基づく設計</h2><p class="section-desc">感覚ではなく、組織行動学の知見を診断モデルに落とし込んでいます</p></div>
+    <div class="theory-grid">
+      <div class="theory-chain reveal reveal-delay-1">
+        <div class="theory-node attitude">
+          <h4>態度（Attitude）</h4>
+          <p>職務満足度・会社への満足・公平感・エンゲージメント</p>
+        </div>
+        <div class="theory-connector"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg><span>影響</span></div>
+        <div class="theory-node behavior">
+          <h4>行動（Behavior）</h4>
+          <p>積極的な顧客対応・組織市民行動・チームへの貢献・勤続継続</p>
+        </div>
+        <div class="theory-connector"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg><span>結果</span></div>
+        <div class="theory-node performance">
+          <h4>業績（Performance）</h4>
+          <p>生産性向上・離職率低下・顧客満足・売上拡大</p>
+        </div>
+      </div>
+      <div class="theory-text reveal reveal-delay-2">
+        <h3>「なぜ辞めるか」より<br>「何をすれば業績が上がるか」を問う</h3>
+        <p>スティーブン P.ロビンスの組織行動学では、従業員の<strong>態度</strong>が<strong>行動</strong>を生み、それが<strong>業績</strong>（生産性・離職率・貢献意欲）に直結することを体系化しています。</p>
+        <p>本診断はその理論構造を3つのSTAGEに落とし込み、「どの態度要因を改善すれば、どの行動が変わり、どう業績に影響するか」を数値で追える設計になっています。</p>
+        <div class="theory-cite">参照：S.P.ロビンス『組織行動のマネジメント』— 効果的なチームモデル・顧客対応型文化の変数・職務満足度と業績の関係性</div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- Target -->
+  <section style="background:var(--white)"><div class="container text-center">
+    <div class="reveal"><p class="section-label">Target</p><h2 class="section-title">こんな方におすすめ</h2></div>
+    <div class="target-grid">
+      <div class="target-card reveal reveal-delay-1">
+        <div class="target-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h3>経営者・役員</h3>
+        <p>組織の現状を数値で把握し、投資優先度と施策の根拠を得たい</p>
+        <div class="target-list">
+          <div class="target-list-item">全社サマリーレポートで全体像を把握</div>
+          <div class="target-list-item">経年推移で施策効果を検証</div>
+          <div class="target-list-item">店舗間の因果構造の違いを比較</div>
+        </div>
+      </div>
+      <div class="target-card reveal reveal-delay-2">
+        <div class="target-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg></div>
+        <h3>人事・教育担当</h3>
+        <p>施策の優先順位を数値で立て、効果測定まで一貫して管理したい</p>
+        <div class="target-list">
+          <div class="target-list-item">STAGE別因果分析で施策根拠を確立</div>
+          <div class="target-list-item">対象者区分（店長・社員・PA）別の分析</div>
+          <div class="target-list-item">ギャップ分析で店長育成に活用</div>
+        </div>
+      </div>
+      <div class="target-card reveal reveal-delay-3">
+        <div class="target-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+        <h3>エリアマネージャー</h3>
+        <p>担当店舗の課題を数値で把握し、的確なサポートと説明を行いたい</p>
+        <div class="target-list">
+          <div class="target-list-item">ダッシュボードで担当店を常時モニタリング</div>
+          <div class="target-list-item">ヒートマップで要注意店を即特定</div>
+          <div class="target-list-item">信号判定で優先介入店を判断</div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- Flow -->
+  <section style="background:var(--bg)"><div class="container text-center">
+    <div class="reveal"><p class="section-label">Flow</p><h2 class="section-title">最短1週間で診断スタート</h2></div>
+    <div class="flow-steps">
+      <div class="flow-step reveal reveal-delay-1"><div class="flow-num">1</div><h3>お問い合わせ</h3><p>フォームまたはデモ予約から。資料のみの請求も可能</p></div>
+      <div class="flow-step reveal reveal-delay-2"><div class="flow-num">2</div><h3>ヒアリング</h3><p>店舗数・対象者・課題感をお伺い（30分程度）</p></div>
+      <div class="flow-step reveal reveal-delay-3"><div class="flow-num">3</div><h3>初期設定</h3><p>組織構成・対象者リスト（CSV可）を登録</p></div>
+      <div class="flow-step reveal reveal-delay-4"><div class="flow-num">4</div><h3>診断スタート</h3><p>URLを配布してスタート。集計・レポートは自動生成</p></div>
+    </div>
+  </div></section>
+
+  <!-- FAQ -->
+  <section id="faq" style="background:var(--white)"><div class="container">
+    <div class="text-center reveal"><p class="section-label">FAQ</p><h2 class="section-title">よくある質問</h2></div>
+    <div class="faq-list">
+      <div class="faq-item reveal"><details><summary>Q. 満足度調査との一番の違いは何ですか？</summary><p class="faq-answer">最大の違いは「目的」です。満足度調査は不満要素の除去を目的とするのに対し、本診断は業績向上に直結する行動要因を特定することを目的に設計されています。スコアの高低を見るだけでなく、「どの要因が業績（顧客満足・勤続意思・貢献行動）にどの程度影響しているか」をβ係数（パス係数）で示す点が大きく異なります。</p></details></div>
+      <div class="faq-item reveal"><details><summary>Q. 管理者はリアルタイムでどこまで見られますか？</summary><p class="faq-answer">アンケート実施中からダッシュボードで確認できます。有効回答数・回答率・TOTAL ENGAGEMENTスコア・3 STAGEのスコア・7指標×全店舗のヒートマップ・強み弱みファクターがリアルタイムで更新されます。事業所別・役職別・年代別のフィルタリングにも対応しています。</p></details></div>
+      <div class="faq-item reveal"><details><summary>Q. レポートはどのような単位で出力されますか？</summary><p class="faq-answer">全社・地域・店舗といった組織単位で出力できます。内容は①全体サマリー（推移グラフ）②STAGEごとの因果分析（β係数）③強み・弱みランキング④ギャップ分析（店長自己評価×スタッフ評価）⑤特に低スコアな要因の詳細抽出、が含まれます。個人へのフィードバックはありません。</p></details></div>
+      <div class="faq-item reveal"><details><summary>Q. 「業績向上」とは具体的に何を指しますか？</summary><p class="faq-answer">本診断における業績向上とは、①生産性の向上②常習的欠勤・転職率の低下③顧客満足（顧客対応型文化）④組織市民行動（自発的な貢献行動）の4つです。これらはスタッフの職務満足度や態度が改善されることで、行動として現れる結果です（S.P.ロビンス組織行動学に基づく）。</p></details></div>
+      <div class="faq-item reveal"><details><summary>Q. 回答はどのくらいの時間がかかりますか？</summary><p class="faq-answer">1人あたり10〜15分程度です。スマートフォンから回答できます。店長・社員・パートアルバイトそれぞれの立場に最適化された設問セット（一部設問が異なります）をご用意しています。</p></details></div>
+      <div class="faq-item reveal"><details><summary>Q. 匿名での回答はできますか？</summary><p class="faq-answer">匿名回答に対応しています。また、5人未満のセグメントは自動マスキングされるため、個人が特定される心配がありません。スタッフが安心して本音を回答できる設計になっています。</p></details></div>
+    </div>
+  </div></section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact"><div class="container"><div class="reveal">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">「何が業績に効いているか」を<br>数値で見てみませんか</h2>
+    <p class="section-desc">まずは資料をご覧いただくか、デモをご覧ください</p>
+    <p class="cta-note">資料のみのご請求・ご質問だけでも歓迎です。契約の義務は一切ありません。</p>
+    <div class="cta-actions">
+      <a href="#" class="btn btn-white"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>資料ダウンロード</a>
+      <a href="#" class="btn btn-ghost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>デモを予約する</a>
+    </div>
+  </div></div></section>
+
+  <footer class="footer"><div class="container"><p>&copy; 2025 店舗・組織診断プログラム All rights reserved.</p></div></footer>
+
+  <script>
+    const obs=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+    window.addEventListener('scroll',()=>document.getElementById('header').classList.toggle('scrolled',window.scrollY>50));
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+    const si=document.querySelector('.stats-inner');
+    if(si)new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!e.target.dataset.done){e.target.dataset.done=1;e.target.querySelectorAll('.stat-number').forEach(n=>{const m=n.textContent.match(/(\d+)(.*)/);if(m){const target=parseInt(m[1]),suffix=m[2]?'<span>'+m[2]+'</span>':'',dur=1500,start=performance.now();const step=now=>{const p=Math.min((now-start)/dur,1),ease=1-Math.pow(1-p,3);n.innerHTML=Math.round(ease*target)+suffix;if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)}})}})},{threshold:.5}).observe(si);
+  </script>
+</body>
+</html>

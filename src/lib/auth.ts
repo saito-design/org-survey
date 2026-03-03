@@ -36,13 +36,13 @@ export function hashPassword(password: string): string {
 }
 
 export async function verifyCredentials(emp_no: string, passwordPlain: string): Promise<Respondent | null> {
-  // 開発用: junestory/junestory1/junestory2/junestory3 でログイン可能
-  // junestory はオーナー権限（エクスポート可）、junestory1 は管理者権限（閲覧のみ）
+  // 開発用: junestry/junestry1/junestry2/junestry3 でログイン可能
+  // junestry はオーナー権限（エクスポート可）、junestry1 は管理者権限（閲覧のみ）
   const devAccounts: Record<string, { password: string; role: 'MANAGER' | 'STAFF' | 'PA'; name: string; is_admin: boolean; is_owner: boolean }> = {
-    'junestory': { password: 'owner', role: 'MANAGER', name: 'オーナー', is_admin: true, is_owner: true },
-    'junestory1': { password: 'junestory1', role: 'MANAGER', name: '店長・管理者', is_admin: true, is_owner: false },
-    'junestory2': { password: 'junestory2', role: 'STAFF', name: '社員', is_admin: false, is_owner: false },
-    'junestory3': { password: 'junestory3', role: 'PA', name: 'PA', is_admin: false, is_owner: false },
+    'junestry': { password: 'owner', role: 'MANAGER', name: 'オーナー', is_admin: true, is_owner: true },
+    'junestry1': { password: 'junestry1', role: 'MANAGER', name: '店長・管理者', is_admin: true, is_owner: false },
+    'junestry2': { password: 'junestry2', role: 'STAFF', name: '社員', is_admin: false, is_owner: false },
+    'junestry3': { password: 'junestry3', role: 'PA', name: 'PA', is_admin: false, is_owner: false },
   };
 
   if (emp_no in devAccounts && passwordPlain === devAccounts[emp_no].password) {
